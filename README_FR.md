@@ -80,10 +80,10 @@ Plage publique : 163.173.19.224/28
 
 | VLAN    | Fonction               | Type   | Site 1 (Hôtes) | Site 2 (Hôtes) | Cloud (Hôtes) | Commentaire                    |
 | ------- | ---------------------- | ------ | -------------- | -------------- | ------------- | ------------------------------ |
-| VLAN 10 | Administratif          | Privé  | 14             | 7              | —             | LAN_1-1 / LAN_2-1              |
-| VLAN 20 | Développeurs           | Privé  | 18             | 26             | —             | LAN_1-2 / LAN_2-2              |
-| VLAN 31 | Serveurs Intranet      | Privé  | 6              | 2              | 10            | LAN_1-31 / LAN_2-31 / LAN_3-31 |
-| VLAN 32 | Serveurs Publics (DMZ) | Public | 14             | 6              | 10            | LAN_1-32 / LAN_2-32 / LAN_3-32 |
+| VLAN 10 | Administratif          | Privé  | 15             | 10              | —             | LAN_1-1 / LAN_2-1              |
+| VLAN 20 | Développeurs           | Privé  | 20             | 25             | —             | LAN_1-2 / LAN_2-2              |
+| VLAN 31 | Serveurs Intranet      | Privé  | 5              | 4              | 10            | LAN_1-31 / LAN_2-31 / LAN_3-31 |
+| VLAN 32 | Serveurs Publics (DMZ) | Public | 13             | 5              | 10            | LAN_1-32 / LAN_2-32 / LAN_3-32 |
 
 #### Routage
 

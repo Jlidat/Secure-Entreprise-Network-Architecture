@@ -76,12 +76,22 @@
 	Le projet vise à :
 	\begin{itemize}
 		\item[$\rightarrow$] Concevoir une architecture réseau multi-sites cohérente
-		\item[$\rightarrow$] Mettre en oeuvre des VLAN conformes à la normes IEEE 802.1Q
+		\item[$\rightarrow$] Mettre en œuvre des VLAN conformes à la normes IEEE 802.1Q
 		\item[$\rightarrow$] Assurer le routage inter-VLAN
-		\item[$\rightarrow$] Implémenter des règles de filtrage via ACL étendues
+		\item[$\rightarrow$] Implémenter des règles de filtrage basées sur des ACL étendues
 		\item[$\rightarrow$] Mettre en oeuvre des mécanismes NAT (statique et dynamique)
-		\item[$\rightarrow$] Garantir la séparation logique des flux internes et extrnes
+		\item[$\rightarrow$] Garantir la séparation logique des flux internes et externes
 	\end{itemize}
+	%-------------------------------------------------
+	\section{Contraintes Techniques}
+
+		\begin{itemize}
+			\item Utilisation du protocole IPv4
+			\item Respect des normes IEEE 802.1Q pour la segmentation VLAN
+			\item Utilisation d’équipements compatibles Cisco IOS
+			\item Simulation réalisée sous GNS3
+		\end{itemize}
+
 	%-------------------------------------------------
 	\section{Architecture Générale}
 	
@@ -119,18 +129,14 @@
 	Sous-réseaux à définir :
 	
 	\begin{itemize}
-		\item LAN\_1-1 : 15 (14) hôtes (Administratif)
-		\item LAN\_1-2 : 20 (18) hôtes (Développeurs)
-		\item LAN\_1-31 : 7 (6) hôtes (Serveurs Intranet)
-		\item LAN\_1-32 : jusqu’à 15 (14) adresses publiques
+		\item LAN\_1-1 : 15  hôtes (Administratif)
+		\item LAN\_1-2 : 20  hôtes (Développeurs)
+		\item LAN\_1-31 : 5  hôtes (Serveurs Intranet)
+		\item LAN\_1-32 : jusqu’à 13 adresses publiques
 	\end{itemize}
 	
-	RE1 (côté SW2): IP (Broadcast : ) !!!!!
-	
 	Réseau privé : 192.168.1.0/24
-	
-	
-	
+		
 	\subsection{Site 2}
 	
 	Plage publique attribuée : 123.2.2.160/27
@@ -138,13 +144,11 @@
 	Sous-réseaux à définir :
 	
 	\begin{itemize}
-		\item LAN\_2-1 : 10 (7) hôtes
-		\item LAN\_2-2 : 25 (26) hôtes
-		\item LAN\_2-31 : 4 (2) hôtes
-		\item LAN\_2-32 : jusqu’à 7 (6) adresses publiques
+		\item LAN\_2-1 : 10  hôtes
+		\item LAN\_2-2 : 25  hôtes
+		\item LAN\_2-31 : 4 hôtes
+		\item LAN\_2-32 : jusqu’à 5 adresses publiques
 	\end{itemize}
-	
-	RE2 (côté SW4) : IP (Broadcast : ) !!!!!
 	
 	Réseau privé :  192.168.2.0/24
 	
@@ -163,10 +167,7 @@
 			\item RF2 : 163.173.19.222/31
 		\end{itemize}
 	\end{itemize}
-	
-	RF1 (côté SW5) : IP (Broadcast : ) !!!!!
-	RF2 (côté SW6) : IP (Broadcast : ) !!!!!
-	
+
 	Réseau privé :  192.168.3.0/24
 	
 	%-------------------------------------------------
@@ -193,7 +194,7 @@
 		\item Interdiction de communication entre VLAN 31 et VLAN 32
 		\item VLAN 31 accessible uniquement depuis les VLAN internes
 		\item VLAN 32 accessible depuis Internet et depuis les VLAN internes
-		\item Accès Internet autorisé pour tous les VLAN (flux sortants uniquement) ; Tous les VLAN peuvent initier des connexions vers Internet.		
+		\item Accès Internet autorisé pour tous les VLAN (flux sortants uniquement)		
 	\end{itemize}
 	
 	Le système devra permettre l’isolation des flux inter-VLAN.
