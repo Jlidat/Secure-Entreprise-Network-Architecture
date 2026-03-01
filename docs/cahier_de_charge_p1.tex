@@ -1,0 +1,234 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Cahier des Charges}
+\lhead{Architecture Réseau Multi-Sites}
+\rfoot{\thepage}
+
+\title{\textbf{Cahier des Charges}\\
+	Conception et Mise en Œuvre d’une Architecture Réseau Multi-Sites avec Extension Cloud}
+\author{Nozha Safi (Jlidat)}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	\thispagestyle{empty}
+	\newpage
+	\tableofcontents
+	\newpage
+	
+	%-------------------------------------------------
+	\section{Préambule}
+	
+	Le présent document définit les exigences techniques relatives à la conception
+	et à la mise en œuvre d’une architecture réseau multi-sites intégrant une
+	extension vers un fournisseur de Cloud.
+	
+	L’objectif est de structurer l’infrastructure interne, d’assurer la
+	segmentation logique des départements, de sécuriser l’accès Internet et
+	de permettre l’hébergement hybride de services applicatifs.
+	
+	%-------------------------------------------------
+	\section{Contexte}
+	
+	L’entreprise dispose de deux sites géographiquement éloignés :
+	
+	\begin{itemize}
+		\item Site 1
+		\item Site 2
+	\end{itemize}
+	
+	Chaque site héberge :
+	
+	\begin{itemize}
+		\item Un département Administratif
+		\item Un département Développeurs
+		\item Des serveurs Intranet
+		\item Des serveurs accessibles depuis Internet
+	\end{itemize}
+	
+	Afin d’absorber une croissance d’activité, l’entreprise externalise
+	une partie de ses serveurs auprès d’un Fournisseur de Cloud.
+	
+	Dans un objectif de modernisation, de performance et de sécurité, l'entreprise souhaite :
+	\begin{itemize}
+		\item{$\star$} Définir un plan d’adressage IPv4 cohérent en respectant les contraintes de capacité.  
+		\item{$\star$} Segmenter les différents départements via VLAN 802.1Q.   
+		\item{$\star$} Isoler les serveurs internes des serveurs exposés  
+		\item{$\star$} Contrôler les communications inter-réseaux
+		\item{$\star$} Sécuriser l'accès Internet
+		\item{$\star$} Intégrer une solution Cloud privée et publique 
+	\end{itemize}
+	%-------------------------------------------------
+	
+	\section{Objectifs}
+	Le projet vise à :
+	\begin{itemize}
+		\item[$\rightarrow$] Concevoir une architecture réseau multi-sites cohérente
+		\item[$\rightarrow$] Mettre en oeuvre des VLAN conformes à la normes IEEE 802.1Q
+		\item[$\rightarrow$] Assurer le routage inter-VLAN
+		\item[$\rightarrow$] Implémenter des règles de filtrage via ACL étendues
+		\item[$\rightarrow$] Mettre en oeuvre des mécanismes NAT (statique et dynamique)
+		\item[$\rightarrow$] Garantir la séparation logique des flux internes et extrnes
+	\end{itemize}
+	%-------------------------------------------------
+	\section{Architecture Générale}
+	
+	Chaque site comprend :
+	
+	\begin{itemize}[label=$\bullet$]
+		\item Un routeur d’accès Internet (RE1 pour Site 1, RE2 pour Site 2)
+		\item Deux commutateurs interconnectés en trunk 802.1Q
+		\begin{itemize}
+			\item Un commutateur dédié aux utilisateurs
+			\item Un commutateur dédié aux serveurs
+		\end{itemize}
+		\item Quatre sous-réseaux distincts
+	\end{itemize}
+	
+	Chez le fournisseur Cloud :
+	
+	\begin{itemize}[label=$\bullet$]
+		\item Cloud privé => Sous-réseau LAN\_3-31
+		\item Cloud public => Sous-réseau LAN\_3-32
+		\item Routeurs fournisseurs assurant l'interconnexion
+		\begin{itemize}
+			\item Routeur RF1 (réseau Intranet Cloud)
+			\item Routeur RF2 (réseau Public Cloud)
+		\end{itemize}
+	\end{itemize}
+	
+	%-------------------------------------------------
+	\section{Plan d’Adressage}
+	
+	\subsection{Site 1}
+	
+	Plage publique attribuée : 123.1.1.160/27
+	
+	Sous-réseaux à définir :
+	
+	\begin{itemize}
+		\item LAN\_1-1 : 15 (14) hôtes (Administratif)
+		\item LAN\_1-2 : 20 (18) hôtes (Développeurs)
+		\item LAN\_1-31 : 7 (6) hôtes (Serveurs Intranet)
+		\item LAN\_1-32 : jusqu’à 15 (14) adresses publiques
+	\end{itemize}
+	
+	RE1 (côté SW2): IP (Broadcast : ) !!!!!
+	
+	Réseau privé : 192.168.1.0/24
+	
+	
+	
+	\subsection{Site 2}
+	
+	Plage publique attribuée : 123.2.2.160/27
+	
+	Sous-réseaux à définir :
+	
+	\begin{itemize}
+		\item LAN\_2-1 : 10 (7) hôtes
+		\item LAN\_2-2 : 25 (26) hôtes
+		\item LAN\_2-31 : 4 (2) hôtes
+		\item LAN\_2-32 : jusqu’à 7 (6) adresses publiques
+	\end{itemize}
+	
+	RE2 (côté SW4) : IP (Broadcast : ) !!!!!
+	
+	Réseau privé :  192.168.2.0/24
+	
+	\subsection{Fournisseur de Cloud}
+	
+	Plage publique Cloud : 163.173.19.224/28
+	
+	Sous-réseaux à définir:
+	
+	\begin{itemize}
+		\item LAN\_3-31 : 10 serveurs Intranet
+		\item LAN\_3-32 : 10 serveurs Public
+		\item Liaisons point-à-point :
+		\begin{itemize}
+			\item RF1 : 163.173.18.254/31
+			\item RF2 : 163.173.19.222/31
+		\end{itemize}
+	\end{itemize}
+	
+	RF1 (côté SW5) : IP (Broadcast : ) !!!!!
+	RF2 (côté SW6) : IP (Broadcast : ) !!!!!
+	
+	Réseau privé :  192.168.3.0/24
+	
+	%-------------------------------------------------
+	\section{Segmentation VLAN}
+	
+	Chaque site met en œuvre des VLAN 802.1Q :
+	
+	\begin{itemize}
+		\item VLAN 10 : Administratif
+		\item VLAN 20 : Développeurs
+		\item VLAN 31 : Serveurs Intranet
+		\item VLAN 32 : Serveurs DMZ
+	\end{itemize}
+	
+	Le routage inter-VLAN est assuré par RE1 et RE2 via encapsulation IEEE 802.1Q.
+	
+	%-------------------------------------------------
+	\section{Politique de Sécurité}
+	
+	Les règles suivantes doivent être appliquées :
+	
+	\begin{itemize}
+		\item Interdiction de communication entre VLAN 10 et VLAN 20
+		\item Interdiction de communication entre VLAN 31 et VLAN 32
+		\item VLAN 31 accessible uniquement depuis les VLAN internes
+		\item VLAN 32 accessible depuis Internet et depuis les VLAN internes
+		\item Accès Internet autorisé pour tous les VLAN (flux sortants uniquement) ; Tous les VLAN peuvent initier des connexions vers Internet.		
+	\end{itemize}
+	
+	Le système devra permettre l’isolation des flux inter-VLAN.
+	
+	%-------------------------------------------------
+	\section{Services Réseau}
+	
+	\subsection{DHCP}
+	
+	Un serveur DHCP est déployé sur chaque site pour attribuer
+	dynamiquement les adresses IP des sous-réseaux privés.
+	
+	Les serveurs applicatifs disposent d’adresses IP statiques.
+	
+	\subsection{NAT}
+	
+	Les routeurs RE1 et RE2 implémentent :
+	
+	\begin{itemize}
+		\item NAT dynamique (PAT) pour les postes internes
+		\item NAT statique pour les serveurs DMZ
+	\end{itemize}
+	
+	Une adresse publique est réservée pour l’accès Internet au serveur Web.
+	
+	%-------------------------------------------------
+	\section{Livrables}
+	
+	\begin{itemize}
+		\item Plan d’adressage détaillé
+		\item Configurations VLAN
+		\item Configurations DHCP
+		\item Règles ACL
+		\item Configuration NAT
+		\item Simulation complète sous GNS3
+	\end{itemize}
+	
+\end{document}

@@ -111,12 +111,14 @@ Les règles suivantes doivent être respectées :
 
 Les mécanismes de sécurité reposent sur des ACL étendues appliquées sur les routeurs RE1/RE2 ainsi que sur des mécanismes de translation d’adresses (NAT dynamique et statique).  
 
+L’ensemble des ACL garantit l’isolation logique des flux inter-VLAN conformément au cahier des exigences.
+
+
 ##### Publication des services DMZ
 ✔ Les serveurs du VLAN 32 sont accessibles depuis Internet via NAT statique  
 ✔ L’exposition est limitée aux services applicatifs nécessaires  
     - HTTP (80)  
-    - HTTPS (443)  
-    - SSH restreint par ACL  
+    - HTTPS (443)    
 ❌ Aucun accès direct depuis Internet vers VLAN 10, VLAN 20 ou VLAN 31  
 ✔ Filtrage inbound sur interface WAN afin de bloquer tout flux non autorisé  
 
@@ -145,6 +147,7 @@ Le projet inclut :
 - Pools distincts par VLAN
 - Exclusion d’adresses réservées (passerelles, équipements réseau)
 - Configuration DHCP Relay (ip helper-address)
+- Utilisation des adresses IP statiques Serveurs applicatifs (VLAN 31 et VLAN 32).
 - Validation via analyse Wireshark (DORA Process)
 
 ---
