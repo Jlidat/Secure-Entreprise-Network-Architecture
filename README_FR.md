@@ -1,5 +1,8 @@
 # Architecture Réseau Multi-Sites Sécurisée avec Extension Cloud
 ## VLAN – ACL – DHCP – NAT – Segmentation Applicative
+### Schéma de l'architecture globale  
+![Topologie](diagrams/logical_topology.png)  
+---
 ### Objectif du Projet
 
 Concevoir et simuler une architecture réseau d’entreprise multi-sites sécurisée intégrant segmentation, filtrage avancé et extension vers un environnement Cloud hybride.
@@ -64,10 +67,6 @@ Plage publique : 163.173.19.224/28
         RF1 : 163.173.18.254/31  
         RF2 : 163.173.19.222/31  
 
----
-
-### Schéma de l'architecture globale  
-![Topologie](diagrams/logical_topology.png)  
 ---
 
 ### Segmentation Réseau
