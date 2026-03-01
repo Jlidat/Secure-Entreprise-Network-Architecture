@@ -1,4 +1,9 @@
 # Architecture Réseau Multi-Sites Sécurisée avec Extension Cloud
+![Cisco](https://img.shields.io/badge/Cisco-IOS-blue)
+![GNS3](https://img.shields.io/badge/Simulation-GNS3-orange)
+![Security](https://img.shields.io/badge/Focus-Network_Security-red)
+![Status](https://img.shields.io/badge/Project-Active-success)
+
 ## VLAN – ACL – DHCP – NAT – Segmentation Applicative
 ### Schéma de l'architecture globale  
 ![Topologie](diagrams/logical_topology.png)  
