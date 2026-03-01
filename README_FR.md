@@ -14,6 +14,9 @@ Concevoir et simuler une architecture réseau d’entreprise multi-sites sécuri
 
 Les plages d’adressage utilisées correspondent au schéma fourni dans le cadre du projet et sont exploitées uniquement dans un environnement de simulation.  
 
+Cette architecture est inspirée d’un scénario académique réalisé dans le cadre de l’UE urbanisation de services réseau.
+La topologie a été restructurée et reformulée à des fins de démonstration technique.
+
 ### Présentation
 
 Le projet présente la conception et l’implémentation d’une architecture réseau (à l’aide de GNS3) d’entreprise multi-sites intégrant :
