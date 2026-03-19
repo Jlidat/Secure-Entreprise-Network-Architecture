@@ -1,0 +1,1271 @@
+\documentclass[12pt,a4paper, oneside]{memoir}
+\setsecnumdepth{subsubsection} % pour gérer la profondeur de la numérotation
+\settocdepth{subsubsection}  % pour gérer la profondeur de la numérotation dans la table de matière
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{lmodern} %police
+\usepackage[a4paper,margin=1.5cm]{geometry} %marges
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor} % pour la coloration syntaxique
+\usepackage{titlesec}  % Pour styliser les titres si besoin
+\usepackage{hyperref}  % Pour les liens cliquables
+\usepackage{pgfgantt} % pour le diagramme de Gantt
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage[colorinlistoftodos]{todonotes}
+\geometry{margin=2.5cm}
+\usepackage[strings]{underscore}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fancyvrb}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{tabularx} 
+\usepackage[table]{xcolor}
+
+
+\usepackage{tikz}
+%\usepackage{tikz-uml}
+\usetikzlibrary{shapes.multipart, arrows.meta, positioning, calc}
+
+\tikzset{
+	box/.style={
+		draw,
+		rounded corners,
+		text width=5.5cm,
+		minimum height=1.2cm,
+		align=center,
+		font=\small,
+		fill=blue!5
+	},
+	arrow/.style={
+		-{Latex[length=2mm]},
+		thick
+	}
+}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta, shapes.multipart, positioning}
+\usepackage{pgf-umlsd}
+
+\usepackage{listings}
+\lstdefinelanguage{autoconf}{
+	morekeywords={AC_INIT,AC_PREREQ,AC_ARG_ENABLE,AS_HELP_STRING,PKG_CHECK_MODULES,
+		AC_CANONICAL_HOST,AC_CANONICAL_TARGET},
+	sensitive=true,
+	morecomment=[l]\#,
+	morestring=[b]"
+}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	stringstyle=\color{red},
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	%breaklines=true,          % permet de couper les lignes trop longues
+	%	breakatwhitespace=false,  % coupe même au milieu d’un mot si besoin
+	%breakatwhitespace=true
+	%postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, % joli symbole de continuation
+	%basicstyle=\ttfamily\small,
+	%columns=fullflexible
+}
+
+%\usepackage[acronym]{glossaries}
+%\makeglossaries
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+%---Entête et pieds de page ---
+\usepackage{fancyhdr} % Personnalisation des en-têtes et pieds de page
+\usepackage{lastpage}  % Pour connaître la dernère page (pour X/Y)
+\pagestyle{fancy} %Active le style fancy
+\fancyhf{}       %Vide en-têtes et pieds
+\fancyfoot[C]{Page\thepage/\pageref{LastPage}} %Centré en bas : Page 1/2
+\renewcommand{\headrulewidth}{0pt}  % Supprime le trait en haut
+\renewcommand{\footrulewidth}{0pt}  % Pas de trait en bas (modifiable)
+
+\pagestyle{fancy}
+\fancyhf{} % Nettoyer les entêtes et pieds
+
+% --- En-tête gauche : texte ---
+
+
+% =========================
+% En-tête personnalisé GitHub
+% =========================
+
+\fancyhead[L]{%
+	\begin{minipage}{0.65\textwidth}
+		\raggedright
+		\textbf{\Large Architecture Réseau d’Entreprise Sécurisée}\\
+		\small Urbanisation des Services Réseau
+	\end{minipage}
+}
+
+\fancyhead[R]{%
+	% Optionnel : logo
+	% \includegraphics[height=1.5cm]{logo.png}
+}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+	
+	\vspace*{1cm}
+	
+	\begin{center}
+		
+		{\Huge \textbf{Architecture Réseau d’Entreprise Sécurisée}}\\[0.8cm]
+		
+		{\Large Conception d’une Infrastructure Multi-Sites}\\[1.5cm]
+		
+		\begin{tcolorbox}[colback=gray!5,colframe=black,width=0.9\textwidth,sharp corners,boxrule=1pt]
+			\centering
+			\Large
+			Ce projet présente la conception d’une architecture réseau d’entreprise comprenant :
+			
+			\begin{itemize}
+				\item Une infrastructure multi-sites
+				\item Une segmentation réseau basée sur VLAN
+				\item Un plan d’adressage structuré
+				\item L’intégration d’une infrastructure Cloud
+				\item Une architecture orientée sécurité (ACL, isolation des flux)
+			\end{itemize}
+			
+		\end{tcolorbox}
+		
+		\vspace{1.5cm}
+		
+		\textbf{Auteur}\\
+		Nozha Safi
+		
+		\vspace{0.5cm}
+		
+		\textbf{Contexte académique}\\
+		Conservatoire National des Arts et Métiers (CNAM)\\
+		Urbanisation des Services Réseau
+		
+		\vspace{0.5cm}
+		
+		\textbf{Année universitaire}\\
+		2025 – 2026
+		
+		\vspace{1cm}
+		
+		\rule{\linewidth}{0.4mm}
+		
+		\vspace{0.5cm}
+		
+		\small
+		Ce dépôt présente une documentation technique reconstruite d’une architecture
+		réseau d’entreprise réalisée dans un cadre pédagogique.
+		
+	\end{center}
+	
+	%--- Fin page de garde ---
+	\clearpage
+	
+	\pagestyle{fancy}
+	\fancyhf{}
+	
+	\tableofcontents
+	\newpage
+	
+	\listoffigures
+	\newpage
+	
+	\listoftables
+	\newpage
+
+
+\chapter{Architecture Réseau de l’Entreprise}
+
+\section{Contexte}
+
+L’entreprise dispose de deux sites géographiquement distincts (\textbf{Site 1} et \textbf{Site 2}). 
+Chaque site comprend :
+
+\begin{itemize}
+	\item deux réseaux utilisateurs (Administratif et Développeurs),
+	\item un réseau de serveurs Intranet,
+	\item un réseau de serveurs publics accessibles depuis Internet.
+\end{itemize}
+
+En complément, deux sous-réseaux sont hébergés chez un fournisseur \textbf{Cloud} afin :
+
+\begin{itemize}
+	\item d’externaliser certains services,
+	\item d’absorber les pics de charge,
+	\item d’améliorer la résilience globale de l’architecture.
+\end{itemize}
+
+Le réseau opérateur (\textit{WAN}) est traité séparément mais reste intégré dans la conception globale de l’architecture réseau.
+\section{Topologie réseau globale}
+La figure suivante présente la topologie globale de l’infrastructure réseau de l’entreprise. 
+Cette topologie met en évidence l’organisation physique du réseau
+(routeurs, commutateurs et hôtes) ainsi que la segmentation logique
+des différents services au moyen de VLAN. Cette approche permet de
+séparer les flux utilisateurs, les services Intranet et les services
+publics exposés sur Internet, tout en conservant une architecture
+cohérente entre les deux sites et l’extension Cloud.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/01_topologie_globale.png}
+	\caption{Topologie globale de l’architecture réseau de l’entreprise incluant les deux sites,
+		l’infrastructure Cloud et la segmentation logique des réseaux par VLAN}
+	
+	\label{fig:topologie_globale}
+\end{figure}
+
+Les différentes zones de l’architecture sont représentées par des
+codes couleurs permettant d’identifier rapidement les périmètres
+réseau : les sites internes de l’entreprise, les segments publics
+exposés à Internet ainsi que l’extension de l’infrastructure
+hébergée chez le fournisseur Cloud.
+
+
+\section{Convention de nommage}
+
+Les sous-réseaux suivent la notation suivante :
+
+\[
+\texttt{LAN\_x-y}
+\]
+
+où :
+
+\begin{itemize}
+	\item \textbf{x} représente le numéro du site :
+	\begin{itemize}
+		\item 1 : Site 1
+		\item 2 : Site 2
+		\item 3 : Infrastructure Cloud
+	\end{itemize}
+	
+	\item \textbf{y} représente l'identifiant fonctionnel du sous-réseau.
+\end{itemize}
+
+Cette convention permet d’identifier rapidement l’origine et la fonction de chaque réseau dans l’architecture globale.
+
+\section{Structure des LAN et VLAN}
+	\subsection{Organisation des LAN}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Fonction} & \textbf{Désignation} \\
+		\hline
+		Administratif & LAN\_1-1 / LAN\_2-1 \\
+		Développeurs & LAN\_1-2 / LAN\_2-2 \\
+		Serveurs Intranet & LAN\_1-31 / LAN\_2-31 \\
+		Serveurs Publics & LAN\_1-32 / LAN\_2-32 \\
+		Cloud Intranet & LAN\_3-31 \\
+		Cloud Public & LAN\_3-32 \\
+		\hline
+	\end{tabular}
+	\caption{Organisation des sous-réseaux LAN}
+\end{table}
+
+\subsection{Segmentation VLAN}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{VLAN} & \textbf{Usage} \\
+		\hline
+		VLAN\_10 & Département Administratif \\
+		VLAN\_20 & Département Développeurs \\
+		VLAN\_31 & Serveurs Intranet (privés) \\
+		VLAN\_32 & Serveurs publics accessibles depuis Internet \\
+		\hline
+	\end{tabular}
+	\caption{Segmentation VLAN}
+\end{table}
+
+Cette segmentation permet :
+
+\begin{itemize}
+	\item une isolation logique des flux réseau,
+	\item un contrôle précis des communications via des ACL,
+	\item une amélioration de la sécurité globale du système,
+	\item une meilleure évolutivité de l’infrastructure.
+\end{itemize}
+
+\section{Principes d’architecture}
+Cette architecture a été conçue selon des principes d’ingénierie réseau visant à garantir robustesse, sécurité et évolutivité de l’infrastructure. Elle repose sur les principes suivants :
+
+\begin{itemize}
+	\item une séparation stricte des rôles entre utilisateurs, serveurs internes et services publics ;
+	\item une distinction claire entre l’adressage privé interne et l’adressage public exposé à Internet ;
+	\item une hiérarchisation du réseau facilitant l’application des politiques de sécurité ;
+	\item une capacité d’évolution du réseau sans remise en cause du plan d’adressage initial.
+\end{itemize}
+
+\section{Recensement des sous-réseaux}
+
+Chaque sous-réseau est défini selon les critères suivants :
+
+\begin{itemize}
+	\item le nom du sous-réseau,
+	\item le type d’adressage (privé ou public),
+	\item le nombre d’hôtes requis,
+	\item le rôle fonctionnel dans l’architecture.
+\end{itemize}
+
+\subsection{Site 1}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|c|l|}
+		\hline
+		\textbf{Sous-réseau} & \textbf{Adressage} & \textbf{Hôtes} & \textbf{Rôle} \\
+		\hline
+		LAN\_1-1 & Privé & 14 & Département Administratif \\
+		LAN\_1-2 & Privé & 18 & Département Développeurs \\
+		LAN\_1-31 & Privé & 6 & Serveurs Intranet locaux \\
+		LAN\_1-32 & Public & 14 & Serveurs exposés à Internet \\
+		\hline
+	\end{tabular}
+	\caption{Sous-réseaux du Site 1}
+\end{table}
+
+\subsection{Site 2}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|c|l|}
+		\hline
+		\textbf{Sous-réseau} & \textbf{Adressage} & \textbf{Hôtes} & \textbf{Rôle} \\
+		\hline
+		LAN\_2-1 & Privé & 7 & Département Administratif \\
+		LAN\_2-2 & Privé & 26 & Département Développeurs \\
+		LAN\_2-31 & Privé & 2 & Serveurs Intranet locaux \\
+		LAN\_2-32 & Public & 6 & Serveurs exposés à Internet \\
+		\hline
+	\end{tabular}
+	\caption{Sous-réseaux du Site 2}
+\end{table}
+
+\subsection{Infrastructure Cloud}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|c|l|}
+		\hline
+		\textbf{Sous-réseau} & \textbf{Adressage} & \textbf{Hôtes} & \textbf{Rôle} \\
+		\hline
+		LAN\_3-31 & Privé & 10 & Serveurs Intranet externalisés \\
+		LAN\_3-32 & Public & 10 & Serveurs publics hébergés dans le Cloud \\
+		\hline
+	\end{tabular}
+	\caption{Sous-réseaux Cloud}
+\end{table}
+
+\section{Paramètres définis pour chaque sous-réseau}
+
+Pour chaque sous-réseau, les éléments suivants sont formellement définis :
+
+\begin{itemize}
+	\item l’adresse réseau (\textit{Network Address}),
+	\item le masque CIDR,
+	\item l’adresse de diffusion (\textit{Broadcast Address}),
+	\item la première adresse IP utilisable attribuée à la passerelle (\textit{Gateway}).
+\end{itemize}
+
+Cette normalisation garantit :
+
+\begin{itemize}
+	\item une cohérence d’implémentation du plan d’adressage,
+	\item une meilleure lisibilité de la configuration réseau,
+	\item une maintenance facilitée,
+	\item une compatibilité avec les mécanismes de sécurité tels que les politiques \textbf{NAT} et les \textbf{ACL}.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Plan d’adressage IP}
+Les détails complets du calcul des sous-réseaux et des plages d’adresses sont présentés dans la feuille de calcul associée.
+
+\section{Stratégie Globale d’Adressage Privé}
+Le plan d’adressage interne s’appuie sur le bloc IP privé \texttt{192.168.0.0/16}. 
+Chaque site utilise un sous-réseau dédié en /24.\\
+\begin{enumerate}
+	\item Site 1 → 192.168.1.0/24	
+	\item Site 2 → 192.168.2.0/24	
+	\item Cloud → 192.168.3.0/24
+\end{enumerate}
+
+
+Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, tout en conservant une marge d’évolution et une cohérence d’ensemble.
+
+\section{Plan d'adressage - Site 1}
+
+\paragraph{i. Plage d’adressage privé}
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{|c|l|c|c|c|c|}
+		\hline
+		\textbf{LAN} &  \textbf{Réseau/Masque}  & \textbf{IP réseau} & \textbf{BroadCast} & \textbf{Plage IP hôtes} & \textbf{Passerelle} \\
+		\hline
+		LAN\_1-1   & 192.168.1.0/27 &  192.168.1.0 & 192.168.1.31 & 192.168.1. 1$\leftrightarrow$ .1.30 & 192.168.1.1 \\
+		LAN\_1-2   & 192.168.1.32/27 & 192.168.1.32 & 192.168.1.63  & 192.168.1.33 $\leftrightarrow$ .1.62 & 192.168.1.33\\
+		LAN\_1-31 & 192.168.1.64/29 &192.168.1.64 & 192.168.1.71 & 192.168.1.65 $\leftrightarrow$ .1.70 & 192.168.1.65 \\
+		\hline
+	\end{tabular}
+	\caption{Sous-réseaux privés du Site 1}
+\end{table}
+	\vspace{0.5cm}
+	
+	\begin{enumerate}
+		\item Les LAN utilisateurs sont en /27 afin d’assurer une capacité d’évolution et une homogénéité d’architecture.\\
+		\item Le LAN serveurs Intranet utilise un /29, suffisant pour 6 hôtes.\\
+		\item La première adresse IP utilisable est attribuée à la passerelle par défaut.	\\ 
+	\end{enumerate}
+ 
+\paragraph{ii. Gestion de la plage publique\\}
+
+Le Site 1 dispose du bloc public suivant : \texttt{123.1.1.160/27} (30 adresses IP utilisables).\\
+Ce bloc est subdivisé afin de couvrir plusieurs besoins : 
+\begin{itemize}[label*=$\rightarrow$]
+	\item Hébergement des serveurs publics (LAN\_1-32)
+	\item Liaison WAN opérateur
+	\item Pool NAT pour les postes internes
+\end{itemize}
+%------------------------------------------
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{gray!10}
+		\textbf{\textit{LAN\_1-32 (Serveurs publics)}} & \textbf{\textit{Adressage IPv4}}\\
+		\hline
+		\textbf{Plage d'adressage} & \textbf{\textit{123.1.1.160/28}} \\
+		\hline
+		Réseau & 123.1.1.160 \\
+		\hline
+		Adresse de broadcast & 123.1.1.175 \\
+		\hline
+		Plage d'adresses utilisables & 123.1.1.161 -- 123.1.1.174 \\
+		\hline
+		Passerelle  & 123.1.1.161 (ou .162)\\
+		\hline
+		Nombre d'adresses utilisables & 14 \\
+		\hline	
+		\hline
+		\textbf{\textit{Liaison WAN point-à-point opérateur}} & \textbf{\textit{123.1.176/31}}\\
+		\hline
+		R1 $\leftrightarrow$ Op & 123.1.1.176 $\leftrightarrow$ 123.1.1.177\\
+		\hline
+		\hline
+		\textbf{\textit{Pool NAT dynamique}} (postes internes) & \textbf{\textit{123.1.1.178 à 123.1.1.190}} \\
+		\hline
+		Nombre d'adresses IP NAT & 13\\
+		\hline
+	\end{tabular}
+	\caption{Découpage de la plage publique du Site 1}
+\end{table}
+
+L’ensemble de ces sous-réseaux reste inclus dans la plage publique initiale 
+\textbf{123.1.1.160/27}. Cette approche permet :
+
+\begin{itemize}
+	\item d’allouer des adresses publiques fixes aux serveurs exposés (NAT statique),
+	\item de réserver un bloc pour la liaison WAN,
+	\item d’implémenter un NAT dynamique pour les VLAN internes,
+	\item tout en optimisant l’utilisation de l’espace d’adressage public tout en garantissant évolutivité et séparation des fonctions..
+\end{itemize}
+
+\vspace{0.5cm}
+iii. \textbf{Polique NAT - Site 1\\}
+
+\textit{NAT Statique (1:1)} : Les serveurs exposés utilisent un NAT statique (1:1) \textit{1 adresse IP privée $\leftrightarrow$ 1 adresse publique}.
+
+\texttt{Objectifs }:
+\begin{itemize}[label*=$\star$]
+	\item Adresse publique permanente
+	\item Publication DNS possible
+	\item Accessibilité continue depuis Internet
+\end{itemize} 
+
+
+\textit{NAT Dynamique avec surcharge (PAT)} : Les Vlan internes utilisent un pool d'adresses publiques, \textit{Nat avec surcharge (PAT)} et une traduction basée sur les ports. 
+
+Cela permet à plusieurs machines privées de partager une ou plusieurs adresses publiques.
+
+%---------------------
+
+\section{Plan d'adressage - Site 2}
+
+i. \textbf{Gestion de la plage privée\\}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|l|c|c|c|c|}
+		\hline
+		\textbf{LAN} &  \textbf{Réseau/Masque}  & \textbf{IP réseau} & \textbf{BroadCast} & \textbf{Plage IP hôtes} & \textbf{Passerelle} \\
+		\hline
+		LAN\_2-1   & 192.168.2.0/27 &  192.168.2.0 & 192.168.2.31 & 192.168.2.1 $\leftrightarrow$ .2.30 & 192.168.2.1 \\
+		LAN\_2-2   & 192.168.2.32/27 & 192.168.2.32 & 192.168.2.63 & 192.168.2.33 $\leftrightarrow$ .2.62 & 192.168.2.33 \\
+		LAN\_2-31 & 192.168.2.64/29 &192.168.2.64 & 192.168.2.71 & 192.168.2.65 $\leftrightarrow$ .2.70& 192.168.2.65 \\
+		\hline
+	\end{tabular}
+	\caption{Sous-réseaux privés du Site 2}
+\end{table}
+%\vspace{0.5cm}
+
+L’uniformité des masques garantit une cohérence d’architecture entre les deux sites.
+
+\vspace{0.5cm}
+
+ii. \textbf{Gestion de la plage publique\\}
+
+Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{gray!10}
+		\textbf{\textit{LAN\_2.32 (Serveurs publics)}} & \textbf{\textit{Adressage IPv4}} \\
+		\hline
+		\textbf{Plan d'adressage} & \textbf{\textit{123.2.2.160/29}} \\
+		\hline
+		Réseau & 123.2.2.160 \\
+		\hline
+		BroadCast & 123.2.2.167\\
+		\hline
+		Plage d'adresses utilisables & 123.2.2.161 -- 123.2.2.166 \\
+		\hline
+		Passerelle & 123.2.2.161 (ou .162)\\
+		\hline
+		Nombre d'adresses utilisables & 6 \\
+		\hline
+		\hline
+		\textbf{\textit{Liaison WAN point-à-point opérateur}} & \textbf{\textit{123.2.2.168/31}}\\
+		\hline
+		R2 $\leftrightarrow$ Op & 123.2.2.168 $\leftrightarrow$ 123.2.2.169\\
+		\hline
+		\hline
+		\textbf{\textit{Pool NAT dynamique}} (postes internes) & \textbf{\textit{123.2.2.170 à 123.2.2.190}} \\
+		\hline
+		Nombre d'adresses IP NAT & 21 \\
+		\hline
+	\end{tabular}
+	\caption{Découpage de la plage publique du Site 2}
+\end{table}
+
+\section{Plan d'adressage - Cloud}
+	\textbf{i. Réseau privé Cloud (Intranet) (LAN\_3-31) \\}
+
+	Le LAN\_3-31 dispose du bloc public suivant :	\texttt{192.168.3.0/28}
+
+	\begin{itemize}[label*=*]
+		\item  Ce sous-réseau privé héberge les \textit{serveurs Intranet externalisés} de l’entreprise au sein de l’infrastructure Cloud.  
+		
+		\item  Il permet d’augmenter la capacité de traitement des services internes tout en conservant une architecture cohérente avec les réseaux locaux des deux sites.
+		
+		\item  L’accès à ce réseau se fait via \textit{un routage inter-sites} assuré par le routeur \textbf{RF1}, permettant aux différents sites de l’entreprise d’accéder aux services Intranet hébergés dans le Cloud.
+		
+		\item  Ce réseau \textit{n’est pas exposé directement à Internet}. Les communications sont limitées aux flux internes autorisés, via des mécanismes de filtrage et de routage inter-sites.
+	\end{itemize}
+	
+
+	%---------------------
+	
+	\textbf{ii. Réseau Publique Cloud (Internet) (Lan\_3-32)\\}
+	
+	Le sous-réseau LAN\_3-32 correspond à la zone publique hébergée chez le fournisseur Cloud.
+	Il est destiné à accueillir des serveurs applicatifs accessibles depuis Internet. Contrairement aux réseaux internes de l’entreprise, ce sous-réseau utilise un adressage IP public (routable via le routeur Rf2), permettant l’accessibilité directe depuis l’extérieur.
+
+	\vspace{0.5cm}
+
+	Le fournisseur Cloud met à disposition la plage publique suivante : \texttt{163.173.19.224/28}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{gray!20}
+		 \textbf{\textit{LAN\_3-32 (Serveurs publics Cloud)}} & \textbf{\textit{Adressage IPv4}} \\
+		\hline
+		\textbf{Plage d'adressage} & \textbf{163.173.19.224/28} \\
+		\hline
+		Réseau & 163.173.19.224 \\
+		\hline
+		Plage d'adresses utilisables & 163.173.19.225 -- 163.173.19.238 \\
+		\hline
+		Nombre d'adresses utilisables & 14 \\
+		\hline
+		Passerelle (Routeur Rf2) & 163.173.19.225 \\
+		\hline
+		Adresse de broadcast & 163.173.19.239 \\
+		\hline
+		\hline
+		\textbf{Liaison WAN point-à-point opérateur} & \textbf{163.173.19.222/31}\\
+		\hline
+		Rf2 $\leftrightarrow$ op &	163.173.19.222 $\leftrightarrow$ 163.173.19.223\\
+		\hline
+	\end{tabular}
+	\caption{Paramètres du sous-réseau public Cloud LAN\_3-32}
+\end{table}
+
+
+	Le routeur Rf2 assure l’interconnexion entre le réseau public Cloud (LAN\_3-32) et le réseau de l’opérateur via une liaison point-à-point utilisant le sous-réseau 163.173.19.222/31.
+%----------------------
+\section{Politique d'adressage}
+Pour chaque sous-réseau :
+\begin{itemize}[label*=$\star$]
+	\item La première adresse IP utilisable est attribuée à l’interface routeur.
+	\item Les adresses réseau et broadcast sont exclues.
+	\item Les masques sont dimensionnés selon les besoins réels avec marge contrôlée.
+	\item Les plages d’adresses sont organisées de manière hiérarchique afin de faciliter l’agrégation des routes et la lisibilité du plan d’adressage.
+	
+\end{itemize}
+
+%----------------------
+
+\section{Considérations de sécurité}
+
+L’exposition de certains services sur Internet impose la mise en œuvre
+de mesures de sécurité adaptées afin de protéger l’infrastructure
+interne de l’entreprise et de contrôler les flux réseau.
+
+Les principaux mécanismes de sécurité mis en place dans cette architecture sont les suivants :
+
+\begin{itemize}
+	\item Filtrage des flux réseau à l’aide d’ACL configurées sur les routeurs d’accès et les équipements de bordure (R1, R2 et Rf2).
+	\item Limitation des ports accessibles depuis Internet afin de réduire la surface d’attaque.
+	\item Séparation stricte entre les réseaux internes (VLAN utilisateurs et intranet) et les réseaux publics exposés.
+	\item Journalisation des connexions afin de permettre une traçabilité des accès et une analyse en cas d’incident de sécurité.
+\end{itemize}
+
+Cette approche permet de maintenir une isolation claire entre
+l’infrastructure interne de l’entreprise et les services exposés au public,
+tout en bénéficiant de la flexibilité offerte par l’extension de
+l’infrastructure vers le Cloud.
+
+\section{Principes d’architecture appliqués}
+
+La conception du plan d’adressage et de l’architecture réseau repose sur plusieurs principes visant à garantir cohérence, évolutivité et sécurité :
+
+\begin{itemize}
+	\item \textbf{Optimisation CIDR} : utilisation de masques de sous-réseau adaptés aux besoins réels en nombre d’hôtes afin d’optimiser l’espace d’adressage.
+	
+	\item \textbf{Segmentation logique par VLAN} : séparation des différents départements et zones serveurs afin de limiter les communications inutiles et d'améliorer la sécurité.
+	
+	\item \textbf{NAT statique pour les services exposés} : les serveurs accessibles depuis Internet disposent d’adresses publiques dédiées, permettant leur publication tout en conservant une architecture interne structurée.
+	
+	\item \textbf{NAT dynamique avec surcharge (PAT)} : les postes utilisateurs des réseaux internes accèdent à Internet via une traduction d’adresse dynamique, permettant le partage d’un nombre limité d’adresses publiques.
+	
+	\item \textbf{Uniformité multi-sites} : les deux sites de l’entreprise utilisent une architecture réseau similaire, facilitant l’administration, le dépannage et l’évolutivité de l’infrastructure.
+	
+	\item \textbf{Utilisation efficace de l’espace d’adressage public} : la plage publique attribuée à chaque site est découpée afin d’accueillir les serveurs exposés, les liaisons WAN et les pools NAT, tout en évitant le gaspillage d’adresses IP.
+\end{itemize}
+
+%----------------------
+\section{Configuration des interfaces réseau des hôtes}
+
+Afin de vérifier la connectivité de la topologie réseau mise en place dans l’environnement GNS3, les interfaces réseau des différentes machines ont été configurées manuellement avec des adresses IP statiques.
+
+Dans un premier temps, cette configuration statique permet de valider le bon fonctionnement du plan d’adressage et des routes avant la mise en place de services automatisés tels que DHCP.
+
+\subsection{Méthodes de configuration}
+
+Sous les systèmes Linux utilisés dans la topologie, la configuration des interfaces réseau peut être réalisée de deux manières :
+
+\begin{itemize}
+	\item en mode texte, en modifiant directement le fichier de configuration situé dans :
+	\texttt{/etc/network/interfaces}
+	\item en mode graphique, en effectuant un clic droit sur la machine concernée dans GNS3 puis en sélectionnant l’option \textit{Edit Configuration}.
+\end{itemize}
+
+Avant tout, il faut redémarrer le service réseau : 
+
+\texttt{/etc/init.d/networking start ou restart}, 
+
+ou bien redémarrer la machine.
+
+Dans le cas de la configuration manuelle, il est nécessaire d’activer les lignes correspondantes à l’interface réseau en supprimant les caractères de commentaire (\#), puis de renseigner les paramètres réseau appropriés.
+
+\subsection{Paramètres configurés}
+
+Les paramètres suivants doivent être définis pour chaque interface :
+
+\begin{itemize}
+	\item l’adresse IP de l’interface ;
+	\item le masque de sous-réseau (\textit{netmask}) ;
+	\item l’adresse de la passerelle par défaut (\textit{gateway}).
+\end{itemize}
+
+\subsection{Exemple de configuration}
+
+Un exemple de configuration statique d’une interface réseau dans le fichier
+\texttt{/etc/network/interfaces} est présenté ci-dessous :
+
+\begin{verbatim}
+	auto eth0
+	iface eth0 inet static
+	address 192.168.1.34
+	netmask 255.255.255.224
+	gateway 192.168.1.33
+\end{verbatim}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../captures/02_hote_config_stat.png}
+\caption{Exemple de fichier de configuration IP d’une interface réseau en mode graphique}
+
+\label{fig:config_stat}
+\end{figure}
+
+Après modification du fichier de configuration, il est nécessaire de redémarrer le service réseau afin d’appliquer les changements :
+
+\begin{verbatim}
+	/etc/init.d/networking restart
+\end{verbatim}
+
+ou bien de redémarrer la machine.
+
+\subsection{Organisation de l'adressage}
+
+Chaque sous-réseau est configuré avec un masque adapté aux besoins en nombre d’hôtes, conformément au plan d’adressage défini précédemment.
+
+Les premières adresses IP utilisables de chaque sous-réseau sont attribuées aux interfaces des routeurs, qui jouent le rôle de passerelles par défaut pour les machines du réseau.
+
+Cette organisation permet d’assurer :
+
+\begin{itemize}
+	\item une gestion cohérente de l’espace d’adressage IP ;
+	\item une connectivité fiable entre les différents sous-réseaux ;
+	\item une communication correcte entre les réseaux internes, le Cloud et l’accès Internet.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Segmentation réseau et mise en œuvre des VLAN}
+
+\section{Principe de segmentation par VLAN}
+Pour isoler le trafic des 4 sous-réseaux privés dans chaque site, on va mettre en place des réseaux virtuels (VLAN) de type 802.1q, qu'on les nommera comme ci-dessous : Administratif (VLAN_10), Développeurs (VLAN_20) et Serveurs (VLAN_31 et VLAN_32).
+
+Dans cette configuration, aucune opération particulière n’est requise sur les hôtes, puisque l’appartenance aux VLANs est entièrement gérée au niveau des commutateurs d’accès. Chaque port de ces commutateurs est configuré pour appartenir à un VLAN spécifique. À chaque VLAN est associé un identifiant (ID) unique, ainsi qu’un sous-réseau privé correspondant. Tous les VLANs sont implémentés conformément à la norme IEEE 802.1Q, permettant ainsi la création de réseaux virtuels isolés au sein de l’infrastructure physique.
+%---------------------
+
+\section{Plan de répartition des VLAN dans l’architecture}
+La répartition des VLAN suit la topologie vu sur la figure  \ref{fig:topologie_globale}
+\begin{table}[H]
+	\centering
+	\caption{Affectation des VLANs, interfaces et sous-réseaux par site}
+	\label{tab:vlans}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{VLAN} & \textbf{Département} & \textbf{Site} & \textbf{Switch} & \textbf{Interface} & \textbf{ID VLAN} & \textbf{Réseau} \\
+		\hline
+		VLAN\_10 & Admin    & 1 & S1 & e1 & 10 & 192.168.1.0/27 \\
+		VLAN\_10 & Admin    & 2 & S3 & e1 & 10 & 192.168.2.0/27 \\
+		\hline
+		\hline
+		VLAN\_20 & Dév     & 1 & S1 & e2 & 20 & 192.168.1.32/27 \\
+		VLAN\_20 & Dév     & 2 & S3 & e2 & 20 & 192.168.2.32/27 \\
+		\hline
+		\hline
+		VLAN\_31 & SRVintra     & 1 & S2 & e2 & 31 & 192.168.1.64/29 \\
+		VLAN\_31 & SRVintra     & 2 & S4 & e2 & 31 & 192.168.2.64/29 \\
+		\hline
+		\hline
+		VLAN\_32 & SRVinter     & 1 & S2 & e3 & 32 & 123.1.1.160/27 \\
+		VLAN\_32 & SRVinter     & 2 & S4 & e3 & 32 & 123.2.2.160/27 \\
+		\hline
+	\end{tabular}
+\end{table}
+%----------------------
+
+\section{Configuration des VLAN sur les commutateurs}
+
+	\subsection{Architecture des ports des commutateurs}
+%Pour chaque site, les VLAN seront configurés sur les switches, et chaque port de switch sera assigné à un VLAN spécifique selon les utilisateurs ou les serveurs qu'il dessert. Les VLAN seront étiquetés avec le protocole IEEE 802.1q afin de permettre le transport simultané des trames appartenant à plusieurs VLANs entre les switches.
+
+La configuration des interfaces se fera comme suit :
+\subsection*{i. Sur les switches S1 et S3}
+
+\textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), ce port permet le transport des trames de plusieurs VLANs entre les switches.
+
+\textbf{Interface \texttt{e1}} : configurée en mode access, ce port connecte les machines hôtes appartenant au VLAN\_10 (ID VLAN 10).
+
+\textbf{Interface \texttt{e2}} : configurée en mode access, ce port connecte les machines hôtes appartenant au VLAN\_20 (ID VLAN 20).
+
+\subsection*{ii. Sur les switches S2 et S4}
+
+\textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), assurant la connexion entre les différents VLANs.
+
+\textbf{Interface \texttt{e1}} : configurée également en mode trunk (802.1q), permettant le transport des trames multi-VLAN.
+
+\textbf{Interface \texttt{e2}} : configurée en mode access, connectant les machines hôtes appartenant au VLAN\_31 (ID VLAN 31).
+
+\textbf{Interface \texttt{e3}} : configurée en mode access, connectant les machines hôtes appartenant au VLAN\_32 (ID VLAN 32).
+
+	\subsection{Configuration des VLAN sur le switch S1}
+
+		\subsubsection{Configuration en mode graphique}
+		Voici les étapes de configuration des VLANs 10 et 20 sur le commutateur \textbf{S1}, ainsi que l’affectation des interfaces aux VLANs et la configuration du mode \texttt{trunk} pour l’interface connectée au routeur R1.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{../captures/03_vlan_graph_conf.png}
+			\caption{Configuration des VLANs d'ID 10 et 20 sur le switch S1.}
+			\label{fig:vlans-conf}
+		\end{figure}
+			\subsubsection{Configuration en ligne de commande}
+\begin{enumerate}
+	\item \textbf{Définir le nom du switch et créer les VLANs :}
+\begin{lstlisting}[language=bash]
+	Switch> enable
+	Switch# configure terminal
+	Switch(config)# hostname S1
+	S1(config)# vlan 10
+	S1(config-vlan)# name VLAN_10
+	S1(config-vlan)# exit
+	S1(config)# vlan 20
+	S1(config-vlan)# name VLAN_20
+	S1(config-vlan)# exit	
+\end{lstlisting}
+	
+	\item \textbf{Vérifier la création des VLAN :}
+\begin{lstlisting}[language=bash]
+	S1# show vlan brief
+\end{lstlisting}	
+	
+	\item \textbf{Attribuer les interfaces aux VLAN 10 et 20 :}
+\begin{lstlisting}[language=bash]
+	S1(config)# interface e1
+	S1(config-if)# switchport mode access
+	S1(config-if)# switchport access vlan 10
+	S1(config-if)# exit
+	
+	S1(config)# interface e2
+	S1(config-if)# switchport mode access
+	S1(config-if)# switchport access vlan 20
+	S1(config-if)# exit
+\end{lstlisting}		
+	
+	\item \textbf{Configurer l’interface \texttt{e0} en mode trunk pour la liaison avec le routeur R1 (et les autres switchs si nécessaire) :}
+\begin{lstlisting}[language=bash]
+	S1(config)# interface e0
+	S1(config-if)# switchport trunk encapsulation dot1q  !ou bien : #switchport mode trunk
+	S1(config-if)# switchport mode trunk
+	S1(config-if)# switchport nonegotiate
+	S1(config-if)# exit
+\end{lstlisting}	
+\end{enumerate}			
+
+	
+		
+%------------------------------
+
+\section{Routage inter-VLAN}
+
+	\subsection{Principe du Router-on-a-Stick}
+	
+Pour permettre la communication entre les différents VLANs sur chaque site, nous mettons en place une solution de type \textbf{router-on-a-stick}, qui consiste à utiliser un \textit{commutateur-routeur} configuré avec des \textbf{sous-interfaces VLAN} sur une interface physique unique.
+
+Chaque routeur (R1 pour le site 1, R2 pour le site 2) utilise son interface \texttt{e1/1}, sur laquelle sont définies des sous-interfaces virtuelles associées à chaque VLAN. Chaque sous-interface est configurée avec :
+\begin{itemize}
+	\item une encapsulation VLAN via le protocole \texttt{dot1q} (IEEE 802.1Q),
+	\item une adresse IP jouant le rôle de passerelle par défaut pour les hôtes du VLAN concerné,
+	\item et une plage IP dédiée au réseau local du VLAN.
+\end{itemize}
+
+Cette solution est adaptée aux environnements de petite et 
+moyenne taille. Dans une architecture à plus grande échelle, 
+un commutateur de niveau 3 (Layer 3 switch) pourrait être 
+préféré afin d’assurer le routage inter-VLAN directement au 
+niveau du cœur de réseau.
+
+Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \textit{\textbf{passerelle par défaut}} pour les hôtes appartenant au VLAN correspondant.
+%\bigskip
+
+\begin{center}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			\textbf{VLAN} & \textbf{Plage IP (Site 1)} & \textbf{Plage IP (Site 2)} & \textbf{Passerelle (Site 1)} & \textbf{Passerelle (Site 2)} & \textbf{Sous-interface} \\
+			\hline
+			VLAN\_10 & 192.168.1.0/27 & 192.168.2.0/27 & 192.168.1.1 & 192.168.2.1 & \texttt{e1/1.10} \\
+			VLAN\_20 & 192.168.1.32/27 & 192.168.2.32/27 & 192.168.1.33 & 192.168.2.33 & \texttt{e1/1.20} \\
+			VLAN\_31 & 192.168.1.64/29 & 192.168.2.64/29 & 192.168.1.65 & 192.168.2.65 & \texttt{e1/1.31} \\
+			VLAN\_32 & 123.1.1.160/27 & 123.2.2.160/27 & 123.1.1.161 & 123.2.2.161 & \texttt{e1/1.32} \\
+			\hline
+		\end{tabular}
+	}
+\end{center}
+
+
+	\subsection{Configuration des sous-interfaces sur le routeur R1}
+\begin{enumerate}
+	\item \textbf{Définition des sous-interfaces VLAN sur le routeur R1 \\} La configuration suivante permet de créer les différentes sous-interfaces sur le routeur R1 et d'associer chacune d'elles à un VLAN spécifique.
+	
+\begin{lstlisting}[language=bash,caption={Configuration des sous-interfaces sur R1}]
+	enable
+	configure terminal
+	interface e1/1
+	no shutdown
+	
+	interface e1/1.10
+	encapsulation dot1Q 10
+	ip address 192.168.1.1 255.255.255.224
+	no shutdown
+	exit
+	
+	interface e1/1.20
+	encapsulation dot1Q 20
+	ip address 192.168.1.33 255.255.255.224
+	no shutdown
+	exit
+	
+	interface e1/1.31
+	encapsulation dot1Q 31
+	ip address 192.168.1.65 255.255.255.248
+	no shutdown
+	exit
+	
+	interface e1/1.32
+	encapsulation dot1Q 32
+	ip address 123.1.1.161 255.255.255.224
+	no shutdown
+	exit
+\end{lstlisting}
+	
+	\item \textbf{Vérification de la configuration }
+	Une fois la configuration est appliquée, la commande suivante permet de vérifier les réseaux connus par le routeur :
+\begin{lstlisting}[language=bash]
+	R1# show ip route
+	R1# show ip interface brief
+\end{lstlisting}
+	Cette commande affiche la table de routage et permet de confirmer que les différents sous-réseaux sont bien reconnus comme réseaux directement connectés
+	\item \textbf{Sauvegarder la configuration du routeur \\}
+	Afin de conserver la configuration après redémarrage du routeur, celle-ci est sauvegardée dans la mémoire non volatile:
+	
+\begin{lstlisting}[language=bash]
+	R1# copy running-config startup-config
+	ou bien une alternative : 
+	R1#write memory
+\end{lstlisting}	
+	
+\end{enumerate}
+
+	\subsection{Configuration des sous-interfaces sur le routeur R2}
+La configuration réalisée sur le routeur du site 2 suit la même logique que celle mise en place sur le site 1.  
+Le routeur agit comme passerelle par défaut pour les différents VLAN du réseau local et assure le routage inter-VLAN grâce à l'utilisation de sous-interfaces associées à l'encapsulation \texttt{802.1Q}.
+
+Chaque sous-interface est liée à un identifiant de VLAN spécifique et possède une adresse IP servant de passerelle pour les hôtes appartenant à ce réseau.
+
+\begin{enumerate}
+	
+	\item \textbf{Définition des sous-interfaces VLAN sur le routeur R2}
+\begin{lstlisting}[language=bash,caption={Configuration des sous-interfaces VLAN sur le routeur R2}]
+	enable
+	configure terminal
+	
+	interface e1/1
+	no shutdown
+	
+	interface e1/1.10
+	encapsulation dot1Q 10
+	ip address 192.168.2.1 255.255.255.224
+	no shutdown
+	exit
+	
+	interface e1/1.20
+	encapsulation dot1Q 20
+	ip address 192.168.2.33 255.255.255.224
+	no shutdown
+	exit
+	
+	interface e1/1.31
+	encapsulation dot1Q 31
+	ip address 192.168.2.65 255.255.255.248
+	no shutdown
+	exit
+	
+	interface e1/1.32
+	encapsulation dot1Q 32
+	ip address 123.2.2.161 255.255.255.248
+	no shutdown
+	exit
+\end{lstlisting}		
+	
+	\item \textbf{Vérification de la configuration}
+	
+	Une fois les sous-interfaces créées et les adresses IP attribuées, la table de routage du routeur peut être vérifiée afin de s'assurer que les différents réseaux VLAN sont correctement reconnus comme réseaux directement connectés.
+	
+\begin{lstlisting}[language=bash]
+	R2# show ip route
+	R2# show ip interface brief
+\end{lstlisting}	
+	
+	\item \textbf{Sauvegarde de la configuration}
+	
+	Afin de conserver la configuration après redémarrage du routeur, celle-ci doit être enregistrée dans la mémoire non volatile :
+	
+\begin{lstlisting}[language=bash]
+	R2# copy running-config startup-config
+\end{lstlisting}	
+	
+	ou
+	
+\begin{lstlisting}[language=bash]
+	R2# write memory
+\end{lstlisting}	
+
+
+\item La figure suivante illustre la configuration réalisée sur le routeur R1.
+\medskip
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{../captures/04_vlan_ssInterfaceR1.png}
+	\caption{Commandes de configuration des interfaces virtuelles sur le routeur R1 du site 1}
+\end{figure}
+\end{enumerate}	
+%-------------------------------
+
+\section{Validation de la configuration}
+
+	\subsection{Vérification des interfaces et des VLAN}
+	
+	
+
+Les captures d’écran suivantes illustrent le résultat de la configuration des sous-interfaces : 
+
+\subsubsection{Sur le routeur R1 (site 1) :}
+	
+	\begin{figure}[H]
+		\centering
+		
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../captures/04_vlan_ssInterfaceR1_ShowInterfaceBrief.png}\\
+			\caption{Etats des interfaces virtuelles sur le routeur R1 du site 1 }	
+			\label{fig:etat-sous_interfaces_R1}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{../captures/04_vlan_ssInterfaceR1_ShowIpRoute.png}
+			\caption{Table de routage du routeur R1 après configuration des sous-interfaces VLAN}
+			\label{fig:routing-r1}
+		\end{subfigure}
+		\caption{Configuration des sous_interfaces sur le routeur R1}
+		\label{fig:reseau}
+	\end{figure}
+
+\subsubsection{Sur le routeur R2 :}
+
+\begin{figure}[H]
+	\centering
+	
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{../captures/05_vlan_ssInterfaceR2_ShowInterfaceBrief.png}
+		\caption{Etats des interfaces virtuelles sur le routeur R2 du site 2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{../captures/05_vlan_ssInterfaceR2_ShowIpRoute.png}
+		\caption{Table de routage du routeur R2 après configuration}
+	\end{subfigure}
+	
+	\caption{Configuration des sous-interfaces VLAN sur le routeur du site 2}
+\end{figure}	
+	
+	Ces captures permettent d'observer plusieurs éléments importants :
+	\begin{itemize}
+		\item les sous-interfaces créées sur l'interface physique e1/1(e.g. \texttt{e1/1.10}, \texttt{e1/1.20}, etc.) ;
+		\item les adresses IP attribuées à chacune d’elles, jouant le rôle de passerelle pour les VLANs ;
+		\item l’état \texttt{up} des interfaces, indiquant leur bon fonctionnement ;
+		\item les réseaux directement joignables à travers chaque sous-interface, permettant d’assurer le routage inter-VLAN.
+	\end{itemize}
+
+\subsection{Analyse des tables de routage}
+\textbf{Site 1 :} 
+	
+	Dans la table de routage, les sous-réseaux 192.168.1.0/27, 192.168.1.32/27 et 192.168.1.64/29 apparaissent comme réseaux directement connectés (C). Chaque réseau est associé à une sous-interface spécifique du routeur (Ethernet1/1.10, Ethernet1/1.20 et Ethernet1/1.31).
+	Le réseau 123.1.1.160/27, correspondant à l’infrastructure publique, est également directement connecté via l’interface Ethernet1/1.32.
+	Cette configuration permet d'assurer la connectivité avec l'infrastructure publique du site.
+	Enfin, l'absence de gateway of last resort indique qu’aucune route par défaut n’a encore été configurée à ce stade de l’implémentation.
+
+
+\textbf{Site 2 :}
+
+L'analyse de la table de routage montre que les réseaux suivants sont directement connectés au routeur :
+
+\begin{itemize}
+	\item \texttt{192.168.2.0/27} : VLAN administratif
+	\item \texttt{192.168.2.32/27} : VLAN développeurs
+	\item \texttt{192.168.2.64/29} : VLAN serveurs intranet
+	\item \texttt{123.2.2.160/29} : réseau des serveurs publics
+\end{itemize}
+
+Chaque réseau est associé à une sous-interface spécifique du routeur (\texttt{Ethernet1/1.X}), permettant d'assurer le routage inter-VLAN au sein du site 2.
+
+Comme pour le site 1, l'absence de \textit{gateway of last resort} indique qu'aucune route par défaut n'a encore été définie à ce stade de la configuration. Cette route sera ajoutée ultérieurement afin d'assurer l'accès aux réseaux externes et à Internet.
+
+%--------------------------------------------
+
+Afin de valider le fonctionnement du routage inter-VLAN au niveau des couches basses du modèle réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}.
+
+
+\subsection{Tests de connectivité entre les différents équipements}
+
+Afin de valider le bon fonctionnement de l’architecture réseau mise en place, des tests de connectivité ont été réalisés entre les différents équipements à l’aide de la commande \texttt{ping}. 
+
+Ces tests reposent sur le protocole ICMP (\textit{Internet Control Message Protocol}), permettant de vérifier l’accessibilité entre des hôtes situés dans des VLANs distincts.
+
+\medskip
+
+\subsubsection{Tests de connectivité ICMP (ping)}
+
+Des requêtes ICMP ont été émises entre plusieurs VLANs d’un même site, notamment :
+\begin{itemize}
+	\item entre le VLAN\_10 (Administratif) et le VLAN\_20 (Développeurs),
+	\item entre les VLANs utilisateurs (VLAN\_10, VLAN\_20) et les VLANs serveurs (VLAN\_31 et VLAN\_32).
+\end{itemize}
+
+\medskip
+
+La figure suivante illustre un exemple de test de connectivité entre deux hôtes appartenant à des VLANs différents.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/06_ping_vlan10_vers_vlan20.png}
+	\caption{Test de connectivité ICMP entre VLAN\_10 et VLAN\_20}
+	\label{fig:ping_inter_vlan}
+\end{figure}
+
+Les résultats obtenus montrent que :
+\begin{itemize}
+	\item les paquets ICMP sont correctement transmis entre les différents VLANs ;
+	\item aucune perte de paquets n’est observée ;
+	\item les temps de réponse sont cohérents avec une communication locale.
+\end{itemize}
+
+Ces observations confirment le bon fonctionnement du routage inter-VLAN assuré par les sous-interfaces du routeur.
+
+\medskip
+
+\subsubsection{Analyse du trafic avec Wireshark}
+
+Afin d’approfondir la validation du fonctionnement réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}. Cette analyse permet d’observer les échanges au niveau des couches basses du modèle OSI.
+
+\medskip
+
+Une capture du trafic ICMP a été effectuée lors de l’émission d’un \texttt{ping} entre deux VLANs distincts. Cette capture a été réalisée sur le lien \textit{trunk} reliant le commutateur au routeur du site, transportant les trames des différents VLAN via le protocole \texttt{IEEE 802.1Q}.
+
+Le filtre suivant a été utilisé dans Wireshark afin d’isoler les paquets ICMP :
+\texttt{icmp}
+
+Pour observer les VLAN :
+\texttt{vlan.id == 10 || vlan.id == 20}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.98\textwidth]{../captures/06_wireshark_icmp_vlan.png}
+	\caption{Capture Wireshark du trafic ICMP entre deux VLANs}
+	\label{fig:wireshark_icmp}
+\end{figure}
+
+L’analyse des paquets capturés met en évidence les éléments suivants :
+
+\begin{itemize}
+	\item présence de requêtes ICMP de type \texttt{Echo Request} et réponses \texttt{Echo Reply} ;
+	\item modification des adresses MAC à chaque saut (passage par le routeur) ;
+	\item conservation des adresses IP source et destination, confirmant le routage de niveau 3 ;
+	\item absence de marquage VLAN visible sur l’hôte, celui-ci étant géré au niveau du trunk entre le switch et le routeur.
+\end{itemize}
+
+\medskip
+
+Ces observations confirment que :
+\begin{itemize}
+	\item le routage inter-VLAN est correctement assuré par le routeur (\textit{router-on-a-stick}) ;
+	\item les communications respectent le modèle en couches (L2 pour la commutation, L3 pour le routage) ;
+	\item l’infrastructure réseau est fonctionnelle et cohérente avec le plan d’adressage défini.
+	\item des trames Ethernet encapsulant des balises VLAN (\texttt{802.1Q}) identifiant les réseaux logiques traversés.
+\end{itemize}
+
+
+\subsection{Interprétation des résultats}
+
+Les tests de connectivité ainsi que l’analyse des captures réseau permettent de valider plusieurs points essentiels de l’architecture :
+
+\begin{itemize}
+	\item le bon fonctionnement du routage inter-VLAN via le mécanisme de \textit{router-on-a-stick} ;
+	\item la correcte segmentation logique des réseaux grâce aux VLANs ;
+	\item la cohérence entre la configuration théorique (plan d’adressage) et le comportement réel du réseau ;
+	\item la fiabilité des communications entre les différents équipements du site.
+\end{itemize}
+
+Ces résultats confirment que l’infrastructure réseau est opérationnelle et conforme aux exigences de segmentation, de communication et de performance définies en phase de conception.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Services réseau}
+	\section{DHCP}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Traduction d'adresses (NAT)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Sécurisation du réseau}
+	\section{Listes de contrôle d'accès (ACL)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
