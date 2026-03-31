@@ -27,6 +27,9 @@
 \usepackage{adjustbox}
 \usepackage{tabularx} 
 \usepackage[table]{xcolor}
+\usepackage{multirow}
+\usepackage{lscape} %pour un tableau en paysage
+\usepackage{pdflscape} %pour un tableau en paysage 
 
 
 \usepackage{tikz}
@@ -416,7 +419,7 @@ Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, t
 
 \section{Plan d'adressage - Site 1}
 
-\paragraph{i. Plage d’adressage privé}
+\subsection{Plage d’adressage privé}
 
 \begin{table}[]
 	\centering
@@ -439,7 +442,7 @@ Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, t
 		\item La première adresse IP utilisable est attribuée à la passerelle par défaut.	\\ 
 	\end{enumerate}
  
-\paragraph{ii. Gestion de la plage publique\\}
+\subsection{Gestion de la plage publique}
 
 Le Site 1 dispose du bloc public suivant : \texttt{123.1.1.160/27} (30 adresses IP utilisables).\\
 Ce bloc est subdivisé afin de couvrir plusieurs besoins : 
@@ -495,11 +498,11 @@ L’ensemble de ces sous-réseaux reste inclus dans la plage publique initiale
 \end{itemize}
 
 \vspace{0.5cm}
-iii. \textbf{Polique NAT - Site 1\\}
+\subsection{Polique NAT }
 
 \textit{NAT Statique (1:1)} : Les serveurs exposés utilisent un NAT statique (1:1) \textit{1 adresse IP privée $\leftrightarrow$ 1 adresse publique}.
 
-\texttt{Objectifs }:
+\textit{Objectifs }:
 \begin{itemize}[label*=$\star$]
 	\item Adresse publique permanente
 	\item Publication DNS possible
@@ -515,7 +518,7 @@ Cela permet à plusieurs machines privées de partager une ou plusieurs adresses
 
 \section{Plan d'adressage - Site 2}
 
-i. \textbf{Gestion de la plage privée\\}
+\subsection{Gestion de la plage privée}
 
 \begin{table}[H]
 	\centering
@@ -536,7 +539,7 @@ L’uniformité des masques garantit une cohérence d’architecture entre les d
 
 \vspace{0.5cm}
 
-ii. \textbf{Gestion de la plage publique\\}
+\subsection{Gestion de la plage publique}
 
 Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
@@ -575,7 +578,7 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 \end{table}
 
 \section{Plan d'adressage - Cloud}
-	\textbf{i. Réseau privé Cloud (Intranet) (LAN\_3-31) \\}
+\subsection{Réseau privé Cloud (Intranet) (LAN\_3-31)}
 
 	Le LAN\_3-31 dispose du bloc public suivant :	\texttt{192.168.3.0/28}
 
@@ -592,7 +595,7 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
 	%---------------------
 	
-	\textbf{ii. Réseau Publique Cloud (Internet) (Lan\_3-32)\\}
+	\subsection{Réseau Publique Cloud (Internet) (Lan\_3-32)}
 	
 	Le sous-réseau LAN\_3-32 correspond à la zone publique hébergée chez le fournisseur Cloud.
 	Il est destiné à accueillir des serveurs applicatifs accessibles depuis Internet. Contrairement aux réseaux internes de l’entreprise, ce sous-réseau utilise un adressage IP public (routable via le routeur Rf2), permettant l’accessibilité directe depuis l’extérieur.
@@ -797,8 +800,8 @@ La répartition des VLAN suit la topologie vu sur la figure  \ref{fig:topologie_
 		VLAN\_31 & SRVintra     & 2 & S4 & e2 & 31 & 192.168.2.64/29 \\
 		\hline
 		\hline
-		VLAN\_32 & SRVinter     & 1 & S2 & e3 & 32 & 123.1.1.160/27 \\
-		VLAN\_32 & SRVinter     & 2 & S4 & e3 & 32 & 123.2.2.160/27 \\
+		VLAN\_32 & SRVinter     & 1 & S2 & e3 & 32 & 123.1.1.160/28 \\
+		VLAN\_32 & SRVinter     & 2 & S4 & e3 & 32 & 123.2.2.160/29 \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -916,7 +919,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 			VLAN\_10 & 192.168.1.0/27 & 192.168.2.0/27 & 192.168.1.1 & 192.168.2.1 & \texttt{e1/1.10} \\
 			VLAN\_20 & 192.168.1.32/27 & 192.168.2.32/27 & 192.168.1.33 & 192.168.2.33 & \texttt{e1/1.20} \\
 			VLAN\_31 & 192.168.1.64/29 & 192.168.2.64/29 & 192.168.1.65 & 192.168.2.65 & \texttt{e1/1.31} \\
-			VLAN\_32 & 123.1.1.160/27 & 123.2.2.160/27 & 123.1.1.161 & 123.2.2.161 & \texttt{e1/1.32} \\
+			VLAN\_32 & 123.1.1.160/28 & 123.2.2.160/29 & 123.1.1.161 & 123.2.2.161 & \texttt{e1/1.32} \\
 			\hline
 		\end{tabular}
 	}
@@ -953,7 +956,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 	
 	interface e1/1.32
 	encapsulation dot1Q 32
-	ip address 123.1.1.161 255.255.255.224
+	ip address 123.1.1.161 255.255.255.240
 	no shutdown
 	exit
 \end{lstlisting}
@@ -1231,27 +1234,578 @@ Les tests de connectivité ainsi que l’analyse des captures réseau permettent
 
 Ces résultats confirment que l’infrastructure réseau est opérationnelle et conforme aux exigences de segmentation, de communication et de performance définies en phase de conception.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\chapter{Mise en place des services réseau : DHCP, NAT et ACL}
+Ce chapitre présente la mise en oeuvre des principaux services réseau nécessaires au bon fonctionnement de l’architecture multi-sites : l’attribution des adresses IP (DHCP), la traduction d’adresses (NAT) et le contrôle des flux (ACL).  
+L’objectif est d’assurer à la fois la connectivité, la sécurité et la maîtrise des échanges entre les différents VLANs et avec Internet.
 
+%=================================================
+	\section{Attribution dynamique des adresses IP : DHCP}
+	
+		\subsection{Choix du mode d’adressage}
+		Dans l’architecture proposée, chaque site est segmenté en plusieurs VLANs correspondant à différents usages (administratif, développement, serveurs).
+		
+		Le choix du mode d’attribution des adresses IP est le suivant :
+		
+			\begin{itemize}
+				\item \textbf{DHCP} pour les postes utilisateurs (VLAN\_10, VLAN\_20)
+				\item \textbf{Adresses statiques} pour les serveurs
+			\end{itemize}
+		
+		Les serveurs internes (VLAN\_31) peuvent fonctionner en DHCP, mais une adresse statique est recommandée pour garantir la stabilité des services.  
+		
+		Les serveurs publics (VLAN\_32) doivent impérativement disposer d’adresses IP fixes afin d’être accessibles depuis Internet.
+	
+	\subsection{Implémentation du service DHCP}
+	
+	Le protocole DHCP a été mis en place afin d’automatiser l’attribution des adresses IP aux hôtes des différents VLANs.
+	
+	La mise en place du DHCP est implémentée sur les routeurs, en mode de configuration globale (configure terminal) et elle repose sur les étapes suivantes: 
+	
+		\paragraph{i. Création des pools DHCP\\}
+		Chaque VLAN utilisateur dispose d'un pool dédié. CI-dessous l'implémentation du pool poolVLAN\_10 pour le VLAN\_10 administratif (idem pour le VLAN\_20) : 
+		\begin{verbatim}
+			ip dhcp pool poolVLAN_10             ! Active le service DHCP
+			network 192.168.1.0 255.255.255.224  ! Associe un sous-réseau au pool
+			default-router 192.168.1.1   ! Définit l’adresse de la passerelle pour le VLAN
+			lease 7   ! Durée du bail : 7 jours (ou lease 12 pour 12h)
+		\end{verbatim}
 
+		\paragraph{ii. Exclusion d’adresses\\}
+		Certaines adresses sont exclues pour des équipements critiques : 
+		\begin{verbatim}
+			ip dhcp excluded-address 192.168.1.1 192.168.1.5 
+		\end{verbatim}
+		
+		\paragraph{iii. Relais DHCP \\}
+		
+		\begin{itemize}
+			\item Le service DHCP est directement implémenté sur les routeurs de chaque site. Ainsi, aucun mécanisme de relai DHCP n’est nécessaire, les requêtes étant traitées localement.
+			
+			\item  Dans le cas où le serveur DHCP était centralisé, les requêtes sont relayées via :
+			\begin{verbatim}
+				ip helper-address @ip\_serveur\_DHCP
+			\end{verbatim}
+		\end{itemize}
+		
+	\paragraph{iv. Implémentation du DHCP sur les équipements \\}
+	
+	La figure~\ref{fig:dhcp_impl} présente les différentes configurations réalisées pour activer le service DHCP :
+	
+	\begin{itemize}
+		\item sur le routeur R1 du site 1 ;
+		\item sur le routeur R2 du site 2 ;
+		\item sur un hôte du VLAN Administratif configuré pour obtenir automatiquement une adresse IP.
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.75\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../captures/07_dhcp_R1_impl.png}
+			\caption{Configuration DHCP sur R1}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.75\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../captures/07_dhcp_R2_impl.png}
+			\caption{Configuration DHCP sur R2}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.75\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../captures/07_dhcp_sur_hotes.png}
+			\caption{Configuration DHCP sur un hôte}
+		\end{subfigure}
+		\caption{Implémentation du service DHCP sur les routeurs et un hôte client}
+		\label{fig:dhcp_impl}
+	\end{figure}	
+		
+%	\subsection{Problèmes rencontrés}
+%	Les requêtes DHCP seront initialement bloquées par les ACL.  
+%	La solution a consisté à autoriser explicitement les flux UDP (ports 67 et 68)(voir \label{DHCP_ACL}).
+	
+	
+	\subsection{Validation du DHCP}	
+	Une fois le service configuré, les commandes de supervision permettent de vérifier son bon fonctionnement sont les suivantes.
+	
+	\begin{itemize}
+		\item \texttt{show ip dhcp pool} : affiche les pools configurés ainsi que le nombre d’adresses disponibles et utilisées ;
+		\item \texttt{show ip dhcp binding} : liste les adresses IP attribuées aux clients (baux actifs).
+	\end{itemize}
+		La figure~\ref{fig:dhcp_show} illustre les résultats de ces commandes :	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{../captures/07_dhcp_show.png}
+		\caption{Affichage des pools DHCP et des baux actifs}
+		\label{fig:dhcp_show}
+	\end{figure}
+	
+	\subsection{Analyse du fonctionnement du DHCP}
+	
+	Enfin, la figure~\ref{fig:dhcp_resultats} présente les résultats expérimentaux confirmant le bon fonctionnement du service DHCP :
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{../captures/07_dhcp_resultats.png}
+		\caption{Résultats de l’attribution DHCP : capture réseau, baux et configuration côté client}
+		\label{fig:dhcp_resultats}
+	\end{figure}
+	
+	\medskip
+	Les captures réalisées à l’aide de Wireshark mettent en évidence la séquence complète d’attribution d’une adresse IP via le protocole DHCP, connue sous l’acronyme DORA (Discover, Offer, Request, Acknowledgment).
+	
+	\begin{itemize}
+		\item \textbf{DHCP Discover} : 
+		Le client, ne disposant d’aucune configuration IP initiale, envoie une requête de découverte en broadcast (adresse de destination 255.255.255.255). 
+		Ce message permet de localiser les serveurs DHCP disponibles sur le réseau. 
+		À ce stade, le client utilise l’adresse IP source 0.0.0.0, car il ne possède pas encore d’adresse valide.
+		
+		\item \textbf{DHCP Offer} : 
+		Le serveur DHCP répond par un message DHCPOFFER, contenant une proposition d’adresse IP ainsi que les paramètres réseau associés (masque de sous-réseau, passerelle par défaut, durée du bail, etc.). 
+		Cette réponse est généralement envoyée en broadcast, car le client n’a pas encore configuré son interface réseau.
+		
+		\item \textbf{DHCP Request} : 
+		Le client sélectionne l’une des offres reçues et envoie un message DHCPREQUEST pour indiquer son acceptation. 
+		Ce message est également diffusé en broadcast afin d’informer les autres serveurs DHCP que leurs offres ne sont pas retenues.
+		
+		\item \textbf{DHCP ACK (Acknowledgment)} : 
+		Le serveur confirme l’attribution de l’adresse IP à l’aide d’un message DHCPACK. 
+		Ce message final contient l’ensemble des paramètres réseau nécessaires à la configuration du client, qui peut alors initialiser son interface avec l’adresse IP attribuée.
+	\end{itemize}
+	
+	\medskip
+	
+	\noindent
+	L’observation de cette séquence complète dans les captures Wireshark confirme le bon fonctionnement du service DHCP. Elle montre que les requêtes des clients sont correctement relayées et traitées, et que les adresses IP sont attribuées de manière dynamique conformément à la configuration des pools DHCP définis sur les routeurs.
+	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Services réseau}
-	\section{DHCP}
+\section{Traduction d’adresses : NAT}
+
+\subsection{Besoins et contraintes}
+
+Les VLANs privés doivent accéder à Internet, tandis que les serveurs publics doivent être directement accessibles.
+
+Les besoins sont :
+\begin{itemize}
+	\item NAT pour les VLAN privés (10, 20, 31)
+	\item Accès direct pour VLAN\_32 (IP publiques)
+\end{itemize}
+
+\subsection{Découpage des plages publiques}
+
+Chaque site dispose d’un bloc d’adresses IPv4 publiques en /27, subdivisé selon les besoins en sous-réseaux dédiés aux serveurs publics, à la liaison WAN avec l’opérateur et au pool NAT, voir le tableau~\ref{tab:decoupage_plages_publiques}.
+
+
+\subsection{Configuration NAT}
+
+Les configurations NAT mises en place sur les routeurs R1 (Site 1) et R2 (Site 2) reposent sur le principe du NAT dynamique avec surcharge (PAT). Le tableau~\ref{tab:nat_configuration} présente les différentes étapes de configuration.
+\begin{landscape}
+	\begin{table}[H]
+		\centering
+		\caption{Découpage des plages d’adresses publiques pour les deux sites}
+		\renewcommand{\arraystretch}{1.2}
+		\begin{tabular}{|c|c|c|c|p{10cm}|}
+			\hline
+			\textbf{Site} & \textbf{Usage} & \textbf{Sous-réseau} & \textbf{Plage IP} & \textbf{Description} \\
+			\hline
+			
+			\multirow{3}{*}{Site 1} 
+			& VLAN\_32 & 123.1.1.160/28 & 123.1.1.161 -- 123.1.1.174 & Serveurs publics (14 IP utilisables) \\
+			\cline{2-5}
+			& WAN & 123.1.1.176/31 & 123.1.1.176 -- 123.1.1.177 & Liaison point-à-point avec l’opérateur \\
+			\cline{2-5}
+			& NAT & 123.1.1.178/27 & 123.1.1.178 -- 123.1.1.190 & Pool d’adresses publiques pour le NAT dynamique \\
+			
+			\hline
+			\hline
+			
+			\multirow{3}{*}{Site 2} 
+			& VLAN\_32 & 123.2.2.160/29 & 123.2.2.161 -- 123.2.2.166 & Serveurs publics (6 IP utilisables) \\
+			\cline{2-5}
+			& WAN & 123.2.2.168/31 & 123.2.2.168 -- 123.2.2.169 & Liaison point-à-point avec l’opérateur \\
+			\cline{2-5}
+			& NAT & 123.2.2.170/27 & 123.2.2.170 -- 123.2.2.190 & Pool d’adresses publiques pour le NAT dynamique \\
+			
+			\hline
+		\end{tabular}
+		\label{tab:decoupage_plages_publiques}
+	\end{table}
+	
+\begin{table}[H]
+	\centering
+	\caption{Configuration du NAT dynamique (PAT) sur les routeurs -en mode config-}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{3cm}|p{10.3cm}|p{10.3cm}|}
+		\hline
+		\textbf{Étape} & \textbf{R1 (Site 1)} & \textbf{R2 (Site 2)} \\
+		\hline
+		
+		Définition des réseaux internes (ACL) 
+		& 
+		\texttt{access-list 1 permit 192.168.1.0 0.0.0.31} \newline 
+		\texttt{access-list 1 permit 192.168.1.32 0.0.0.31} \newline 
+		\texttt{access-list 1 permit 192.168.1.64 0.0.0.7}
+		&
+		\texttt{access-list 2 permit 192.168.2.0 0.0.0.31} \newline
+		\texttt{access-list 2 permit 192.168.2.32 0.0.0.31} \newline 
+		\texttt{access-list 2 permit 192.168.2.64 0.0.0.7}
+		\\
+		\hline
+		
+		Création du pool NAT 
+		&
+		\small{\texttt{ip nat pool NAT\_POOL\_SITE1} %\newline
+		\texttt{123.1.1.178 123.1.1.190} %\newline
+		\texttt{netmask 255.255.255.224}}
+		&
+		\small{\texttt{ip nat pool NAT\_POOL\_SITE2} %\newline
+		\texttt{123.2.2.170 123.2.2.190} %\newline
+		\texttt{netmask 255.255.255.224}}
+		\\
+		\hline
+		
+		Activation du NAT (PAT)
+		&
+		\texttt{ip nat inside source list 1} %\newline
+		\texttt{pool NAT\_POOL\_SITE1 overload}
+		&
+		\texttt{ip nat inside source list 2} %\newline
+		\texttt{pool NAT\_POOL\_SITE2 overload}
+		\\
+		\hline
+		
+		Interfaces internes (inside)
+		&
+		\texttt{e1/1.10, e1/1.20, e1/1.31}
+		&
+		\texttt{e1/1.10, e1/1.20, e1/1.31}
+		\\
+		& Ex. : \newline
+		interface e1/1.10 \newline
+		ip nat inside & (idem)\\
+		\hline
+		
+		Interface externe (outside)
+		&
+		\texttt{f0/0} (idem)
+		&
+		\texttt{f0/0} (idem)
+		\\
+		\hline
+		
+	\end{tabular}
+	\label{tab:nat_configuration}
+\end{table}
+\end{landscape}
+\medskip
+
+\noindent
+Les serveurs du VLAN\_32 ne nécessitent pas de traduction d’adresses (NAT), car ils disposent déjà d’adresses IP publiques. Ils sont donc directement accessibles depuis Internet, sous réserve de règles de routage et de filtrage appropriées.
+
+\textbf{Remarque :} Il est important de noter que les listes de contrôle d’accès (ACL) utilisées dans la configuration du NAT ne remplissent pas un rôle de filtrage du trafic. Elles servent uniquement à identifier les réseaux internes dont les adresses doivent être traduites. Contrairement aux ACL de sécurité, ces règles ne sont pas appliquées directement sur les interfaces du routeur, mais sont utilisées comme critère de sélection dans le processus de traduction d’adresses.
+
+\subsubsection{Validation du NAT}
+Afin de valider le bon fonctionnement du mécanisme de traduction d’adresses (NAT), une simulation d’accès à Internet a été mise en place dans l’environnement GNS3. Pour cela, un routeur a été ajouté dans la zone opérateur afin de représenter une sortie vers l’extérieur, figure~\ref{fig:nat_topologie}. Ce routeur est interconnecté avec les routeurs des deux sites via des liaisons point-à-point, permettant d’assurer la connectivité entre les réseaux internes et l’environnement simulé.
+	
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../captures/08_nat_topologie.png}
+	\caption{Topologie de test avec simulation d’Internet via le routeur opérateur}
+	\label{fig:nat_topologie}
+\end{figure}
+
+Les caractéristiques des interconnexions entre les routeurs sont résumées dans le tableau~\ref{tab:liaisons_operateur}.
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Site} & \textbf{Interface R1/2} & \textbf{Interface R3 Op} & \textbf{Réseau} & \textbf{Adresses IP} \\
+		\hline
+		Site 1 & f0/0 (R1) & e1/1 (Opérateur) & 123.1.1.176/31 & 123.1.1.176 / 123.1.1.177 \\
+		\hline
+		Site 2 & f0/0 (R2) & e0/1 (Opérateur) & 123.2.2.168/31 & 123.2.2.168 / 123.2.2.169 \\
+		\hline
+	\end{tabular}
+	\caption{Liaisons point-à-point entre les routeurs des sites et le routeur opérateur}
+	\label{tab:liaisons_operateur}
+\end{table}
+	
+\subsection{Validation du fonctionnement du NAT}
+
+La validation a été réalisée à partir d’un hôte du réseau interne (poste administrateur), en initiant un ping vers l’adresse \texttt{8.8.8.8}. Lors de cette opération, l’activation du mode debug sur le routeur R1 (\texttt{debug ip nat}) a permis d’observer en temps réel la traduction d’adresse, avec le message indiquant le passage de l’adresse source privée \texttt{192.168.1.6} vers une adresse publique du pool NAT, par exemple \texttt{123.1.1.179}. Cette correspondance confirme que le trafic issu du réseau interne est correctement traduit avant d’être transmis vers l’extérieur. Ainsi, la combinaison des tests de connectivité et des traces de débogage atteste du bon fonctionnement du NAT dynamique avec surcharge (PAT), validant la configuration mise en place dans cette architecture réseau. Le tableau~\ref{tab:validation_nat} résume les étapes mises en œuvre et la figure~\ref{tab:validation_nat} illustre les résultats obtenus.
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{3.5cm}|c|l|}
+		\hline
+		\textbf{Étape} & Commande & \textbf{Description} \\
+		\hline
+		Simulation & R1-R3-R2 & Ajout d’un routeur dans la zone \\
+		 d’Internet & & opérateur afin de simuler une \\
+		  & & connectivité externe. \\
+		\hline
+		
+		Configuration  & interface loopback0 & Création d’une interface loopback\\
+		d’une destination & ip address 8.8.8.8 255.255.255.255 & sur le routeur opérateur avec \\
+		distante (sur R3)&  & l’adresse \texttt{8.8.8.8/32}.\\
+		\hline
+		
+		Routage sortant & ip route 0.0.0.0 0.0.0.0 123.1.1.177 & Configuration d’une route par  \\
+		(R1) & & défaut sur R1 (.177 est l'adresse\\
+		& &  du prochain saut).\\
+		\hline
+		
+		Routage retour& \texttt{123.1.1.160 } & Ajout d’une route  \\
+		 (sur R3) & \texttt{255.255.255.224 123.1.1.176} & vers le réseau interne. \\
+		\hline
+		Test de connecti- & \texttt{ping 8.8.8.8} & Envoi d’un ping depuis un hôte \\
+		 vité& &  interne (192.168.1.6) vers \texttt{8.8.8.8}. \\
+		\hline
+		
+		Activation du  & debug ip nat & Pour observer la traduction \\
+		 debug NAT sur R1 & &  d’adresse en temps réel. \\
+		\hline
+		
+		Résultat & show ip nat translations & \texttt{NAT:s=192.168.1.6→123.1.1.179} \\
+		& & Traduction observée confirmant \\
+		 & & le bon fonctionnement du NAT. \\
+		\hline
+		
+	\end{tabular}
+	\caption{Étapes de validation du NAT dans l’architecture réseau}
+	\label{tab:validation_nat}
+\end{table}
+	
+	\textbf{Remarque :}Les entrées de la table NAT étant dynamiques et temporaires, leur observation nécessite la génération d’un trafic continu. Par ailleurs, le routage côté opérateur doit être configuré vers les adresses publiques traduites et non vers les adresses privées internes.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{../captures/08_nat_debug.png}
+		\caption{Observation de la traduction d’adresse via la commande \texttt{debug ip nat} sur R1 -à droite- et le test de connectivité depuis un hôte interne vers l’adresse externe simulée (8.8.8.8) -à gauche-}
+		\label{fig:nat_debug}
+	\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contrôle d’accès : ACL}
 
-\chapter{Traduction d'adresses (NAT)}
+\subsection{Analyse des contraintes}
+\subsection{Expression des besoins en matière d’ACL de sécurité}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Les contraintes de sécurité définies pour l’architecture réseau sont traduites en règles de filtrage (ACL). Le tableau~\ref{tab:besoins_acl} synthétise les besoins en termes de contrôle des flux entre les différents VLANs et vers Internet.
 
-\chapter{Sécurisation du réseau}
-	\section{Listes de contrôle d'accès (ACL)}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|c|c|c|p{6cm}|}
+		\hline
+		\textbf{Source} & \textbf{Destination} & \textbf{Action} & \textbf{Justification} \\
+		\hline
+		VLAN\_10 (Admin) & VLAN\_20 (Dev) & Refuser & Isolation entre départements pour des raisons de sécurité \\
+		\hline
+		VLAN\_20 (Dev) & VLAN\_10 (Admin) & Refuser & Isolation bidirectionnelle des flux \\
+		\hline
+		
+		VLAN\_31  & VLAN\_32  & Refuser & Séparation des environnements \\
+		(Serveurs internes) & (Serveurs publics) &  & interne et exposé  \\
+		\hline
+		
+		VLAN\_32  & VLAN\_31  & Refuser & Protection des serveurs internes \\
+		(Serveurs publics) & (Serveurs internes) &  & Protection des serveurs internes \\
+		\hline
+		
+		VLAN\_10 & VLAN\_31 & Autoriser & Accès des administratifs aux services internes \\
+		\hline
+		VLAN\_20 & VLAN\_31 & Autoriser & Accès des développeurs aux services internes \\
+		\hline
+		Internet & VLAN\_10 & Refuser & Protection des postes administratifs (réseau privé) \\
+		\hline
+		Internet & VLAN\_20 & Refuser & Protection des postes développeurs (réseau privé) \\
+		\hline
+		Internet & VLAN\_31 & Refuser & Protection des serveurs internes \\
+		\hline
+		Internet & VLAN\_32 & Autoriser & Accès public aux services exposés \\
+		\hline
+		VLAN\_10 & VLAN\_32 & Autoriser & Accès des administratifs aux services exposés \\
+		\hline
+		VLAN\_20 & VLAN\_32 & Autoriser & Accès des développeurs aux services exposés \\
+		\hline
+		\hline
+		VLAN\_10 & Internet & Autoriser & Accès sortant autorisé (navigation, services) \\
+		\hline
+		VLAN\_20 & Internet & Autoriser & Accès sortant autorisé \\
+		\hline
+		VLAN\_31 & Internet & Autoriser & Accès sortant autorisé \\
+		\hline
+		VLAN\_32 & Internet & Autoriser & Accès sortant autorisé \\
+		\hline
+	\end{tabular}
+	\caption{Expression des besoins en règles ACL}
+	\label{tab:besoins_acl}
+\end{table}
 
+Cette modélisation met en évidence une politique de sécurité de type « zéro confiance partielle », où les flux internes sont strictement contrôlés et les accès depuis Internet sont limités aux seuls services explicitement exposés. Les communications sortantes restent autorisées afin de garantir le bon fonctionnement des usages utilisateurs.
 
+\subsection{Schéma des flux autorisés et interdits}
 
+La politique de sécurité repose sur une séparation stricte des flux internes et un contrôle des accès depuis Internet. Les règles peuvent être résumées comme suit :
+
+\begin{itemize}
+	\item \textbf{Flux interdits :}
+	\begin{itemize}
+		\item VLAN\_10 $\leftrightarrow$ VLAN\_20 (isolation des départements)
+		\item VLAN\_31 $\leftrightarrow$ VLAN\_32 (séparation interne / public)
+		\item Internet $\rightarrow$ VLAN\_10, VLAN\_20, VLAN\_31
+	\end{itemize}
+	
+	\item \textbf{Flux autorisés :}
+	\begin{itemize}
+		\item VLAN\_10 $\rightarrow$ VLAN\_31
+		\item VLAN\_20 $\rightarrow$ VLAN\_31
+		\item VLAN\_32 $\leftrightarrow$ tous (interne + Internet)
+		\item Tous les VLANs $\rightarrow$ Internet
+	\end{itemize}
+\end{itemize}
+\subsection{Structuration des ACL}
+
+Les règles de filtrage sont regroupées selon leur rôle :
+
+\begin{itemize}
+	\item \textbf{ACL 100 :} Isolation VLAN\_10 / VLAN\_20
+	\item \textbf{ACL 101 :} Protection VLAN\_31
+	\item \textbf{ACL 102 :} Filtrage Internet → réseaux privés
+\end{itemize}
+
+\subsection{Configuration des ACL de sécurité}
+
+Les règles de filtrage ont été implémentées sur les routeurs sous forme d’ACL étendues. Les tableaux~\ref{tab:acl_interfaces},\ref{tab:config_acl} présentent les principales configurations mises en place ainsi que leur rôle dans l’architecture.
+
+La configuration des ACL a été réalisée en respectant le principe du filtrage au plus proche de la source du trafic. Chaque ACL est appliquée sur une interface spécifique et dans un sens approprié afin de contrôler efficacement les flux tout en limitant l’impact sur les performances du routeur. Cette approche modulaire facilite également la maintenance et l’évolution de la politique de sécurité.
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{Interface} & \textbf{ACL appliquée} & \textbf{Sens} & \textbf{commande}\\
+		\hline
+		interface e1/1.10 & ACL 100 & in & ip access-group 100 in\\
+		\hline
+		interface e1/1.20 & ACL 100 & in & ip access-group 100 in\\
+		\hline
+		interface e1/1.31 & ACL 101 & in & ip access-group 101 in\\
+		\hline
+		interface e1/1.32 & ACL 101 & in & ip access-group 101 in\\
+		\hline
+		interface f0/0 (WAN) & ACL 102 & out & ip access-group 102 out\\
+		\hline
+	\end{tabular}
+	\caption{Application des ACL sur les interfaces des routeurs R1 et R2}
+	\label{tab:acl_interfaces}
+\end{table}
+
+\begin{landscape}
+\begin{table}[]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|c|p{8cm}|p{8cm}|p{5cm}|}
+		\hline
+		\textbf{ACL} & \textbf{Configuration sur R1} & \textbf{Configuration sur R2} & \textbf{Rôle} \\
+		\hline
+		
+		ACL 100 &
+		\texttt{access-list 100 deny ip 192.168.1.0 0.0.0.31 192.168.1.32 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.1.32 0.0.0.31 192.168.1.0 0.0.0.31} \newline \newline
+		\texttt{access-list 100 permit ip any any}
+		&
+		\texttt{access-list 100 deny ip 192.168.2.0 0.0.0.31 192.168.2.32 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.2.32 0.0.0.31 192.168.2.0 0.0.0.31} \newline \newline
+		\texttt{access-list 100 permit ip any any}
+		&
+		Isolation entre VLAN\_10 (Administratif) et VLAN\_20 (Développeurs)
+		\\
+		\hline
+		
+		ACL 101 &
+		\texttt{access-list 101 deny ip 192.168.1.64 0.0.0.7 123.1.1.160 0.0.0.15} \newline\newline
+		\texttt{access-list 101 deny ip 123.1.1.160 0.0.0.15 192.168.1.64 0.0.0.7} \newline\newline
+		\texttt{access-list 101 permit ip any any}
+		&
+		\texttt{access-list 101 deny ip 192.168.2.64 0.0.0.7 123.2.2.160 0.0.0.7} \newline\newline
+		\texttt{access-list 101 deny ip 123.2.2.160 0.0.0.7 192.168.2.64 0.0.0.7} \newline\newline
+		\texttt{access-list 101 permit ip any any}
+		&
+		Protection des serveurs internes (VLAN\_31) contre le VLAN public (VLAN\_32)
+		\\
+		\hline
+		
+		ACL 102 &
+		\texttt{access-list 102 deny ip any 192.168.1.0 0.0.0.255} \newline\newline
+		\texttt{access-list 102 permit ip any any}
+		&
+		\texttt{access-list 102 deny ip any 192.168.2.0 0.0.0.255} \newline\newline
+		\texttt{access-list 102 permit ip any any}
+		&
+		Blocage des accès depuis Internet vers les réseaux privés (VLAN\_10, VLAN\_20, VLAN\_31)
+		\\
+		\hline
+	\end{tabular}
+	\caption{Configuration des ACL sur les routeurs de chacun des sites}
+	\label{tab:config_acl}
+\end{table}
+\end{landscape}
+
+\subsection{Validation des ACL}
+
+Afin de vérifier le bon fonctionnement des règles de filtrage mises en place, une série de tests de connectivité a été réalisée à l’aide de requêtes ICMP (\texttt{ping}) entre les différents VLANs.
+
+\subsubsection{Résultats des tests de connectivité}
+
+Les tests effectués mettent en évidence les comportements suivants :
+
+\begin{itemize}
+	\item \textbf{VLAN\_10 $\leftrightarrow$ VLAN\_20 :} communication bloquée
+	\item \textbf{VLAN\_31 $\leftrightarrow$ VLAN\_32 :} communication bloquée
+	\item \textbf{VLAN\_10, VLAN\_20 $\leftrightarrow$ VLAN\_31 :} communication autorisée
+	\item \textbf{VLAN\_32 :} accessible depuis tous les VLANs et depuis Internet
+\end{itemize}
+
+La figure~\ref{fig:acl_blocage_vlan10_20} illustre les tests ICMP réalisés depuis des hôtes des VLAN\_10 et VLAN\_20. On y observe que les communications entre ces deux VLANs sont bloquées, comme l’indique le message \textit{"Packet filtered"} ainsi qu’un taux de perte de paquets de 100\%. En revanche, les accès vers le VLAN\_31 ainsi que vers une adresse publique sont fonctionnels.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/09_ACL_ping_filtre_VLAN1020.png}
+	\caption{Tests de connectivité ICMP entre VLAN\_10 et VLAN\_20}
+	\label{fig:acl_blocage_vlan10_20}
+\end{figure}
+
+La figure~\ref{fig:acl_blocage_vlan31_32} présente des tests similaires entre les VLAN\_31 et VLAN\_32. Les communications entre ces deux réseaux sont également bloquées, tandis que les échanges avec les VLAN utilisateurs restent autorisés.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../captures/09_ACL_ping_filtre_VLAN3132.png}
+	\caption{Tests de connectivité ICMP entre VLAN\_31 et VLAN\_32}
+	\label{fig:acl_blocage_vlan31_32}
+\end{figure}
+
+La figure~\ref{fig:acl_wireshark} illustre ces comportements à travers des captures de paquets mettant en évidence les flux autorisés et refusés.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/09_ACL_wireshark_VLAN3132.png}
+	\caption{Analyse Wireshark des flux ICMP (autorisé vs bloqué)}
+	\label{fig:acl_wireshark}
+\end{figure}
+L’analyse des captures réseau réalisées avec Wireshark montre que les paquets ICMP bloqués génèrent un message \textit{"Destination unreachable"} ou \textit{"Packet filtered"}, tandis que les flux autorisés donnent lieu à un échange complet \textit{Echo Request / Echo Reply} avec un taux de réussite de 100\%.
+
+Ces observations confirment que les ACL appliquées filtrent correctement les flux dès leur arrivée sur le routeur, en respectant la politique de sécurité définie. L’isolation des VLANs sensibles est assurée, tout en maintenant les communications nécessaires vers les services internes et externes.
+
+%=================================================
 
 
 
