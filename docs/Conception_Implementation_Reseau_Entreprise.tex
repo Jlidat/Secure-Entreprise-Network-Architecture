@@ -1508,7 +1508,7 @@ Les serveurs du VLAN\_32 ne nécessitent pas de traduction d’adresses (NAT), c
 
 \textbf{Remarque :} Il est important de noter que les listes de contrôle d’accès (ACL) utilisées dans la configuration du NAT ne remplissent pas un rôle de filtrage du trafic. Elles servent uniquement à identifier les réseaux internes dont les adresses doivent être traduites. Contrairement aux ACL de sécurité, ces règles ne sont pas appliquées directement sur les interfaces du routeur, mais sont utilisées comme critère de sélection dans le processus de traduction d’adresses.
 
-\subsubsection{Validation du NAT}
+\subsubsection{Topologie nécessaire pour réaliser un test de validation du NAT}
 Afin de valider le bon fonctionnement du mécanisme de traduction d’adresses (NAT), une simulation d’accès à Internet a été mise en place dans l’environnement GNS3. Pour cela, un routeur a été ajouté dans la zone opérateur afin de représenter une sortie vers l’extérieur, figure~\ref{fig:nat_topologie}. Ce routeur est interconnecté avec les routeurs des deux sites via des liaisons point-à-point, permettant d’assurer la connectivité entre les réseaux internes et l’environnement simulé.
 	
 \begin{figure}[H]
@@ -1587,14 +1587,14 @@ La validation a été réalisée à partir d’un hôte du réseau interne (post
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\textwidth]{../captures/08_nat_debug.png}
-		\caption{Observation de la traduction d’adresse via la commande \texttt{debug ip nat} sur R1 -à droite- et le test de connectivité depuis un hôte interne vers l’adresse externe simulée (8.8.8.8) -à gauche-}
+		\caption{Observation de la traduction d’adresse via la commande \texttt{debug ip nat} sur R1 -à droite- et le test de connectivité depuis un hôte interne vers l’adresse externe simulée (8.8.8.8) -à gauche-.}
 		\label{fig:nat_debug}
 	\end{figure}
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Contrôle d’accès : ACL}
 
-\subsection{Analyse des contraintes}
+%\subsection{Analyse des contraintes}
 \subsection{Expression des besoins en matière d’ACL de sécurité}
 
 Les contraintes de sécurité définies pour l’architecture réseau sont traduites en règles de filtrage (ACL). Le tableau~\ref{tab:besoins_acl} synthétise les besoins en termes de contrôle des flux entre les différents VLANs et vers Internet.
@@ -1665,9 +1665,9 @@ La politique de sécurité repose sur une séparation stricte des flux internes 
 	
 	\item \textbf{Flux autorisés :}
 	\begin{itemize}
-		\item VLAN\_10 $\rightarrow$ VLAN\_31
-		\item VLAN\_20 $\rightarrow$ VLAN\_31
-		\item VLAN\_32 $\leftrightarrow$ tous (interne + Internet)
+		\item VLAN\_10 $\rightarrow$ VLAN\_31 \& VLAN\_32
+		\item VLAN\_20 $\rightarrow$ VLAN\_31 \& VLAN\_32
+		\item VLAN\_32 $\leftrightarrow$ VLAN utilisateurs \& Internet)
 		\item Tous les VLANs $\rightarrow$ Internet
 	\end{itemize}
 \end{itemize}
@@ -1772,14 +1772,14 @@ Les tests effectués mettent en évidence les comportements suivants :
 	\item \textbf{VLAN\_10 $\leftrightarrow$ VLAN\_20 :} communication bloquée
 	\item \textbf{VLAN\_31 $\leftrightarrow$ VLAN\_32 :} communication bloquée
 	\item \textbf{VLAN\_10, VLAN\_20 $\leftrightarrow$ VLAN\_31 :} communication autorisée
-	\item \textbf{VLAN\_32 :} accessible depuis tous les VLANs et depuis Internet
+	\item \textbf{VLAN\_32 :} accessible depuis tous les VLANs et depuis Internet sauf VLAN\_31
 \end{itemize}
 
 La figure~\ref{fig:acl_blocage_vlan10_20} illustre les tests ICMP réalisés depuis des hôtes des VLAN\_10 et VLAN\_20. On y observe que les communications entre ces deux VLANs sont bloquées, comme l’indique le message \textit{"Packet filtered"} ainsi qu’un taux de perte de paquets de 100\%. En revanche, les accès vers le VLAN\_31 ainsi que vers une adresse publique sont fonctionnels.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../captures/09_ACL_ping_filtre_VLAN1020.png}
+	\includegraphics[width=1\textwidth]{../captures/09_ACL_ping_filtre_VLAN1020.png}
 	\caption{Tests de connectivité ICMP entre VLAN\_10 et VLAN\_20}
 	\label{fig:acl_blocage_vlan10_20}
 \end{figure}
@@ -1788,7 +1788,7 @@ La figure~\ref{fig:acl_blocage_vlan31_32} présente des tests similaires entre l
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../captures/09_ACL_ping_filtre_VLAN3132.png}
+	\includegraphics[width=1\textwidth]{../captures/09_ACL_ping_filtre_VLAN3132.png}
 	\caption{Tests de connectivité ICMP entre VLAN\_31 et VLAN\_32}
 	\label{fig:acl_blocage_vlan31_32}
 \end{figure}
@@ -1797,7 +1797,7 @@ La figure~\ref{fig:acl_wireshark} illustre ces comportements à travers des capt
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{../captures/09_ACL_wireshark_VLAN3132.png}
+	\includegraphics[width=1.1\textwidth]{../captures/09_ACL_wireshark_VLAN3132.png}
 	\caption{Analyse Wireshark des flux ICMP (autorisé vs bloqué)}
 	\label{fig:acl_wireshark}
 \end{figure}
@@ -1807,14 +1807,338 @@ Ces observations confirment que les ACL appliquées filtrent correctement les fl
 
 %=================================================
 
+\chapter{Mise en œuvre du réseau opérateur}
+
+\section{Présentation de la topologie}
+
+Dans cette seconde partie du projet, l’objectif est de mettre en place un réseau opérateur simulé permettant d’interconnecter les différents sites de l’entreprise ainsi que les infrastructures du fournisseur de cloud, figure~\ref{fig:Topo_op}.
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/img2.png}
+	\caption{Topologie du réseau opérateur}
+	\label{fig:Topo_op}
+\end{figure}
+
+Afin de simplifier l’architecture, un unique réseau opérateur est considéré. Celui-ci est composé de deux types de routeurs :
+
+\begin{itemize}
+	\item \textbf{Routeurs de cœur :} quatre routeurs (RO1 à RO4) interconnectés entre eux selon une topologie maillée. Cette interconnexion assure une redondance des chemins et une meilleure résilience du réseau.
+	
+	\item \textbf{Routeurs de périphérie :} trois routeurs (RO11, RO21 et RO31) assurant l’accès aux réseaux externes. Ces routeurs permettent de connecter les différents sites et services au réseau opérateur via des liens d’accès dédiés.
+\end{itemize}
+
+Les routeurs de périphérie assurent l’interconnexion avec les différentes entités externes suivantes :
+
+\begin{itemize}
+	\item le réseau du \textbf{Site 1} de l’entreprise via le routeur R1 ;
+	\item le réseau du \textbf{Site 2} de l’entreprise via le routeur R2 ;
+	\item le réseau \textbf{Intranet} du fournisseur de cloud via le routeur RF1 ;
+	\item le réseau \textbf{Public} du fournisseur de cloud via le routeur RF2.
+\end{itemize}
+
+Chaque connexion est réalisée à l’aide de liens d’accès identifiés (A1, A2, B1, B2, C et D), permettant de relier les extrémités du réseau aux routeurs de périphérie.
+
+Cette architecture distingue clairement :
+\begin{itemize}
+	\item un \textbf{cœur de réseau}, responsable du transport des données ;
+	\item une \textbf{périphérie}, assurant l’accès aux différents réseaux clients et services.
+\end{itemize}
+
+Le choix d’une topologie maillée pour le cœur du réseau permet de garantir une continuité de service en cas de défaillance d’un lien ou d’un routeur, ce qui constitue un élément clé dans les infrastructures opérateurs.
+
+\vspace{0.5cm}
+\textbf{Remarque :}
+Dans le cadre de cette implémentation, une image spécifique de routeur a été utilisée pour l’ensemble des équipements du réseau opérateur. Il s’agit de l’image \texttt{c7200-adventerprisek9-mz.124-24.T5}, importée dans l’environnement GNS3 via le fichier \texttt{cisco-7200-edge.gns3a}.
+
+Cette image permet d’accéder à des fonctionnalités avancées nécessaires à la mise en œuvre du réseau opérateur, notamment en termes de protocoles de routage et de gestion du trafic.
+
+\section{Plan d’adressage}
+Le plan d’adressage du réseau opérateur couvre l’ensemble des liaisons du backbone reliant les routeurs de cœur (RO1 à RO4) ainsi que les routeurs de périphérie (RO11, RO21, RO31).
+Pour les interconnexions du backbone, un masque de sous-réseau /30 est retenu, offrant quatre adresses IPv4 par liaison, dont deux utilisables, une pour chaque extrémité.
+En ce qui concerne les liaisons point-à-point entre les routeurs de périphérie et les routeurs des clients (sites de l’entreprise et fournisseur cloud), un masque /31 est utilisé. Ce choix permet d’optimiser l’utilisation des adresses IPv4 en supprimant l’adresse de diffusion et en rendant exploitables les deux adresses disponibles sur la liaison.
+
+Le tableau suivant présente le découpage d’adressage retenu pour le backbone et les liaisons d’extrémité du réseau opérateur (hors liens A2 et B2), en indiquant pour chaque liaison :
+
+l’adresse du sous-réseau et le masque associé,
+
+l’adresse de diffusion lorsque applicable,
+
+les adresses attribuées aux ports des routeurs,
+
+et les interfaces correspondantes.
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+			%		\centering
+			%		\caption{Plan d'adressage réseau opérateur}
+			%		\renewcommand{\arraystretch}{1.2}
+			\begin{tabular}{|l|l|l|l|l|l|}
+				\hline
+				\textbf{Lien} & \textbf{Sous-réseau /31} & \textbf{IP réseau} & \textbf{IP1 -- IP2} & \textbf{Interfaces} & \textbf{IP boradcast}\\
+				\hline
+				R1 -- RO11 (A1) & 123.1.1.176/31 & no & 123.1.1.176 -- 123.1.1.177 & f0/0 -- f0/0 & no\\
+				R2 -- RO21 (B1) & 123.2.2.168/31 & no & 123.2.2.168 -- 123.2.2.169 & f0/0 -- f0/0 & no\\
+				&	&	&	&	&\\		
+				RO11 -- RO2 & 12.0.0.0/30 & 12.0.0.0 & 12.0.0.1 -- 12.0.0.2 & e1/0 -- e1/0 & 12.0.0.3\\
+				RO21 -- RO3 & 12.0.0.4/30 & 12.0.0.4 & 12.0.0.5 -- 12.0.0.6 & e1/0 -- e1/0 & 12.0.0.7\\
+				RO31 -- RO4 & 12.0.0.8/30 & 12.0.0.8 & 12.0.0.9 -- 12.0.0.10 & e1/0 -- e1/0 & 12.0.0.11\\
+				&	&	&	&	&\\		
+				RO2 -- RO4 & 12.0.0.12/30 & 12.0.0.12 & 12.0.0.13 -- 12.0.0.14 & e1/3 -- e1/3 & 12.0.0.15\\
+				RO3 -- RO4 & 12.0.0.16/30 & 12.0.0.16 & 12.0.0.17 -- 12.0.0.18 & e1/1 -- e1/1 & 12.0.0.19\\
+				RO2 -- RO1 & 12.0.0.20/30 & 12.0.0.20 & 12.0.0.21 -- 12.0.0.22 & e1/1 -- e1/1 & 12.0.0.23\\
+				RO3 -- RO1 & 12.0.0.24/30 & 12.0.0.24 & 12.0.0.25 -- 12.0.O.26 & e1/3 -- e1/3 & 12.0.0.27\\
+				RO4 -- RO1 & 12.0.0.28/30 & 12.0.0.28 & 12.0.0.29 -- 12.0.0.30 & e1/2 -- e1/2 & 12.0.0.31\\
+				&	&	&	&	&\\		
+				RF1 -- RO31 (Intranet) & 163.173.18.254/31 & no & 163.173.18.254 -- 163.173.18.255 & e1/0 -- e1/1 & no \\
+				RF2 -- RO31  (Public) & 163.173.19.222/31 & no & 163.173.19.222 --163.173.19.223 & f0/0 -- f0/0 & no\\
+				\hline
+			\end{tabular}
+		}
+		%\end{table}
+	\end{center}
+	
+La configuration des interfaces des routeurs s’effectue en mode \textit{configuration terminal}. À titre d’exemple, la configuration de l’interface \texttt{f0/0} du routeur \textbf{R1} est présentée ci-dessous :
+
+\begin{verbatim}
+	interface f0/0 
+	ip address 123.1.1.176 255.255.255.254 
+	no shutdown
+\end{verbatim}
+
+Cette procédure est appliquée de manière similaire pour l’ensemble des interfaces des différents routeurs du réseau opérateur.
+
+Le détail complet de la configuration des interfaces pour tous les équipements est fourni dans le document Excel en annexe.
+\paragraph{Justification du choix des masques /30 et /31}
+
+Le plan d’adressage du réseau opérateur repose sur l’utilisation de sous-réseaux de petite taille, notamment avec des masques \textbf{/30} et \textbf{/31}, adaptés aux liaisons point-à-point entre routeurs.
+
+\textbf{Utilisation du masque /30}
+
+Le masque \textbf{/30} (255.255.255.252) permet de disposer de 4 adresses IP par sous-réseau :
+\begin{itemize}
+	\item 1 adresse réseau,
+	\item 2 adresses utilisables pour les équipements,
+	\item 1 adresse de broadcast.
+\end{itemize}
+
+Ce type de masque est historiquement utilisé pour les liaisons point-à-point, car il permet de connecter exactement deux équipements (par exemple deux routeurs) tout en respectant le fonctionnement classique d’IPv4.
+
+\textbf{Utilisation du masque /31}
+
+Le masque \textbf{/31} (255.255.255.254) permet quant à lui de disposer de seulement 2 adresses IP, toutes deux utilisables.
+
+Contrairement aux sous-réseaux classiques, les adresses réseau et broadcast ne sont pas nécessaires dans le cas des liaisons point-à-point. Cette utilisation est définie par la RFC 3021, qui autorise l’emploi du /31 pour ce type de liaison.
+
+Ainsi, le /31 présente plusieurs avantages :
+\begin{itemize}
+	\item \textbf{Optimisation de l’espace d’adressage IPv4}, en évitant le gaspillage d’adresses ;
+	\item \textbf{Adaptation parfaite aux liaisons point-à-point}, qui ne nécessitent que deux adresses ;
+	\item \textbf{Réduction de la complexité du plan d’adressage}.
+\end{itemize}
+
+\textbf{Choix retenu dans l’architecture}
+
+Dans cette architecture, les deux masques sont utilisés de manière complémentaire :
+\begin{itemize}
+	\item le \textbf{/31} est privilégié pour les liaisons directes entre routeurs (ex : liaison avec l’opérateur), afin d’optimiser l’utilisation des adresses publiques ;
+	\item le \textbf{/30} est utilisé pour les interconnexions internes du réseau opérateur, garantissant une compatibilité maximale avec les équipements et protocoles.
+\end{itemize}
+
+Ce choix permet de concilier \textbf{efficacité d’adressage}, \textbf{simplicité de gestion} et \textbf{compatibilité technique}.
+
+
+\section{Définition des routes}
+
+L’utilisation du routage dynamique, ici avec OSPF, permet une mise à jour automatique des tables de routage et assure la tolérance aux pannes, ce qui représente un avantage considérable par rapport au routage statique qui nécessite une reconfiguration manuelle en cas de changement de topologie. Par exemple, si le lien RO1–RO2 est défaillant, OSPF recalculera automatiquement un chemin alternatif via RO3 et RO4 sans intervention humaine. 
+
+Le routage dynamique n’est cependant nécessaire que sur les routeurs du backbone de l’opérateur (RO1, RO2, RO3, RO4, RO11, RO21, RO31) afin d’assurer la connectivité interne et la diffusion des routes. Les routeurs clients (R1, R2, RF1, RF2) peuvent se contenter de routes statiques car ils ne possèdent qu’un point d’entrée vers le réseau opérateur.
+
+\subsection{Routage dynamique via le protocole OSPF (routeurs du backbone)}
+
+Le routage dynamique au sein du réseau opérateur est assuré à l’aide du protocole \textbf{OSPF} (\textit{Open Shortest Path First}). 
+
+La configuration du protocole OSPF est réalisée de manière similaire sur l’ensemble des routeurs du backbone, incluant à la fois les routeurs de cœur et les routeurs de périphérie. Tous les routeurs sont intégrés dans une même zone OSPF (area 0), correspondant à l’aire backbone.
+
+À titre d’exemple, la configuration du routage dynamique sur le routeur \textbf{RO1} est présentée ci-dessous :
+
+\begin{verbatim}
+	RO1# configure terminal
+	RO1(config)# router ospf 1     ! activer le processus OSPF.
+	RO1(config-router)# router-id 1.1.1.1    ! identifiant unique du routeur.
+	RO1(config-router)# network 12.0.0.20 0.0.0.3 area 0  ! annoncer les sous-
+	RO1(config-router)# network 12.0.0.28 0.0.0.3 area 0  ! réseaux directement 
+	RO1(config-router)# network 12.0.0.24 0.0.0.3 area 0  ! connectés au routeur
+	RO1(config-router)# end                               ! dans l’aire 0.
+\end{verbatim}
+
+Le détail complet de la configuration OSPF pour l’ensemble des routeurs est fourni dans le document Excel en annexe.
+
+%-------------------------
+
+\subsection{Routage statique (routeurs clients) et interfaces passives}
+
+Les routeurs clients, à savoir \textbf{R1}, \textbf{R2}, \textbf{RF1} et \textbf{RF2}, ne participent pas au protocole de routage OSPF. En effet, ces équipements n’appartiennent pas au domaine de routage du réseau opérateur.
+
+L’échange de routes entre les routeurs clients et les routeurs de périphérie du réseau opérateur (routeurs PE) est assuré à l’aide de routes statiques. Cette approche permet de simplifier la configuration et de limiter la propagation des informations de routage en dehors du backbone opérateur.
+
+Par conséquent, des routes statiques sont configurées sur ces routeurs afin d’assurer la connectivité avec les réseaux distants.
+
+\medskip
+
+Par ailleurs, afin d’éviter l’établissement de voisinages OSPF avec les routeurs clients, tout en continuant à annoncer leurs réseaux au sein du backbone, les interfaces connectées aux clients (par exemple \texttt{f0/0} sur \textbf{RO11}, \textbf{RO21} et \textbf{RO31}) sont configurées en mode \textit{passive} dans OSPF.
+
+Cette configuration permet :
+\begin{itemize}
+	\item de \textbf{désactiver l’envoi et la réception des messages OSPF} (Hello) sur ces interfaces ;
+	\item de \textbf{prévenir toute tentative de formation d’adjacence OSPF} avec les routeurs clients ;
+	\item tout en \textbf{continuant à annoncer les préfixes correspondants} dans le domaine OSPF.
+\end{itemize}
+
+Ainsi, les réseaux des sites clients (notamment les adresses IP publiques) restent accessibles depuis l’ensemble du backbone, sans nécessiter l’exécution du protocole OSPF sur les routeurs clients.
+
+\medskip
+
+Un exemple de configuration sur le routeur \textbf{RO11} est donné ci-dessous :
+
+%\textbf{Route statique et interfaces passives sur RO11}
+\begin{verbatim}
+RO11# configure terminal
+	! Route vers le VLAN_32 publique du site 1			
+RO11(config)#ip route 123.1.1.160 255.255.255.240 123.1.1.176  
+RO11(config)# router ospf 1
+	! Redistribuer ces statique le réseau opérateur 		
+RO11(config-router)# redistribute static subnets 
+	! Définir une interface passive dans l'ospf  
+RO11(config-router)# passive-interface f0/0   
+RO11(config-router)# network 123.1.1.176 0.0.0.1 area 0
+RO11(config-router)# end
+\end{verbatim}
+
+ \textbf{ Route par défaut vers l’opérateur}
+\begin{verbatim}
+	RE1(config)# ip route 0.0.0.0 0.0.0.0 123.1.1.177		
+	RE2(config)# ip route 0.0.0.0 0.0.0.0 123.2.2.169		
+	RF2(config)# ip route 0.0.0.0 0.0.0.0 163.173.19.223			
+\end{verbatim}
+
+\section{Validation du fonctionnement du protocole OSPF}
+
+Afin de vérifier le bon fonctionnement du protocole de routage dynamique OSPF au sein du réseau opérateur, une analyse du trafic ainsi que des états de voisinage a été réalisée.
+\subsection{Wiresharque (Hello \& LS Update \& voisinage)}
+L’observation des captures réseau met en évidence la présence de messages OSPF de type \textit{Hello}, échangés périodiquement entre les routeurs adjacents (fig.~\ref{fig:ospf_lsupdate}). Ces messages permettent :
+\begin{itemize}
+	\item la découverte des routeurs voisins ;
+	\item le maintien des relations de voisinage ;
+	\item la détection d’éventuelles pertes de connectivité.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/10_ospf_lsupdate.png}
+	\caption{Capture Wireshark des échanges OSPF après modification de topologie : observation des messages Hello et des paquets LS Update diffusant les informations de routage}
+	\label{fig:ospf_lsupdate}
+\end{figure}
+
+Par ailleurs, la formation des adjacences OSPF a été vérifiée à l’aide des commandes de diagnostic (par exemple \texttt{show ip ospf neighbor}), confirmant que les routeurs du backbone ont bien établi des relations de voisinage complètes.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../captures/10_ospf_neighbors.png}
+	\caption{Table des voisins OSPF sur le routeur RO4 : adjacences établies avec les routeurs du backbone (état \textit{FULL})}
+	\label{fig:ospf_neighbors_ro4}
+\end{figure}
+Une fois ces adjacences établies, les routeurs échangent leur base de données de topologie, permettant la construction d’une vision cohérente du réseau. L’absence de messages de type \textit{LS Update} dans les captures s’explique par le fait que le réseau est dans un état stable, sans modification de topologie.\\
+\textbf{Remarque : } pour visualiser un \textit{LS Update}, on peut le provoquer ainsi : 
+\begin{verbatim}
+	RO11(config)#shutdown interface e1/0
+	RO11(config)#no shutdown
+\end{verbatim}
+
+\subsection{Tests de la connectivité du réseau opérateur}
+Enfin, pour valider le bon fonctionnement du routage dynamique OSPF au sein du réseau opérateur, des tests de connectivité peuvent être réaliser entre différents équipements dans les situations suivantes :
+\begin{enumerate}
+	\item  entre toutes paires de routeurs des réseaux extrémités : RE1, RE2 et RF2,
+	\item entre chaque sous-réseau privé du Site x vers un serveur accessible par Internet du Site y,
+	\item entre chaque sous-réseau privé ou public du Site x de l’entreprise et le routeur RF2,
+	\item entre chaque sous-réseau privé du Site x vers un serveur accessible par Internet hébergé chez le Fournisseur de Cloud.
+\end{enumerate}
 
 
 
+\textbf{Exemple de tests de connectivité entre les routeurs clients \textbf{R1}, \textbf{R2} et le réseau distant \textbf{RF2}}\\
+La figure~\ref{fig:connectivite_operateur} présente des tests de connectivité réalisés depuis les routeurs \textbf{R1} et \textbf{R2}, incluant des commandes \texttt{ping} et \texttt{traceroute} vers différents réseaux distants.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/10_ospf_connexion_routeurs.png}
+	\caption{Tests de connectivité depuis R1 et R2 : validation du routage avec \texttt{ping} (100\% de réussite) et visualisation des chemins avec \texttt{traceroute} à travers le backbone opérateur}
+	\label{fig:connectivite_operateur}
+\end{figure}
 
 
 
+\begin{enumerate}
+	\item \textbf{Tests ICMP (ping)} : 
+	
+	Les tests de type ICMP (\texttt{ping}) montrent un taux de réussite de \textbf{100\%} entre les différents points testés :
+	
+	\begin{itemize}
+		\item Depuis \textbf{R2} vers \texttt{123.1.1.176} (site 1)
+		\item Depuis \textbf{R1} vers \texttt{123.2.2.168} (site 2)
+		\item Depuis \textbf{R1} et \textbf{R2} vers \texttt{163.173.19.222} (réseau distant)
+	\end{itemize}
+	
+	Ces résultats confirment que :
+	\begin{itemize}
+		\item les routes sont correctement propagées via OSPF dans le backbone ;
+		\item les routes statiques côté clients sont correctement configurées ;
+		\item la connectivité inter-sites et vers les réseaux externes est fonctionnelle.
+	\end{itemize}
+	
+	\item \textbf{Analyse des chemins (traceroute)}
+	
+	Les commandes \texttt{traceroute} permettent d’observer le chemin emprunté par les paquets à travers le réseau opérateur.
+	
+	Les résultats montrent que :
+	\begin{itemize}
+		\item les paquets traversent successivement les routeurs de périphérie (RO11, RO21) puis les routeurs du cœur (RO1 à RO4) ;
+		\item plusieurs sauts intermédiaires correspondent aux adresses du réseau backbone (\texttt{12.0.0.x}) ;
+		\item le chemin est cohérent avec la topologie maillée du réseau opérateur.
+	\end{itemize}
+	
+	Cela confirme que :
+	\begin{itemize}
+		\item le protocole OSPF calcule correctement les routes ;
+		\item les chemins sélectionnés respectent la connectivité du backbone ;
+		\item la convergence du réseau est effective.
+	\end{itemize}
+	
+	\item \textbf{Observation du trafic réseau}
+	
+	Une capture de trafic réalisée entre les routeurs \textbf{RO11} et \textbf{RO2} met en évidence la circulation des paquets ICMP ainsi que les échanges liés au protocole OSPF.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{../captures/10_ospf_connexion_routeurs_wireshark.png}
+		\caption{Capture de trafic entre RO11 et RO2 : observation des échanges ICMP et OSPF}
+		\label{fig:wireshark_operateur}
+	\end{figure}
+	
+	L’analyse de cette capture met en évidence les éléments suivants :
+	
+	L’analyse montre notamment :
+	\begin{itemize}
+		\item le passage des requêtes ICMP (Echo Request) et des réponses (Echo Reply) entre les routeurs ;
+		\item la présence de paquets OSPF (Hello, LS Update), confirmant l’établissement des voisinages ;
+		\item une transmission correcte des paquets sans perte ni anomalie.
+	\end{itemize}
 
+\end{enumerate}
+	
+\textbf{Conclusion :}
 
+Les tests de connectivité (ping et traceroute) confirment que les routes calculées par OSPF sont correctement utilisées pour acheminer les paquets à travers le réseau opérateur.
+
+Ainsi, l’ensemble de ces observations (messages Hello, formation des adjacences, stabilité du réseau et connectivité effective) permet de valider le bon fonctionnement du protocole OSPF dans l’architecture mise en place.
 
 
 
