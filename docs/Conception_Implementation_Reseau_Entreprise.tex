@@ -211,8 +211,8 @@ En complément, deux sous-réseaux sont hébergés chez un fournisseur \textbf{C
 \end{itemize}
 
 Le réseau opérateur (\textit{WAN}) est traité séparément mais reste intégré dans la conception globale de l’architecture réseau.
-\section{Topologie réseau globale}
-La figure suivante présente la topologie globale de l’infrastructure réseau de l’entreprise. 
+\subsection{Topologie réseau globale}
+La figure suivant en (fig.~\ref{fig:topologie_globale}) présente la topologie globale de l’infrastructure réseau de l’entreprise. 
 Cette topologie met en évidence l’organisation physique du réseau
 (routeurs, commutateurs et hôtes) ainsi que la segmentation logique
 des différents services au moyen de VLAN. Cette approche permet de
@@ -236,7 +236,7 @@ exposés à Internet ainsi que l’extension de l’infrastructure
 hébergée chez le fournisseur Cloud.
 
 
-\section{Convention de nommage}
+\subsection{Convention de nommage}
 
 Les sous-réseaux suivent la notation suivante :
 
@@ -259,8 +259,8 @@ où :
 
 Cette convention permet d’identifier rapidement l’origine et la fonction de chaque réseau dans l’architecture globale.
 
-\section{Structure des LAN et VLAN}
-	\subsection{Organisation des LAN}
+\subsection{Structure des LAN et VLAN}
+	\subsubsection{Organisation des LAN}
 
 \begin{table}[H]
 	\centering
@@ -280,7 +280,7 @@ Cette convention permet d’identifier rapidement l’origine et la fonction de 
 	\caption{Organisation des sous-réseaux LAN}
 \end{table}
 
-\subsection{Segmentation VLAN}
+\subsubsection{Segmentation VLAN}
 
 \begin{table}[H]
 	\centering
@@ -307,7 +307,7 @@ Cette segmentation permet :
 	\item une meilleure évolutivité de l’infrastructure.
 \end{itemize}
 
-\section{Principes d’architecture}
+\subsection{Principes d’architecture}
 Cette architecture a été conçue selon des principes d’ingénierie réseau visant à garantir robustesse, sécurité et évolutivité de l’infrastructure. Elle repose sur les principes suivants :
 
 \begin{itemize}
@@ -317,7 +317,7 @@ Cette architecture a été conçue selon des principes d’ingénierie réseau v
 	\item une capacité d’évolution du réseau sans remise en cause du plan d’adressage initial.
 \end{itemize}
 
-\section{Recensement des sous-réseaux}
+\subsection{Recensement des sous-réseaux}
 
 Chaque sous-réseau est défini selon les critères suivants :
 
@@ -328,7 +328,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\item le rôle fonctionnel dans l’architecture.
 \end{itemize}
 
-\subsection{Site 1}
+\subsubsection{Site 1}
 
 \begin{table}[H]
 	\centering
@@ -346,7 +346,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\caption{Sous-réseaux du Site 1}
 \end{table}
 
-\subsection{Site 2}
+\subsubsection{Site 2}
 
 \begin{table}[H]
 	\centering
@@ -364,7 +364,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\caption{Sous-réseaux du Site 2}
 \end{table}
 
-\subsection{Infrastructure Cloud}
+\subsubsection{Infrastructure Cloud}
 
 \begin{table}[H]
 	\centering
@@ -380,7 +380,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\caption{Sous-réseaux Cloud}
 \end{table}
 
-\section{Paramètres définis pour chaque sous-réseau}
+\subsection{Paramètres définis pour chaque sous-réseau}
 
 Pour chaque sous-réseau, les éléments suivants sont formellement définis :
 
@@ -402,10 +402,10 @@ Cette normalisation garantit :
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Plan d’adressage IP}
+\section{Plan d’adressage IP}
 Les détails complets du calcul des sous-réseaux et des plages d’adresses sont présentés dans la feuille de calcul associée.
 
-\section{Stratégie Globale d’Adressage Privé}
+\subsection{Stratégie Globale d’Adressage Privé}
 Le plan d’adressage interne s’appuie sur le bloc IP privé \texttt{192.168.0.0/16}. 
 Chaque site utilise un sous-réseau dédié en /24.\\
 \begin{enumerate}
@@ -417,9 +417,9 @@ Chaque site utilise un sous-réseau dédié en /24.\\
 
 Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, tout en conservant une marge d’évolution et une cohérence d’ensemble.
 
-\section{Plan d'adressage - Site 1}
+\subsection{Plan d'adressage - Site 1}
 
-\subsection{Plage d’adressage privé}
+\subsubsection{Plage d’adressage privé}
 
 \begin{table}[]
 	\centering
@@ -442,7 +442,7 @@ Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, t
 		\item La première adresse IP utilisable est attribuée à la passerelle par défaut.	\\ 
 	\end{enumerate}
  
-\subsection{Gestion de la plage publique}
+\subsubsection{Gestion de la plage publique}
 
 Le Site 1 dispose du bloc public suivant : \texttt{123.1.1.160/27} (30 adresses IP utilisables).\\
 Ce bloc est subdivisé afin de couvrir plusieurs besoins : 
@@ -498,7 +498,7 @@ L’ensemble de ces sous-réseaux reste inclus dans la plage publique initiale
 \end{itemize}
 
 \vspace{0.5cm}
-\subsection{Polique NAT }
+\subsubsection{Polique NAT }
 
 \textit{NAT Statique (1:1)} : Les serveurs exposés utilisent un NAT statique (1:1) \textit{1 adresse IP privée $\leftrightarrow$ 1 adresse publique}.
 
@@ -516,9 +516,9 @@ Cela permet à plusieurs machines privées de partager une ou plusieurs adresses
 
 %---------------------
 
-\section{Plan d'adressage - Site 2}
+\subsection{Plan d'adressage - Site 2}
 
-\subsection{Gestion de la plage privée}
+\subsubsection{Gestion de la plage privée}
 
 \begin{table}[H]
 	\centering
@@ -539,7 +539,7 @@ L’uniformité des masques garantit une cohérence d’architecture entre les d
 
 \vspace{0.5cm}
 
-\subsection{Gestion de la plage publique}
+\subsubsection{Gestion de la plage publique}
 
 Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
@@ -577,8 +577,8 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 	\caption{Découpage de la plage publique du Site 2}
 \end{table}
 
-\section{Plan d'adressage - Cloud}
-\subsection{Réseau privé Cloud (Intranet) (LAN\_3-31)}
+\subsection{Plan d'adressage - Cloud}
+\subsubsection{Réseau privé Cloud (Intranet) (LAN\_3-31)}
 
 	Le LAN\_3-31 dispose du bloc public suivant :	\texttt{192.168.3.0/28}
 
@@ -595,7 +595,7 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
 	%---------------------
 	
-	\subsection{Réseau Publique Cloud (Internet) (Lan\_3-32)}
+	\subsubsection{Réseau Publique Cloud (Internet) (Lan\_3-32)}
 	
 	Le sous-réseau LAN\_3-32 correspond à la zone publique hébergée chez le fournisseur Cloud.
 	Il est destiné à accueillir des serveurs applicatifs accessibles depuis Internet. Contrairement aux réseaux internes de l’entreprise, ce sous-réseau utilise un adressage IP public (routable via le routeur Rf2), permettant l’accessibilité directe depuis l’extérieur.
@@ -636,7 +636,7 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
 	Le routeur Rf2 assure l’interconnexion entre le réseau public Cloud (LAN\_3-32) et le réseau de l’opérateur via une liaison point-à-point utilisant le sous-réseau 163.173.19.222/31.
 %----------------------
-\section{Politique d'adressage}
+\subsection{Politique d'adressage}
 Pour chaque sous-réseau :
 \begin{itemize}[label*=$\star$]
 	\item La première adresse IP utilisable est attribuée à l’interface routeur.
@@ -648,7 +648,7 @@ Pour chaque sous-réseau :
 
 %----------------------
 
-\section{Considérations de sécurité}
+\subsection{Considérations de sécurité}
 
 L’exposition de certains services sur Internet impose la mise en œuvre
 de mesures de sécurité adaptées afin de protéger l’infrastructure
@@ -668,7 +668,7 @@ l’infrastructure interne de l’entreprise et les services exposés au public,
 tout en bénéficiant de la flexibilité offerte par l’extension de
 l’infrastructure vers le Cloud.
 
-\section{Principes d’architecture appliqués}
+\subsection{Principes d’architecture appliqués}
 
 La conception du plan d’adressage et de l’architecture réseau repose sur plusieurs principes visant à garantir cohérence, évolutivité et sécurité :
 
@@ -687,13 +687,13 @@ La conception du plan d’adressage et de l’architecture réseau repose sur pl
 \end{itemize}
 
 %----------------------
-\section{Configuration des interfaces réseau des hôtes}
+\subsection{Configuration des interfaces réseau des hôtes}
 
 Afin de vérifier la connectivité de la topologie réseau mise en place dans l’environnement GNS3, les interfaces réseau des différentes machines ont été configurées manuellement avec des adresses IP statiques.
 
 Dans un premier temps, cette configuration statique permet de valider le bon fonctionnement du plan d’adressage et des routes avant la mise en place de services automatisés tels que DHCP.
 
-\subsection{Méthodes de configuration}
+\subsubsection{Méthodes de configuration}
 
 Sous les systèmes Linux utilisés dans la topologie, la configuration des interfaces réseau peut être réalisée de deux manières :
 
@@ -711,7 +711,7 @@ ou bien redémarrer la machine.
 
 Dans le cas de la configuration manuelle, il est nécessaire d’activer les lignes correspondantes à l’interface réseau en supprimant les caractères de commentaire (\#), puis de renseigner les paramètres réseau appropriés.
 
-\subsection{Paramètres configurés}
+\subsubsection{Paramètres configurés}
 
 Les paramètres suivants doivent être définis pour chaque interface :
 
@@ -721,7 +721,7 @@ Les paramètres suivants doivent être définis pour chaque interface :
 	\item l’adresse de la passerelle par défaut (\textit{gateway}).
 \end{itemize}
 
-\subsection{Exemple de configuration}
+\subsubsection{Exemple de configuration}
 
 Un exemple de configuration statique d’une interface réseau dans le fichier
 \texttt{/etc/network/interfaces} est présenté ci-dessous :
@@ -751,7 +751,7 @@ Après modification du fichier de configuration, il est nécessaire de redémarr
 
 ou bien de redémarrer la machine.
 
-\subsection{Organisation de l'adressage}
+\subsubsection{Organisation de l'adressage}
 
 Chaque sous-réseau est configuré avec un masque adapté aux besoins en nombre d’hôtes, conformément au plan d’adressage défini précédemment.
 
@@ -769,15 +769,15 @@ Cette organisation permet d’assurer :
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\chapter{Segmentation réseau et mise en œuvre des VLAN}
+\section{Segmentation réseau et mise en œuvre des VLAN}
 
-\section{Principe de segmentation par VLAN}
+\subsection{Principe de segmentation par VLAN}
 Pour isoler le trafic des 4 sous-réseaux privés dans chaque site, on va mettre en place des réseaux virtuels (VLAN) de type 802.1q, qu'on les nommera comme ci-dessous : Administratif (VLAN_10), Développeurs (VLAN_20) et Serveurs (VLAN_31 et VLAN_32).
 
 Dans cette configuration, aucune opération particulière n’est requise sur les hôtes, puisque l’appartenance aux VLANs est entièrement gérée au niveau des commutateurs d’accès. Chaque port de ces commutateurs est configuré pour appartenir à un VLAN spécifique. À chaque VLAN est associé un identifiant (ID) unique, ainsi qu’un sous-réseau privé correspondant. Tous les VLANs sont implémentés conformément à la norme IEEE 802.1Q, permettant ainsi la création de réseaux virtuels isolés au sein de l’infrastructure physique.
 %---------------------
 
-\section{Plan de répartition des VLAN dans l’architecture}
+\subsection{Plan de répartition des VLAN dans l’architecture}
 La répartition des VLAN suit la topologie vu sur la figure  \ref{fig:topologie_globale}
 \begin{table}[H]
 	\centering
@@ -807,13 +807,13 @@ La répartition des VLAN suit la topologie vu sur la figure  \ref{fig:topologie_
 \end{table}
 %----------------------
 
-\section{Configuration des VLAN sur les commutateurs}
+\subsection{Configuration des VLAN sur les commutateurs}
 
-	\subsection{Architecture des ports des commutateurs}
+	\subsubsection{Architecture des ports des commutateurs}
 %Pour chaque site, les VLAN seront configurés sur les switches, et chaque port de switch sera assigné à un VLAN spécifique selon les utilisateurs ou les serveurs qu'il dessert. Les VLAN seront étiquetés avec le protocole IEEE 802.1q afin de permettre le transport simultané des trames appartenant à plusieurs VLANs entre les switches.
 
 La configuration des interfaces se fera comme suit :
-\subsection*{i. Sur les switches S1 et S3}
+\subsubsection*{i. Sur les switches S1 et S3}
 
 \textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), ce port permet le transport des trames de plusieurs VLANs entre les switches.
 
@@ -821,7 +821,7 @@ La configuration des interfaces se fera comme suit :
 
 \textbf{Interface \texttt{e2}} : configurée en mode access, ce port connecte les machines hôtes appartenant au VLAN\_20 (ID VLAN 20).
 
-\subsection*{ii. Sur les switches S2 et S4}
+\subsubsection*{ii. Sur les switches S2 et S4}
 
 \textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), assurant la connexion entre les différents VLANs.
 
@@ -831,9 +831,9 @@ La configuration des interfaces se fera comme suit :
 
 \textbf{Interface \texttt{e3}} : configurée en mode access, connectant les machines hôtes appartenant au VLAN\_32 (ID VLAN 32).
 
-	\subsection{Configuration des VLAN sur le switch S1}
+	\subsubsection{Configuration des VLAN sur le switch S1}
 
-		\subsubsection{Configuration en mode graphique}
+		\paragraph{Configuration en mode graphique \\}
 		Voici les étapes de configuration des VLANs 10 et 20 sur le commutateur \textbf{S1}, ainsi que l’affectation des interfaces aux VLANs et la configuration du mode \texttt{trunk} pour l’interface connectée au routeur R1.
 		\begin{figure}[H]
 			\centering
@@ -841,7 +841,7 @@ La configuration des interfaces se fera comme suit :
 			\caption{Configuration des VLANs d'ID 10 et 20 sur le switch S1.}
 			\label{fig:vlans-conf}
 		\end{figure}
-			\subsubsection{Configuration en ligne de commande}
+			\paragraph{Configuration en ligne de commande \\}
 \begin{enumerate}
 	\item \textbf{Définir le nom du switch et créer les VLANs :}
 \begin{lstlisting}[language=bash]
@@ -888,9 +888,9 @@ La configuration des interfaces se fera comme suit :
 		
 %------------------------------
 
-\section{Routage inter-VLAN}
+\subsection{Routage inter-VLAN}
 
-	\subsection{Principe du Router-on-a-Stick}
+	\subsubsection{Principe du Router-on-a-Stick}
 	
 Pour permettre la communication entre les différents VLANs sur chaque site, nous mettons en place une solution de type \textbf{router-on-a-stick}, qui consiste à utiliser un \textit{commutateur-routeur} configuré avec des \textbf{sous-interfaces VLAN} sur une interface physique unique.
 
@@ -926,7 +926,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 \end{center}
 
 
-	\subsection{Configuration des sous-interfaces sur le routeur R1}
+	\subsubsection{Configuration des sous-interfaces sur le routeur R1}
 \begin{enumerate}
 	\item \textbf{Définition des sous-interfaces VLAN sur le routeur R1 \\} La configuration suivante permet de créer les différentes sous-interfaces sur le routeur R1 et d'associer chacune d'elles à un VLAN spécifique.
 	
@@ -979,7 +979,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 	
 \end{enumerate}
 
-	\subsection{Configuration des sous-interfaces sur le routeur R2}
+	\subsubsection{Configuration des sous-interfaces sur le routeur R2}
 La configuration réalisée sur le routeur du site 2 suit la même logique que celle mise en place sur le site 1.  
 Le routeur agit comme passerelle par défaut pour les différents VLAN du réseau local et assure le routage inter-VLAN grâce à l'utilisation de sous-interfaces associées à l'encapsulation \texttt{802.1Q}.
 
@@ -1055,15 +1055,15 @@ Chaque sous-interface est liée à un identifiant de VLAN spécifique et possèd
 \end{enumerate}	
 %-------------------------------
 
-\section{Validation de la configuration}
+\subsection{Validation de la configuration}
 
-	\subsection{Vérification des interfaces et des VLAN}
+	\subsubsection{Vérification des interfaces et des VLAN}
 	
 	
 
 Les captures d’écran suivantes illustrent le résultat de la configuration des sous-interfaces : 
 
-\subsubsection{Sur le routeur R1 (site 1) :}
+\paragraph{Sur le routeur R1 (site 1) \\}
 	
 	\begin{figure}[H]
 		\centering
@@ -1085,7 +1085,7 @@ Les captures d’écran suivantes illustrent le résultat de la configuration de
 		\label{fig:reseau}
 	\end{figure}
 
-\subsubsection{Sur le routeur R2 :}
+\paragraph{Sur le routeur R2 \\}
 
 \begin{figure}[H]
 	\centering
@@ -1113,7 +1113,7 @@ Les captures d’écran suivantes illustrent le résultat de la configuration de
 		\item les réseaux directement joignables à travers chaque sous-interface, permettant d’assurer le routage inter-VLAN.
 	\end{itemize}
 
-\subsection{Analyse des tables de routage}
+\subsubsection{Analyse des tables de routage}
 \textbf{Site 1 :} 
 	
 	Dans la table de routage, les sous-réseaux 192.168.1.0/27, 192.168.1.32/27 et 192.168.1.64/29 apparaissent comme réseaux directement connectés (C). Chaque réseau est associé à une sous-interface spécifique du routeur (Ethernet1/1.10, Ethernet1/1.20 et Ethernet1/1.31).
@@ -1142,7 +1142,7 @@ Comme pour le site 1, l'absence de \textit{gateway of last resort} indique qu'au
 Afin de valider le fonctionnement du routage inter-VLAN au niveau des couches basses du modèle réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}.
 
 
-\subsection{Tests de connectivité entre les différents équipements}
+\subsubsection{Tests de connectivité entre les différents équipements}
 
 Afin de valider le bon fonctionnement de l’architecture réseau mise en place, des tests de connectivité ont été réalisés entre les différents équipements à l’aide de la commande \texttt{ping}. 
 
@@ -1150,7 +1150,7 @@ Ces tests reposent sur le protocole ICMP (\textit{Internet Control Message Proto
 
 \medskip
 
-\subsubsection{Tests de connectivité ICMP (ping)}
+\paragraph{Tests de connectivité ICMP (ping) \\}
 
 Des requêtes ICMP ont été émises entre plusieurs VLANs d’un même site, notamment :
 \begin{itemize}
@@ -1180,7 +1180,7 @@ Ces observations confirment le bon fonctionnement du routage inter-VLAN assuré 
 
 \medskip
 
-\subsubsection{Analyse du trafic avec Wireshark}
+\paragraph{Analyse du trafic avec Wireshark \\}
 
 Afin d’approfondir la validation du fonctionnement réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}. Cette analyse permet d’observer les échanges au niveau des couches basses du modèle OSI.
 
@@ -1221,7 +1221,7 @@ Ces observations confirment que :
 \end{itemize}
 
 
-\subsection{Interprétation des résultats}
+\subsubsection{Interprétation des résultats}
 
 Les tests de connectivité ainsi que l’analyse des captures réseau permettent de valider plusieurs points essentiels de l’architecture :
 
@@ -1236,14 +1236,14 @@ Ces résultats confirment que l’infrastructure réseau est opérationnelle et 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Mise en place des services réseau : DHCP, NAT et ACL}
+\section{Mise en place des services réseau : DHCP, NAT et ACL}
 Ce chapitre présente la mise en oeuvre des principaux services réseau nécessaires au bon fonctionnement de l’architecture multi-sites : l’attribution des adresses IP (DHCP), la traduction d’adresses (NAT) et le contrôle des flux (ACL).  
 L’objectif est d’assurer à la fois la connectivité, la sécurité et la maîtrise des échanges entre les différents VLANs et avec Internet.
 
 %=================================================
-	\section{Attribution dynamique des adresses IP : DHCP}
+	\subsection{Attribution dynamique des adresses IP : DHCP}
 	
-		\subsection{Choix du mode d’adressage}
+		\subsubsection{Choix du mode d’adressage}
 		Dans l’architecture proposée, chaque site est segmenté en plusieurs VLANs correspondant à différents usages (administratif, développement, serveurs).
 		
 		Le choix du mode d’attribution des adresses IP est le suivant :
@@ -1257,7 +1257,7 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 		
 		Les serveurs publics (VLAN\_32) doivent impérativement disposer d’adresses IP fixes afin d’être accessibles depuis Internet.
 	
-	\subsection{Implémentation du service DHCP}
+	\subsubsection{Implémentation du service DHCP}
 	
 	Le protocole DHCP a été mis en place afin d’automatiser l’attribution des adresses IP aux hôtes des différents VLANs.
 	
@@ -1327,7 +1327,7 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 %	La solution a consisté à autoriser explicitement les flux UDP (ports 67 et 68)(voir \label{DHCP_ACL}).
 	
 	
-	\subsection{Validation du DHCP}	
+	\subsubsection{Validation du DHCP}	
 	Une fois le service configuré, les commandes de supervision permettent de vérifier son bon fonctionnement sont les suivantes.
 	
 	\begin{itemize}
@@ -1342,7 +1342,7 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 		\label{fig:dhcp_show}
 	\end{figure}
 	
-	\subsection{Analyse du fonctionnement du DHCP}
+	\subsubsection{Analyse du fonctionnement du DHCP}
 	
 	Enfin, la figure~\ref{fig:dhcp_resultats} présente les résultats expérimentaux confirmant le bon fonctionnement du service DHCP :
 	
@@ -1383,9 +1383,9 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Traduction d’adresses : NAT}
+\subsection{Traduction d’adresses : NAT}
 
-\subsection{Besoins et contraintes}
+\subsubsection{Besoins et contraintes}
 
 Les VLANs privés doivent accéder à Internet, tandis que les serveurs publics doivent être directement accessibles.
 
@@ -1395,12 +1395,12 @@ Les besoins sont :
 	\item Accès direct pour VLAN\_32 (IP publiques)
 \end{itemize}
 
-\subsection{Découpage des plages publiques}
+\subsubsection{Découpage des plages publiques}
 
 Chaque site dispose d’un bloc d’adresses IPv4 publiques en /27, subdivisé selon les besoins en sous-réseaux dédiés aux serveurs publics, à la liaison WAN avec l’opérateur et au pool NAT, voir le tableau~\ref{tab:decoupage_plages_publiques}.
 
 
-\subsection{Configuration NAT}
+\subsubsection{Configuration NAT}
 
 Les configurations NAT mises en place sur les routeurs R1 (Site 1) et R2 (Site 2) reposent sur le principe du NAT dynamique avec surcharge (PAT). Le tableau~\ref{tab:nat_configuration} présente les différentes étapes de configuration.
 \begin{landscape}
@@ -1536,7 +1536,7 @@ Les caractéristiques des interconnexions entre les routeurs sont résumées dan
 	\label{tab:liaisons_operateur}
 \end{table}
 	
-\subsection{Validation du fonctionnement du NAT}
+\subsubsection{Validation du fonctionnement du NAT}
 
 La validation a été réalisée à partir d’un hôte du réseau interne (poste administrateur), en initiant un ping vers l’adresse \texttt{8.8.8.8}. Lors de cette opération, l’activation du mode debug sur le routeur R1 (\texttt{debug ip nat}) a permis d’observer en temps réel la traduction d’adresse, avec le message indiquant le passage de l’adresse source privée \texttt{192.168.1.6} vers une adresse publique du pool NAT, par exemple \texttt{123.1.1.179}. Cette correspondance confirme que le trafic issu du réseau interne est correctement traduit avant d’être transmis vers l’extérieur. Ainsi, la combinaison des tests de connectivité et des traces de débogage atteste du bon fonctionnement du NAT dynamique avec surcharge (PAT), validant la configuration mise en place dans cette architecture réseau. Le tableau~\ref{tab:validation_nat} résume les étapes mises en œuvre et la figure~\ref{tab:validation_nat} illustre les résultats obtenus.
 
@@ -1562,7 +1562,7 @@ La validation a été réalisée à partir d’un hôte du réseau interne (post
 		& &  du prochain saut).\\
 		\hline
 		
-		Routage retour& \texttt{123.1.1.160 } & Ajout d’une route  \\
+		Routage retour& \texttt{ip route 123.1.1.160 } & Ajout d’une route  \\
 		 (sur R3) & \texttt{255.255.255.224 123.1.1.176} & vers le réseau interne. \\
 		\hline
 		Test de connecti- & \texttt{ping 8.8.8.8} & Envoi d’un ping depuis un hôte \\
@@ -1592,10 +1592,10 @@ La validation a été réalisée à partir d’un hôte du réseau interne (post
 	\end{figure}
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Contrôle d’accès : ACL}
+\subsection{Contrôle d’accès : ACL}
 
 %\subsection{Analyse des contraintes}
-\subsection{Expression des besoins en matière d’ACL de sécurité}
+\subsubsection{Expression des besoins en matière d’ACL de sécurité}
 
 Les contraintes de sécurité définies pour l’architecture réseau sont traduites en règles de filtrage (ACL). Le tableau~\ref{tab:besoins_acl} synthétise les besoins en termes de contrôle des flux entre les différents VLANs et vers Internet.
 
@@ -1651,7 +1651,7 @@ Les contraintes de sécurité définies pour l’architecture réseau sont tradu
 
 Cette modélisation met en évidence une politique de sécurité de type « zéro confiance partielle », où les flux internes sont strictement contrôlés et les accès depuis Internet sont limités aux seuls services explicitement exposés. Les communications sortantes restent autorisées afin de garantir le bon fonctionnement des usages utilisateurs.
 
-\subsection{Schéma des flux autorisés et interdits}
+\subsubsection{Schéma des flux autorisés et interdits}
 
 La politique de sécurité repose sur une séparation stricte des flux internes et un contrôle des accès depuis Internet. Les règles peuvent être résumées comme suit :
 
@@ -1671,7 +1671,7 @@ La politique de sécurité repose sur une séparation stricte des flux internes 
 		\item Tous les VLANs $\rightarrow$ Internet
 	\end{itemize}
 \end{itemize}
-\subsection{Structuration des ACL}
+\subsubsection{Structuration des ACL}
 
 Les règles de filtrage sont regroupées selon leur rôle :
 
@@ -1681,7 +1681,7 @@ Les règles de filtrage sont regroupées selon leur rôle :
 	\item \textbf{ACL 102 :} Filtrage Internet → réseaux privés
 \end{itemize}
 
-\subsection{Configuration des ACL de sécurité}
+\subsubsection{Configuration des ACL de sécurité}
 
 Les règles de filtrage ont été implémentées sur les routeurs sous forme d’ACL étendues. Les tableaux~\ref{tab:acl_interfaces},\ref{tab:config_acl} présentent les principales configurations mises en place ainsi que leur rôle dans l’architecture.
 
@@ -1720,11 +1720,15 @@ La configuration des ACL a été réalisée en respectant le principe du filtrag
 		
 		ACL 100 &
 		\texttt{access-list 100 deny ip 192.168.1.0 0.0.0.31 192.168.1.32 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.1.0 0.0.0.31 192.168.2.32 0.0.0.31} \newline \newline		
 		\texttt{access-list 100 deny ip 192.168.1.32 0.0.0.31 192.168.1.0 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.1.32 0.0.0.31 192.168.2.0 0.0.0.31} \newline \newline		
 		\texttt{access-list 100 permit ip any any}
 		&
 		\texttt{access-list 100 deny ip 192.168.2.0 0.0.0.31 192.168.2.32 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.2.0 0.0.0.31 192.168.1.32 0.0.0.31} \newline \newline
 		\texttt{access-list 100 deny ip 192.168.2.32 0.0.0.31 192.168.2.0 0.0.0.31} \newline \newline
+		\texttt{access-list 100 deny ip 192.168.2.32 0.0.0.31 192.168.1.0 0.0.0.31} \newline \newline
 		\texttt{access-list 100 permit ip any any}
 		&
 		Isolation entre VLAN\_10 (Administratif) et VLAN\_20 (Développeurs)
@@ -1733,11 +1737,15 @@ La configuration des ACL a été réalisée en respectant le principe du filtrag
 		
 		ACL 101 &
 		\texttt{access-list 101 deny ip 192.168.1.64 0.0.0.7 123.1.1.160 0.0.0.15} \newline\newline
+		\texttt{access-list 101 deny ip 192.168.1.64 0.0.0.7 123.2.2.160 0.0.0.7} \newline\newline
 		\texttt{access-list 101 deny ip 123.1.1.160 0.0.0.15 192.168.1.64 0.0.0.7} \newline\newline
+		\texttt{access-list 101 deny ip 123.1.1.160 0.0.0.15 192.168.2.64 0.0.0.7} \newline\newline
 		\texttt{access-list 101 permit ip any any}
 		&
 		\texttt{access-list 101 deny ip 192.168.2.64 0.0.0.7 123.2.2.160 0.0.0.7} \newline\newline
+		\texttt{access-list 101 deny ip 192.168.2.64 0.0.0.7 123.1.1.160 0.0.0.15} \newline\newline
 		\texttt{access-list 101 deny ip 123.2.2.160 0.0.0.7 192.168.2.64 0.0.0.7} \newline\newline
+		\texttt{access-list 101 deny ip 123.2.2.160 0.0.0.7 192.168.1.64 0.0.0.7} \newline\newline
 		\texttt{access-list 101 permit ip any any}
 		&
 		Protection des serveurs internes (VLAN\_31) contre le VLAN public (VLAN\_32)
@@ -1760,7 +1768,7 @@ La configuration des ACL a été réalisée en respectant le principe du filtrag
 \end{table}
 \end{landscape}
 
-\subsection{Validation des ACL}
+\subsubsection{Validation des ACL}
 
 Afin de vérifier le bon fonctionnement des règles de filtrage mises en place, une série de tests de connectivité a été réalisée à l’aide de requêtes ICMP (\texttt{ping}) entre les différents VLANs.
 
@@ -1806,29 +1814,43 @@ L’analyse des captures réseau réalisées avec Wireshark montre que les paque
 Ces observations confirment que les ACL appliquées filtrent correctement les flux dès leur arrivée sur le routeur, en respectant la politique de sécurité définie. L’isolation des VLANs sensibles est assurée, tout en maintenant les communications nécessaires vers les services internes et externes.
 
 %=================================================
+%=================================================
+%=================================================
 
 \chapter{Mise en œuvre du réseau opérateur}
 
+\section{Contexte}
+
+La mise en place du réseau opérateur répond à deux objectifs principaux :
+
+\begin{itemize}
+	\item disposer d’un réseau IP pleinement opérationnel, reposant sur un routage dynamique au sein du backbone (protocole OSPF), complété par du routage statique entre les routeurs de périphérie et les réseaux clients ;
+	
+	\item mettre en œuvre des circuits virtuels à l’aide du protocole MPLS, afin d’optimiser l’acheminement des flux et de permettre une isolation logique des trafics.
+\end{itemize}
+
+Ainsi, le backbone opérateur repose sur une architecture de type \textbf{IP/MPLS}, dans laquelle le routage IP assure la connectivité globale tandis que MPLS permet une commutation efficace des paquets basée sur des labels.
+
 \section{Présentation de la topologie}
 
-Dans cette seconde partie du projet, l’objectif est de mettre en place un réseau opérateur simulé permettant d’interconnecter les différents sites de l’entreprise ainsi que les infrastructures du fournisseur de cloud, figure~\ref{fig:Topo_op}.
+Dans cette seconde partie du projet, l’objectif est de mettre en place un réseau opérateur simulé permettant d’interconnecter les différents sites de l’entreprise ainsi que les infrastructures du fournisseur de cloud (figure~\ref{fig:Topo_op}).
 
-\begin{figure}[]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../captures/img2.png}
+	\includegraphics[width=0.9\textwidth]{../captures/img3.png}
 	\caption{Topologie du réseau opérateur}
 	\label{fig:Topo_op}
 \end{figure}
 
-Afin de simplifier l’architecture, un unique réseau opérateur est considéré. Celui-ci est composé de deux types de routeurs :
+Afin de simplifier l’architecture, un unique réseau opérateur est considéré. Celui-ci est structuré autour de deux types de routeurs :
 
 \begin{itemize}
-	\item \textbf{Routeurs de cœur :} quatre routeurs (RO1 à RO4) interconnectés entre eux selon une topologie maillée. Cette interconnexion assure une redondance des chemins et une meilleure résilience du réseau.
+	\item \textbf{Routeurs de cœur (P -- Provider)} : quatre routeurs (RO1 à RO4) interconnectés selon une topologie maillée. Cette organisation permet d’assurer la redondance des chemins et d’améliorer la résilience du réseau en cas de défaillance.
 	
-	\item \textbf{Routeurs de périphérie :} trois routeurs (RO11, RO21 et RO31) assurant l’accès aux réseaux externes. Ces routeurs permettent de connecter les différents sites et services au réseau opérateur via des liens d’accès dédiés.
+	\item \textbf{Routeurs de périphérie (PE -- Provider Edge)} : trois routeurs (RO11, RO21 et RO31) assurant l’interface entre le réseau opérateur et les réseaux externes.
 \end{itemize}
 
-Les routeurs de périphérie assurent l’interconnexion avec les différentes entités externes suivantes :
+Les routeurs de périphérie permettent l’interconnexion avec les différentes entités suivantes :
 
 \begin{itemize}
 	\item le réseau du \textbf{Site 1} de l’entreprise via le routeur R1 ;
@@ -1837,25 +1859,32 @@ Les routeurs de périphérie assurent l’interconnexion avec les différentes e
 	\item le réseau \textbf{Public} du fournisseur de cloud via le routeur RF2.
 \end{itemize}
 
-Chaque connexion est réalisée à l’aide de liens d’accès identifiés (A1, A2, B1, B2, C et D), permettant de relier les extrémités du réseau aux routeurs de périphérie.
+Les routeurs RE1, RE2 et RF1 sont considérés comme des routeurs \textbf{CE (Customer Edge)}, situés du côté client et ne participant pas directement au fonctionnement du protocole MPLS.
 
-Cette architecture distingue clairement :
+Chaque interconnexion est réalisée à l’aide de liens d’accès identifiés (A1, A2, B1, B2, C et D), permettant de relier les réseaux externes aux routeurs de périphérie.
+
+Cette architecture met en évidence une séparation claire entre :
+
 \begin{itemize}
-	\item un \textbf{cœur de réseau}, responsable du transport des données ;
-	\item une \textbf{périphérie}, assurant l’accès aux différents réseaux clients et services.
+	\item le \textbf{cœur de réseau}, chargé du transport des données ;
+	\item la \textbf{périphérie}, assurant l’accès aux réseaux clients et aux services.
 \end{itemize}
 
-Le choix d’une topologie maillée pour le cœur du réseau permet de garantir une continuité de service en cas de défaillance d’un lien ou d’un routeur, ce qui constitue un élément clé dans les infrastructures opérateurs.
+Le choix d’une topologie maillée pour le cœur du réseau constitue un élément clé des infrastructures opérateurs, garantissant la continuité de service grâce à la multiplicité des chemins possibles.
 
 \vspace{0.5cm}
 \textbf{Remarque :}
-Dans le cadre de cette implémentation, une image spécifique de routeur a été utilisée pour l’ensemble des équipements du réseau opérateur. Il s’agit de l’image \texttt{c7200-adventerprisek9-mz.124-24.T5}, importée dans l’environnement GNS3 via le fichier \texttt{cisco-7200-edge.gns3a}.
 
-Cette image permet d’accéder à des fonctionnalités avancées nécessaires à la mise en œuvre du réseau opérateur, notamment en termes de protocoles de routage et de gestion du trafic.
+Dans le cadre de cette implémentation, une image spécifique de routeur a été utilisée pour l’ensemble des équipements du réseau opérateur : \texttt{c7200-adventerprisek9-mz.124-24.T5}, importée dans l’environnement GNS3 via le fichier \texttt{cisco-7200-edge.gns3a}.
+
+Cette image permet d’accéder à des fonctionnalités avancées indispensables à la mise en œuvre d’un réseau opérateur, notamment pour le routage dynamique (OSPF) et le support du protocole MPLS.
+
 
 \section{Plan d’adressage}
 Le plan d’adressage du réseau opérateur couvre l’ensemble des liaisons du backbone reliant les routeurs de cœur (RO1 à RO4) ainsi que les routeurs de périphérie (RO11, RO21, RO31).
+
 Pour les interconnexions du backbone, un masque de sous-réseau /30 est retenu, offrant quatre adresses IPv4 par liaison, dont deux utilisables, une pour chaque extrémité.
+
 En ce qui concerne les liaisons point-à-point entre les routeurs de périphérie et les routeurs des clients (sites de l’entreprise et fournisseur cloud), un masque /31 est utilisé. Ce choix permet d’optimiser l’utilisation des adresses IPv4 en supprimant l’adresse de diffusion et en rendant exploitables les deux adresses disponibles sur la liaison.
 
 Le tableau suivant présente le découpage d’adressage retenu pour le backbone et les liaisons d’extrémité du réseau opérateur (hors liens A2 et B2), en indiquant pour chaque liaison :
@@ -1946,16 +1975,13 @@ Dans cette architecture, les deux masques sont utilisés de manière complément
 
 Ce choix permet de concilier \textbf{efficacité d’adressage}, \textbf{simplicité de gestion} et \textbf{compatibilité technique}.
 
+%\section{Création d'un réseau opérationnel via les protocoles OSPF et MPLS, LDP}
 
-\section{Définition des routes}
-
-L’utilisation du routage dynamique, ici avec OSPF, permet une mise à jour automatique des tables de routage et assure la tolérance aux pannes, ce qui représente un avantage considérable par rapport au routage statique qui nécessite une reconfiguration manuelle en cas de changement de topologie. Par exemple, si le lien RO1–RO2 est défaillant, OSPF recalculera automatiquement un chemin alternatif via RO3 et RO4 sans intervention humaine. 
+\section{Mise en œuvre du routage IP}
+\subsection{Mise en œuvre du routage IP (OSPF) (routeurs du backbone)}
+L’utilisation du routage dynamique, ici avec le protocole \textbf{OSPF} (\textit{Open Shortest Path First}), permet une mise à jour automatique des tables de routage et assure la tolérance aux pannes, ce qui représente un avantage considérable par rapport au routage statique qui nécessite une reconfiguration manuelle en cas de changement de topologie. Par exemple, si le lien RO1–RO2 est défaillant, OSPF recalculera automatiquement un chemin alternatif via RO3 et RO4 sans intervention humaine. 
 
 Le routage dynamique n’est cependant nécessaire que sur les routeurs du backbone de l’opérateur (RO1, RO2, RO3, RO4, RO11, RO21, RO31) afin d’assurer la connectivité interne et la diffusion des routes. Les routeurs clients (R1, R2, RF1, RF2) peuvent se contenter de routes statiques car ils ne possèdent qu’un point d’entrée vers le réseau opérateur.
-
-\subsection{Routage dynamique via le protocole OSPF (routeurs du backbone)}
-
-Le routage dynamique au sein du réseau opérateur est assuré à l’aide du protocole \textbf{OSPF} (\textit{Open Shortest Path First}). 
 
 La configuration du protocole OSPF est réalisée de manière similaire sur l’ensemble des routeurs du backbone, incluant à la fois les routeurs de cœur et les routeurs de périphérie. Tous les routeurs sont intégrés dans une même zone OSPF (area 0), correspondant à l’aire backbone.
 
@@ -2021,10 +2047,12 @@ RO11(config-router)# end
 	RF2(config)# ip route 0.0.0.0 0.0.0.0 163.173.19.223			
 \end{verbatim}
 
-\section{Validation du fonctionnement du protocole OSPF}
+\subsection{Validation du fonctionnement du protocole OSPF}
 
 Afin de vérifier le bon fonctionnement du protocole de routage dynamique OSPF au sein du réseau opérateur, une analyse du trafic ainsi que des états de voisinage a été réalisée.
-\subsection{Wiresharque (Hello \& LS Update \& voisinage)}
+
+
+\subsubsection{Wiresharque (Hello \& LS Update \& voisinage)}
 L’observation des captures réseau met en évidence la présence de messages OSPF de type \textit{Hello}, échangés périodiquement entre les routeurs adjacents (fig.~\ref{fig:ospf_lsupdate}). Ces messages permettent :
 \begin{itemize}
 	\item la découverte des routeurs voisins ;
@@ -2034,7 +2062,7 @@ L’observation des captures réseau met en évidence la présence de messages O
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{../captures/10_ospf_lsupdate.png}
+	\includegraphics[width=0.81\textwidth]{../captures/10_ospf_lsupdate.png}
 	\caption{Capture Wireshark des échanges OSPF après modification de topologie : observation des messages Hello et des paquets LS Update diffusant les informations de routage}
 	\label{fig:ospf_lsupdate}
 \end{figure}
@@ -2046,17 +2074,20 @@ Par ailleurs, la formation des adjacences OSPF a été vérifiée à l’aide de
 	\caption{Table des voisins OSPF sur le routeur RO4 : adjacences établies avec les routeurs du backbone (état \textit{FULL})}
 	\label{fig:ospf_neighbors_ro4}
 \end{figure}
-Une fois ces adjacences établies, les routeurs échangent leur base de données de topologie, permettant la construction d’une vision cohérente du réseau. L’absence de messages de type \textit{LS Update} dans les captures s’explique par le fait que le réseau est dans un état stable, sans modification de topologie.\\
-\textbf{Remarque : } pour visualiser un \textit{LS Update}, on peut le provoquer ainsi : 
+Une fois ces adjacences établies, les routeurs échangent leur base de données de topologie, permettant la construction d’une vision cohérente du réseau. 
+
+\textbf{Remarque : \\} L’absence de messages de type \textit{LS Update} dans les captures s’explique par le fait que le réseau est dans un état stable, sans modification de topologie. 
+
+Pour visualiser un \textit{LS Update}, on peut le provoquer ainsi : 
 \begin{verbatim}
 	RO11(config)#shutdown interface e1/0
 	RO11(config)#no shutdown
 \end{verbatim}
 
-\subsection{Tests de la connectivité du réseau opérateur}
+\subsubsection{Tests de la connectivité du réseau opérateur}
 Enfin, pour valider le bon fonctionnement du routage dynamique OSPF au sein du réseau opérateur, des tests de connectivité peuvent être réaliser entre différents équipements dans les situations suivantes :
 \begin{enumerate}
-	\item  entre toutes paires de routeurs des réseaux extrémités : RE1, RE2 et RF2,
+	\item  entre toutes paires de routeurs des réseaux extrémités : R1, R2 et RF2,
 	\item entre chaque sous-réseau privé du Site x vers un serveur accessible par Internet du Site y,
 	\item entre chaque sous-réseau privé ou public du Site x de l’entreprise et le routeur RF2,
 	\item entre chaque sous-réseau privé du Site x vers un serveur accessible par Internet hébergé chez le Fournisseur de Cloud.
@@ -2123,27 +2154,631 @@ La figure~\ref{fig:connectivite_operateur} présente des tests de connectivité 
 		\label{fig:wireshark_operateur}
 	\end{figure}
 	
-	L’analyse de cette capture met en évidence les éléments suivants :
-	
-	L’analyse montre notamment :
+	L’analyse de cette capture montre les éléments suivants :
 	\begin{itemize}
 		\item le passage des requêtes ICMP (Echo Request) et des réponses (Echo Reply) entre les routeurs ;
 		\item la présence de paquets OSPF (Hello, LS Update), confirmant l’établissement des voisinages ;
 		\item une transmission correcte des paquets sans perte ni anomalie.
 	\end{itemize}
 
-\end{enumerate}
+%\end{enumerate}
 	
+%\subsubsection{Validation de la diffusion des routes externes}
+	\item \textbf{{Validation de la diffusion des routes externes}}
+	
+Afin de vérifier la propagation des routes externes dans le domaine OSPF, la commande suivante a été utilisée sur les routeurs de périphérie RO11, RO21 et RO31:
+
+\begin{verbatim}
+	RO11# show ip ospf database external
+\end{verbatim}
+
+La commande \texttt{show ip ospf database external} permet de visualiser les routes externes injectées dans le processus OSPF. Ces routes correspondent à des réseaux non appris nativement via OSPF, mais introduits par redistribution ou via des routes statiques.
+
+Les entrées observées dans cette base correspondent à des \textbf{LSA de type 5} (\textit{External LSA}), identifiées par leur préfixe réseau et le routeur annonceur (ASBR). Chaque LSA contient notamment :
+\begin{itemize}
+	\item le réseau de destination ;
+	\item la métrique associée ;
+	\item le type de métrique (1 ou 2) ;
+	\item l’identifiant du routeur ayant injecté la route.
+\end{itemize}
+
+La présence de ces LSA sur l’ensemble des routeurs analysés confirme que les routes externes sont correctement propagées dans le backbone OSPF. Cela permet aux routeurs internes d’avoir une visibilité complète des réseaux situés en dehors du domaine OSPF, notamment les réseaux publics et les infrastructures du fournisseur de cloud.
+
+\paragraph{Observations sur les routeurs}
+
+La figure~\ref{fig:ospf_ext_example} illustre un exemple de routes externes (LSA de type 5) observées sur un routeur du backbone (RO11).
+
+Des résultats similaires ont été obtenus sur les routeurs RO21 et RO31, confirmant que les routes externes sont correctement propagées à l’ensemble du domaine OSPF.
+
+Cette cohérence entre les différents équipements valide le bon fonctionnement de la diffusion des routes externes dans le réseau opérateur.
+
+\textbf{Routeur RO11}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/11_ospf_database_external.png}
+	\caption{Exemple de LSA externes (type 5) observés sur un routeur du backbone}
+	\label{fig:ospf_ext_example}
+\end{figure}
+
+\end{enumerate}
+Les observations sont identiques sur l’ensemble des routeurs du backbone, ce qui confirme la cohérence de la base de données OSPF (LSDB).
+
+
 \textbf{Conclusion :}
 
-Les tests de connectivité (ping et traceroute) confirment que les routes calculées par OSPF sont correctement utilisées pour acheminer les paquets à travers le réseau opérateur.
+Les tests de connectivité (ping et traceroute ainsi le database external) confirment que les routes calculées par OSPF sont correctement utilisées pour acheminer les paquets à travers le réseau opérateur.
 
 Ainsi, l’ensemble de ces observations (messages Hello, formation des adjacences, stabilité du réseau et connectivité effective) permet de valider le bon fonctionnement du protocole OSPF dans l’architecture mise en place.
 
+\subsection{Mise en œuvre du protocole MPLS}
+\subsubsection{Activation de MPLS et du protocole LDP}
+
+Sur l’ensemble des routeurs du réseau opérateur (RO1 à RO4, RO11, RO21, RO31), le mécanisme CEF (\textit{Cisco Express Forwarding}) est activé. Cette fonctionnalité est indispensable au bon fonctionnement de MPLS, car elle permet une commutation rapide des paquets basée sur des tables de transfert optimisées.
+
+Le protocole MPLS ainsi que le protocole de distribution de labels LDP (\textit{Label Distribution Protocol}) sont ensuite activés uniquement sur les interfaces du backbone du réseau opérateur.
+
+En revanche, aucune configuration MPLS/LDP n’est appliquée sur les liaisons d’accès reliant les routeurs clients (R1, R2) aux routeurs de périphérie (RO11, RO21). Ces interfaces restent en routage IP classique, conformément au modèle CE/PE, où seuls les routeurs du cœur et de périphérie participent au transport MPLS.
+
+Un exemple de configuration est présenté ci-dessous, le détail complet étant fourni en annexe dans le fichier Excel.
+
+\begin{verbatim}
+	! Activer CEF (obligatoire pour MPLS)
+	RO11(config)# ip cef
+	
+	! Activer MPLS globalement
+	RO11(config)# mpls ip
+	
+	! Définir le protocole de distribution de labels (LDP)
+	RO11(config)# mpls label protocol ldp
+	
+	! Activer MPLS sur une interface du backbone
+	RO11(config)# interface e1/0
+	RO11(config-if)# mpls ip
+\end{verbatim}
+
+Ainsi, les routeurs PE assurent l’insertion et la suppression des labels MPLS, tandis que les routeurs P réalisent uniquement la commutation basée sur ces labels.
+
+\subsubsection{Vérification des voisins LDP}
+
+La commande \texttt{show mpls ldp neighbor} permet de vérifier l’établissement des sessions LDP entre les routeurs du backbone.
+
+Les résultats obtenus montrent que chaque routeur MPLS établit correctement des relations de voisinage avec ses routeurs adjacents. Ces échanges permettent la distribution des labels nécessaires à la mise en place des chemins MPLS.
+
+La présence de voisins LDP actifs confirme que le plan de contrôle MPLS est opérationnel (fig.~\ref{fig:mpls_example}).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/12_mpls_results.png}
+	\caption{Exemple d'établissement des sessions LDP entre le routeur RO11 et le reste des routeurs de backbone}
+	\label{fig:mpls_example}
+\end{figure}
+\subsubsection{Analyse de la table de commutation MPLS}
+
+La commande \texttt{show mpls forwarding-table} permet de visualiser les labels associés aux différents préfixes réseau.
+
+Cette table indique (fig.~\ref{fig:mpls_example}), pour chaque destination :
+\begin{itemize}
+	\item le label local attribué ;
+	\item le label de sortie ;
+	\item l’interface de sortie ;
+	\item le prochain saut.
+\end{itemize}
+
+L’analyse de cette table met en évidence que les paquets ne sont plus routés uniquement sur la base de l’adresse IP, mais commutés en fonction des labels MPLS.
+
+Cela confirme le bon fonctionnement du plan de données MPLS.
+
+\subsubsection{Tests de connectivité}
+
+Des tests de connectivité ont été réalisés à l’aide des commandes \texttt{ping} et \texttt{traceroute} entre les différents routeurs et réseaux (fig.~\ref{fig:mpls_ping}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../captures/12_mpls_ping_RO11.png}
+	\caption{Exemple de test de connectivité entre les routeurs RO11 et R2}
+	\label{fig:mpls_ping}
+\end{figure}
+
+Les résultats montrent que les communications sont correctement établies à travers le backbone MPLS. Les chemins empruntés sont cohérents avec la topologie du réseau.
+
+Ces tests confirment que MPLS fonctionne correctement et assure le transport des paquets entre les différents sites.
 
 
+\subsubsection{Perte d'adjacence}
+Si un routeur du backbone tombe, OSPF détecte la perte d’adjacence, reconstruit la topologie et recalculera les routes (ré-installation des routes et ré-distribution de labels MPLS) (fig.~\ref{ospf_panne1}). Pendant la reconvergence on observera pertes/transitoires, TTL expired dans traceroute ou hop manquant ; une fois OSPF/MPLS reconvergés, le trafic emprunte le chemin alterné disponible.
+Techniquement voici les étapes de ce qui se passe :
+\begin{itemize}
+	\item Lien ou routeur tombe → adjacences OSPF se brisent
+	\item Les voisins détectent la disparition (Hello timeouts).
+	\item show ip ospf neighbor passe du statut FULL à DOWN/INIT/2-way.
+	\item OSPF reconstruit la LSDB et recalcule SPF
+	\item Chaque routeur recalcule les routes (nouvelle RIB).
+	\item Les routes affectées peuvent être supprimées ou changées de next-hop.
+	\item MPLS/LDP : mise à jour des labels
+	\item LDP détecte la perte de session LDP avec le voisin → les labels associés sont supprimés.
+	\item Les routeurs recalculent LFIB (forwarding-table). Si un chemin alternatif via d’autres PE/P est disponible, de nouveaux labels sont assignés et distribués.
+	\item Conséquences visibles côté utilisateur
+	ping échoue temporairement, traceroute montre TTL exceeded / * / sauts changeants / alternance
+	Possibles paquets perdus ou sessions TCP reset avant que la nouvelle route soit utilisée.
+\end{itemize}
 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/12_mpls_ping_RO11.png}
+	\caption{Disparition des routes utilisées par RO11 ou changement de next-hop}
+	\label{ospf_panne1}
+\end{figure}
+
+\subsubsection{Joignabilité des réseaux privés depuis l'extérieur}
+ Les paquets arrivant depuis RF1/RF2 ne pourront pas atteindre les hôtes privés ou les réponses ne reviendront pas. 
+ 
+ Dans notre topologie, les hôtes privés (192.168.x.x) sortent vers Internet en étant traduits (NAT) sur R1/R2.
+ 
+ Par défaut, NAT overload (ip nat inside source list X interface FastEthernet0/0 overload) n’accepte pas les connexions entrantes non sollicitées : il traduit les flux sortants mais ne mappe pas une connexion entrante vers un hôte interne
+
+Donc un ping/connexion initiée depuis RF1 ou RF2 vers une IP privée des deux sites ne peut pas traverser R1 ni R2 pour atteindre l’hôte privé, à moins qu'on fasse de la redirection (fig.~\ref{ospf_RF1-prive}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/13_connectivite_RF1_prive.png}
+	\caption{Injoignabilité des réseaux privés depuis le routeur RF1}
+	\label{ospf_RF1-prive}
+\end{figure}
 
 
+\chapter{Tunnel d'interconnexion}
+\section{Objectif}
+Cette troisième partie du projet a pour objectif d’étendre les capacités du réseau opérateur en mettant en place des mécanismes d’interconnexion avancés entre les différents sites de l’entreprise et les infrastructures du fournisseur de cloud. Dans un premier temps, un tunnel de type \textbf{L2VPN basé sur MPLS} est déployé afin d’assurer une continuité des réseaux locaux entre les Sites 1 et 2. Ce mécanisme permet de transporter les trames Ethernet de manière transparente à travers le backbone opérateur, offrant ainsi l’illusion d’un réseau local unique, tout en conservant l’encapsulation VLAN existante. Dans un second temps, un tunnel de type \textbf{L3VPN basé sur GRE} est mis en œuvre pour interconnecter les sous-réseaux applicatifs avec le réseau Intranet du fournisseur de cloud. Contrairement au L2VPN, ce tunnel fonctionne au niveau IP et permet l’échange de datagrammes entre des réseaux distincts. L’objectif global est donc de combiner ces deux approches afin d’assurer à la fois une extension des réseaux locaux entre sites et une interconnexion sécurisée et structurée avec les services externes, tout en s’appuyant sur l’infrastructure IP/MPLS mise en place précédemment.
+
+%----------------------------------------------
+\section{Interconnexion des sites via MPLS (L2VPN)}
+
+\subsection{Schéma Général des Tunnel L2VPN}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[>=latex, node distance=3cm, every node/.style={draw, rounded corners, minimum width=2.5cm, minimum height=1cm, align=center}]
+		
+		% Sites
+		\node (R1) {R1 \\ Site 1};
+		\node (R2) [right=5cm of R1] {R2 \\ Site 2};
+		%		\node (RE2) [right=8cm of RE1] {RE2 \\ Site 2};
+		
+		% Opérateur
+		\node (RO11) [above=3cm of R1] {RO11 \\ Opérateur};
+		\node (RO21) [above=3cm of R2] {RO21 \\ Opérateur};
+		
+		% Liaisons CE->PE
+		\draw[->, thick] (R1) -- node[left] {e1/2.10, e1/2.20, e1/2.31} (RO11);
+		\draw[->, thick] (R2) -- node[right] {e1/2.10, e1/2.20, e1/2.31} (RO21);
+		
+		% Tunnel MPLS
+		\draw[<->, dashed, thick, red] (RO11) -- (RO21);
+		
+		% Texte sur le tunnel
+		\node[draw=none, above=0.4cm] at ($(RO11)!0.5!(RO21)$) {MPLS: LSP label + VPN label};
+		\node[draw=none, below=0.2cm] at ($(RO11)!0.5!(RO21)$) {Tunnel L2VPN MPLS};
+		
+		
+		% VLANs LAN_x-1, LAN_x-2, LAN_x-31
+		\node[draw, below=1cm of R1] (LAN1) {LAN\_1-1, LAN\_1-2, LAN\_1-31};
+		\node[draw, below=1cm of R2] (LAN2) {LAN\_2-1, LAN\_2-2, LAN\_2-31};
+		
+		\draw[->, thick] (LAN1.north) -- (R1.south);
+		\draw[->, thick] (LAN2.north) -- (R2.south);
+		
+	\end{tikzpicture}
+	\caption{Schéma logique MPLS L2VPN pour l’interconnexion des sites de l’entreprise}
+\end{figure}
+\begin{itemize}
+	\item Les routeurs d’extrémité client (Customer Edge – CE), R1 et R2 se connectent respectivement aux VLAN_10, VLAN_20 et VLAN_31. 
+	
+	\item Les routeurs opérateurs (Provider Edge – PE), RO11 et RO21,  leur rôle est de terminer les sessions MPLS et de créer les tunnels L2VPN VPWS (Virtual Private Wire Service). Ils sont reliés aux CE (R1 et R2) via des sous-interfaces Ethernet (interface physique e1/2) taguées (VLAN 10, 20, 31).
+	
+	\item La liaisons R1 → RO11 (R2 → RO21) est représentée par une flèche où chaque sous-interface, e1/2.10, e1/2.20 ou e1/2.31, transporte le trafic de son VLAN spécifique.
+	
+	Ce trafic est encapsulé par les PE (RO11/RO21) via le protocole MPLS.
+	
+	\item Tunnel MPLS entre RO11 et RO21, représenté par une liaison pointillée ({\color{red}<$\dot{---}$>}). Le texte associé précise la double hiérarchie d’étiquettes MPLS :\\
+	LSP label : utilisé pour acheminer les paquets dans le cœur MPLS.\\
+	VPN label : utilisé pour identifier le pseudowire correspondant à un VLAN (10, 20, 31).
+	
+	C’est ce mécanisme qui permet d’offrir un service L2VPN (VPWS).
+	
+	\item Les blocs (LAN_1-1, LAN_1-2, LAN_1-31) et (LAN_2-1, LAN_2-2, LAN_2-3), représentent les réseaux locaux des deux sites. Chaque VLAN (10, 20, 31) correspond à un sous-réseau spécifique. Grâce au tunnel MPLS, les VLANs sont étendus d’un site à l’autre comme si les deux LANs étaient sur le même switch étendu.
+\end{itemize}
+
+Avec cette configuration, chaque VLAN des sites 1 et 2 est prolongé sur le tunnel L2VPN MPLS. Les employés de VLAN identiques sur les deux sites peuvent communiquer comme s’ils étaient sur le même LAN.
+
+\subsection{Plan d'adressage}
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+			%	\caption{Tableau d’adressage pour la première évolution (Tunnel L2VPN MPLS)}
+			\begin{tabular}{|c|c|c|c|c|c|c|c|}
+				\hline
+				Site & VLAN & Sous-réseau & Interface CE/RE & IP RE & IP PE & Masque & Tunnel MPLS ID \\
+				\hline
+				1 & 10 & LAN\_1-1 &  R1 e1/2.10 & 192.168.0.0 & -- & /31 & 101 \\
+				& 20 & LAN\_1-2 & R1 e1/2.20 & 192.168.0.2 & -- & /31 & 101 \\
+				& 31 & LAN\_1-31 & R1 e1/2.31 & 192.168.0.4 & -- & /31 & 101 \\
+				\hline		
+				2 & 10 & LAN\_2-1 & R2 e1/2.10 & 192.168.0.1 & -- & /31 & 101 \\
+				& 20 & LAN\_2-2 & R2 e1/2.20 & 192.168.0.3 & -- & /31 & 101 \\
+				& 31 & LAN\_2-31 & R2 e1/2.31 & 192.168.0.5 & -- & /31 & 101 \\
+				\hline
+				RO11 &-- & Loopback PE & Loopback0 & -- & 192.168.0.11 & /32 & -- \\
+				RO21 &-- & Loopback PE & Loopback0 & -- & 192.168.0.21 & /32 & -- \\
+				\hline
+			\end{tabular}
+		}
+	\end{center}
+
+	\subsection{Implémentations nécessaires sur les routeurs clients }
+	Le schéma ci-dessous représente le flue des trames à travers le tunnel L2VPN via le protocole MPLS où on ne voit que les routeurs (CE) R1 et R2.
+	
+	\vline 
+	
+	\begin{tikzpicture}[node distance=6.5cm, thick, >=latex]
+		%	xshift=-3cm
+		% Style des boîtes
+		\tikzstyle{router}=[draw, rounded corners=2pt, minimum width=1.5cm, minimum height=3.5cm, align=center]
+		
+		% Les deux box
+		\node[router] (R1) {R1};
+		\node[router, right=4.5cm of R1] (R2) {R2};
+		
+		%--- Définition des "ports" (coordonnées) ---
+		% RE1 : ports LAN (gauche)
+		\path (R1.west) ++(0, 1.0) coordinate (R1L10);
+		\path (R1.west) ++(0, 0.0) coordinate (R1L20);
+		\path (R1.west) ++(0,-1.0) coordinate (R1L31);
+		
+		% R1 : ports inter-site (droite)
+		\path (R1.east) ++(0, 1.0) coordinate (R1X10);
+		\path (R1.east) ++(0, 0.0) coordinate (R1X20);
+		\path (R1.east) ++(0,-1.0) coordinate (R1X31);
+		
+		% R2 : ports inter-site (gauche)
+		\path (R2.west) ++(0, 1.0) coordinate (R2X10);
+		\path (R2.west) ++(0, 0.0) coordinate (R2X20);
+		\path (R2.west) ++(0,-1.0) coordinate (R2X31);
+		
+		% R2 : ports LAN (droite)
+		\path (R2.east) ++(0, 1.0) coordinate (R2R10);
+		\path (R2.east) ++(0, 0.0) coordinate (R2R20);
+		\path (R2.east) ++(0,-1.0) coordinate (R2R31);
+		
+		%--- Dessin des petits carrés (ports visuels) ---
+		% Ports R1 côté gauche (vers l'extérieur à gauche)
+		\filldraw[fill=white] (R1L10) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R1L20) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R1L31) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		
+		% Ports R1 côté droit (vers l'extérieur à droite)
+		\filldraw[fill=white] (R1X10) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R1X20) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R1X31) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		
+		% Ports R2 côté gauche (vers l'extérieur à gauche)
+		\filldraw[fill=white] (R2X10) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R2X20) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R2X31) ++(-0.18, 0.12) rectangle ++(0.18,-0.24);
+		
+		% Ports R2 côté droit (vers l'extérieur à droite)
+		\filldraw[fill=white] (R2R10) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R2R20) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		\filldraw[fill=white] (R2R31) ++( 0.00, 0.12) rectangle ++(0.18,-0.24);
+		
+		%--- Liaisons LAN vers R1 (gauche) ---
+		\draw (R1L10) ++(-0.20,0) -- ++(-2.2,0) node[left, above]{192.168.1.0/27 :\color{blue}e1/1.10};
+		\draw (R1L20) ++(-0.20,0) -- ++(-2.2,0) node[left, above]{192.168.1.32/27 :\color{blue}e1/1.20};
+		\draw (R1L31) ++(-0.20,0) -- ++(-2.2,0) node[left, above]{192.168.1.64/29 :\color{blue}e1/1.31};
+		
+		%--- Liaisons LAN depuis R2 (droite) ---
+		\draw (R2R10) ++(0.20,0) -- ++(2.2,0) node[right, above]{{\color{blue}e1/1.10}: 192.168.2.0/27};
+		\draw (R2R20) ++(0.20,0) -- ++(2.2,0) node[right, above]{{\color{blue}e1/1.20}: 192.168.2.32/27};
+		\draw (R2R31) ++(0.20,0) -- ++(2.2,0) node[right, above]{{\color{blue}e1/1.31}: 192.168.2.64/29};
+		
+		%--- Liaisons inter-sites (chaque lien vers un port distinct) ---
+		\draw (R1X10) ++(0.18,0) -- node[midway, above]{{\color{blue}e1/2.10} : .0 {\color{gray}$\dot{...}$} .1 : {\color{blue}e1/2.10}} (R2X10) ++(-0.18,0);
+		\draw (R1X20) ++(0.18,0) -- node[midway, above]{{\color{blue}e1/2.20} : .2 {\color{gray}$\dot{...}$} .3 : {\color{blue}e1/2.20}} (R2X20) ++(-0.18,0);
+		\draw (R1X31) ++(0.18,0) -- node[midway, above]{{\color{blue}e1/2.31} : .4 {\color{gray}$\dot{...}$} .5 : {\color{blue}e1/2.31}} (R2X31) ++(-0.18,0);
+		\draw (R1X31) ++(0.18,0) -- node[midway, below]{192.168.0.0/24} (R2X31) ++(-0.18,0);
+	\end{tikzpicture}
+		\subsubsection{Création des sous-interfaces sur les R1 et R2}
+			\paragraph{i. \textbf{Sur R1}}
+\begin{verbatim}
+	! VLAN10 : LAN_1-1
+	interface Ethernet1/0.10
+	encapsulation dot1Q 10
+	ip address 192.168.0.0 255.255.255.254
+	
+	! VLAN20 : LAN_1-2
+	interface Ethernet1/0.20
+	encapsulation dot1Q 20
+	ip address 192.168.0.2 255.255.255.254
+	
+	! VLAN20 : LAN_1-31
+	interface Ethernet1/0.31
+	encapsulation dot1Q 31
+	ip address 192.168.0.4 255.255.255.254	
+\end{verbatim}
+		\paragraph{ii. \textbf{Sur R2}}
+\begin{verbatim}
+	! VLAN10 : LAN_2-1
+	interface Ethernet1/0.10
+	encapsulation dot1Q 10
+	ip address 192.168.0.1 255.255.255.254
+	
+	! VLAN20 : LAN_1-2
+	interface Ethernet1/0.20
+	encapsulation dot1Q 20
+	ip address 192.168.0.3 255.255.255.254
+	
+	! VLAN31 : LAN_1-31
+	interface Ethernet1/0.31
+	encapsulation dot1Q 31
+	ip address 192.168.0.5 255.255.255.254	
+\end{verbatim}
+
+		\subsubsection{Routage statique (R1/R2)}
+
+Une fois les VLANs des deux sites sont définis (VLAN 10, 20, 31).
+Le tunnel MPLS L2VPN transporte les trames entre les routeurs R1 (site 1) et R2 (site 2).
+Pour que le trafic circule correctement, il faut indiquer aux routeurs comment atteindre les sous-réseaux de l’autre site via leur tunnel/MPLS backbone.\\
+Les liens sont directement point-à-point, donc : 
+
+VLAN10 : R1 = 192.168.0.0/31 -- R2 = 192.168.0.1/31\\
+VLAN20 : R1 = 192.168.0.2/31 -- R2 = 192.168.0.3/31\\
+VLAN31 : R1 = 192.168.0.4/31 -- RE2 = 192.168.0.5/31\\
+
+Le routage est simple, il suffit de dire que pour joindre le réseau du site distant, il faut passer par l’IP voisine. 
+
+D'autre part, les LAN des sites tels que définis dans la partie 1, sont :\\
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Site} & \textbf{Département} & \textbf{Sous-réseau} \\
+		\hline
+		 & Administratif & 192.168.1.0/27 \\
+		 1 & Développeurs  & 192.168.1.32/27 \\
+		 & Serveurs Intranet & 192.168.1.64/29 \\
+		\hline
+		\hline
+		& Administratif & 192.168.2.0/27 \\
+		2 & Développeurs  & 192.168.2.32/27 \\
+		& Serveurs Intranet & 192.168.2.64/29 \\
+		\hline
+	\end{tabular}
+	\caption{Plan d’adressage des sous-réseaux des sites de l’entreprise}
+	\label{tab:adressage_sites}
+\end{table}
+
+\textbf{Les routes statiques à poser sur R1 et R2 :}
+
+%--------------------------------------------------
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|l|l|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Routeur} & Cible & \textbf{Commande} (ip route réseau_dist masque_dist IP_next_hop) \\
+		\hline
+		
+		\rowcolor{blue!5}
+		  & LAN\_2-1 & \texttt{ip route 192.168.2.0 255.255.255.224 192.168.0.1}  \\
+		
+		\rowcolor{blue!5}
+		R1  & LAN\_2-2 &\texttt{ip route 192.168.2.32 255.255.255.224 192.168.0.3}  \\
+		
+		\rowcolor{blue!5}
+		  & LAN\_2-31 &\texttt{ip route 192.168.2.64 255.255.255.248 192.168.0.5}  \\
+			
+		\rowcolor{green!10}
+		R1 & Par défaut & \texttt{ip route 0.0.0.0 0.0.0.0 192.168.0.11} \\
+		
+		\hline
+		\hline
+		
+		\rowcolor{orange!5}
+		 & LAN\_1-1  & \texttt{ip route 192.168.1.0 255.255.255.224 192.168.0.0} 
+		\\
+		
+		\rowcolor{orange!5}
+		R2  & LAN\_1-2 & \texttt{ip route 192.168.1.32 255.255.255.224 192.168.0.2} 
+		 \\
+		
+		\rowcolor{orange!5}
+		  & LAN\_1-31 & \texttt{ip route 192.168.1.64 255.255.255.248 192.168.0.4} 
+		 \\
+		
+		\rowcolor{green!10}
+		RE2 & Par défaut & \texttt{ip route 0.0.0.0 0.0.0.0 192.168.0.21} 
+		\\
+		
+		\hline
+	\end{tabular}
+	\caption{Routes statiques entre les sites (mise en évidence par type)}
+\end{table}
+
+%%%%%%%%%
+
+\subsection{Configuration du tunnel MPLS sur RO11 et RO21}
+\paragraph{i. \textbf{Sur RO11}}
+\begin{verbatim}
+	! Identifiant fixe pour RO11
+	interface Loopback0
+	
+	! ip address <ID_routeur_RO11> 255.255.255.255
+	ip address 192.168.0.11 255.255.255.255  
+	
+	! Interface vers R1
+	interface Ethernet1/2
+	no ip address ! parceque on est au niveau 2
+\end{verbatim}
+
+\begin{verbatim}
+	!xconnect pour chaque VLAN (vers RO21)
+	interface Ethernet1/2
+	
+	! xconnect <ID_routeur_RO21> <ID_tunnel> encapsulation mpls
+	xconnect 192.168.0.21 101 encapsulation mpls 
+	
+	!annoncer les sous-réseaux entre les CE R1 et R2
+	router ospf 1
+	passive-interface loopback0
+	network 192.168.0.0 0.0.0.1 area 0
+	network 192.168.0.2 0.0.0.1 area 0
+	network 192.168.0.4 0.0.0.1 area 0
+	
+	!annoncer le loopback0
+	network 192.168.0.11 0.0.0.0 area 0
+	
+\end{verbatim}
+
+\texttt{Remarque}
+192.168.0.21 correspond à l’interface Loopback0 de RO21 (PE côté Site2).
+101 est l'ID du tunnel L2VPN via le protocol MPLS.
+
+\begin{verbatim}
+	! ajouter des routes statiques vers les sous-réseaux privé du site 1
+	ip route 192.168.1.0 255.255.255.224 192.168.0.0
+	ip route 192.168.1.32 255.255.255.224 192.168.0.2
+	ip route 192.168.1.64 255.255.255.248 192.168.0.4		
+\end{verbatim}
+
+\paragraph{\textbf{Sur RO21}}
+\begin{verbatim}
+	! Identifiant fixe pour RO21
+	interface Loopback0
+	ip address 192.168.0.21 255.255.255.255
+	
+	! Interface vers R2
+	interface Ethernet1/2
+	no ip address
+\end{verbatim}
+
+\begin{verbatim}
+	!xconnect pour chaque VLAN (vers RO11)
+	interface Ethernet1/2
+	xconnect 192.168.0.11 101 encapsulation mpls
+	
+	!annoncer les sous-réseaux entre les CE RE1 et RE2
+	router ospf 1
+	passive-interface loopback0
+	network 192.168.0.1 0.0.0.1 area 0
+	network 192.168.0.3 0.0.0.1 area 0
+	network 192.168.0.5 0.0.0.1 area 0
+	
+	!annoncer le loopback0
+	network 192.168.0.21 0.0.0.0 area 0
+\end{verbatim}
+
+\texttt{Remarque}
+192.168.0.11 correspond à l’interface Loopback0 de RO11 (PE côté Site1).
+101 même ID du tunnels MPLS pour chaque VLAN.
+
+	\begin{verbatim}
+		! ajouter des routes statiques vers les sous-réseaux privé du site 2
+		ip route 192.168.2.0 255.255.255.224 192.168.0.1
+		ip route 192.168.2.32 255.255.255.224 192.168.0.3
+		ip route 192.168.2.64 255.255.255.248 192.168.0.5		
+	\end{verbatim}
+\subsection{Débogage et vérification de l'état up du tunnel L2VPN}
+
+Dans le cadre du débogage du tunnel L2VPN MPLS, une série de vérifications et d’actions correctives, résumée dans le tableau ci-dessous, peut-être menée afin d’identifier l’origine d'un dysfonctionnement (état \textit{DOWN} du pseudowire par exemple). 
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|}
+	\hline
+	\textbf{Commande} & \textbf{Commentaire}\\
+	\hline
+	\texttt{router ospf 1}   & Vérifier la cohérence du protocole OSPF \\
+	    & sur les routeurs \textbf{RO11} et \textbf{RO21},\\
+	\texttt{router-id 192.168.0.21} &  notamment en s’assurant que le \textit{router-id}\\
+	   & correspond bien à l’adresse IP de l’interface \\
+	   & \textit{loopback0},  utilisée comme\\
+	   & identifiant stable dans le réseau.\\ 
+	   & Une incohérence entre le \textit{router-id} et \\ 
+	   & l’adresse de loopback pouvant empêcher\\
+	   &  le bon fonctionnement de MPLS et du\\
+	   & protocole LDP.\\
+	\hline
+	\texttt{mpls ldp router-id loopback0 force} & Il a été nécessaire de forcer l’utilisation\\
+	    & de l’interface loopback comme identifiant \\
+	    & pour le protocole LDP à l’aide de la commande, \\
+	    & garantissant ainsi une correspondance correcte \\
+	    &entre les adresses utilisées pour l’établissement \\
+	    & du pseudowire.\\
+	\hline
+	\texttt{clear ip ospf process} & Après ces modifications, les processus doivent\\ 
+	et &  être réinitialisés à l’aide des commandes,\\ 
+	\texttt{clear mpls ldp neighbor *}& afin de prendre en compte les nouvelles \\
+	 & configurations.\\
+	\hline
+	\texttt{show mpls ldp neighbor} & la commande permit de confirmer l’établissement\\
+	     &  des sessions LDP entre les routeurs,\\
+	 \hline
+	 \texttt{show xconnect all} &  pour observer l’état du circuit virtuel MPLS.\\
+	 \hline
+\end{tabular}
+
+\vspace{0.5cm}
+L’ensemble de ces étapes a permis d’assurer la cohérence entre les différents mécanismes (OSPF, LDP et MPLS) nécessaires à l’établissement du tunnel L2VPN.
+
+\subsection{Validation de bon fonctionnement du Tunnel L2VPN }
+\subsubsection{Via la commande ping }
+
+Les tests de connectivité réalisés entre les postes utilisateurs appartenant au même VLAN démontrent que la communication est bien établie. Les machines situées sur un site peuvent joindre directement celles de l’autre site dans le même domaine de diffusion, ce qui confirme la bonne propagation des VLANs à travers l’infrastructure opérateur. Le \texttt{traceroute} met en évidence le chemin suivi par les trames, qui traversent successivement les routeurs de l’opérateur avant d’atteindre leur destination.
+
+De manière similaire, les serveurs intranet déployés sur les deux sites et placés dans le même VLAN sont accessibles entre eux. Là encore, la connectivité est vérifiée par des tests de ping et de \texttt{traceroute}, illustrant le cheminement des paquets à travers le cœur du réseau. Ces résultats confirment le bon fonctionnement du service L2VPN mis en place, permettant d’assurer une continuité logique du VLAN entre sites distants tout en préservant la transparence pour les utilisateurs finaux.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.81\textwidth]{../captures/14_L2VPN_fonctionnel.png}
+	\caption{Connectivité des LAN dans le même VLAN; les postes utilisateurs dans le même VLAN sont joignables et traceroute du chemin emprunté par la trame. D'autre part, filtration du trafic entre les VLAN (ici VLAN_10 - VLAN_20) }
+	\label{fig:l2VPN_fonctionnel}
+\end{figure}
+\subsubsection{Via les captures de flux}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/14_L2VPN_wireshark_R1-RO11.png}
+	\caption{Capture Wireshark sur le lien entre R1 et RO11 : le trafic ICMP apparaît sous forme de trames Ethernet classiques, sans étiquetage MPLS, ce qui correspond à la zone d’accès client avant l’entrée dans le backbone MPLS.}
+	\label{L2VPN_MPLS_wireshark_R1-RO11}	
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/14_L2VPN_wireshark_RO21-R2.png}
+	\caption{Capture Wireshark sur le lien entre RO21 et R2 : les paquets ICMP sont décapsulés à la sortie du réseau MPLS et transmis sous forme de trames Ethernet classiques vers le réseau client, confirmant le rôle du routeur PE dans la restitution du trafic.}
+	\label{L2VPN_MPLS_wireshark_R1-S1}	
+\end{figure}
+
+Sur la capture Wireshark d’un flux ICMP, généré par un ping entre Admin1 du site 1 et Admin2 du site 2, et observé sur le lien entre les routeurs RO2 et RO4, on distingue clairement la présence de deux niveaux de labels MPLS (cf. figure \ref{L2VPN_MPLS_wireshark_RO2-RO4}).
+
+Le premier label, 24 (avec S = 0), correspond au label du provider, utilisé pour l’acheminement du paquet à travers le backbone de l’opérateur.
+
+Le second label, 16 (avec S = 1), est le label de service L2VPN. Celui-ci identifie la connexion de type VPN de niveau 2 établie entre les deux sites à travers le réseau MPLS.
+
+Ainsi, la capture confirme le bon fonctionnement du mécanisme de pile de labels MPLS, combinant un label de transport (backbone) et un label de service (VPN).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/14_L2VPN_wireshark_RO2-RO4.png}
+	\caption{Capture d'écran de flux via wireshark dans le backbone; entre les deux routeurs RO2 et RO4}
+	\label{L2VPN_MPLS_wireshark_RO2-RO4}
+\end{figure}
+
+En traversant la liaison RO3 – RO21, le label de routage du backbone (24) disparaît. Il ne subsiste alors que le label de service L2VPN (16), utilisé pour l’identification du circuit virtuel de niveau 2 (cf. figure \ref{L2VPN_MPLS_wireshark_RO3-RO21}).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/14_L2VPN_wireshark_RO21-RO3.png}
+	\caption{Capture d'écran de flux, entre les deux routeurs RO21 et RO3}
+	\label{L2VPN_MPLS_wireshark_RO3-RO21}
+\end{figure}
+
+\section{Interconnexion avec le réseau Intranet du fournisseur de cloud (L3VPN via GRE)}
+La suite ...
 \end{document}

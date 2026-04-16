@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper]{memoir}%{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -27,7 +27,7 @@
 	\newpage
 	\tableofcontents
 	\newpage
-	
+\chapter{Introduction}	
 	%-------------------------------------------------
 	\section{Préambule}
 	
@@ -83,92 +83,96 @@
 		\item[$\rightarrow$] Garantir la séparation logique des flux internes et externes
 	\end{itemize}
 	%-------------------------------------------------
+
+\chapter{Réseau de l'entreprise}
+%-------------------------------------------------
+	\section{Architecture Générale}
+
+		Chaque site comprend :
+		
+		\begin{itemize}[label=$\bullet$]
+			\item Un routeur d’accès Internet (R1 pour Site 1, R2 pour Site 2)
+			\item Deux commutateurs interconnectés en trunk 802.1Q
+			\begin{itemize}
+				\item Un commutateur dédié aux utilisateurs
+				\item Un commutateur dédié aux serveurs
+			\end{itemize}
+			\item Quatre sous-réseaux distincts
+		\end{itemize}
+		
+		Chez le fournisseur Cloud :
+		
+		\begin{itemize}[label=$\bullet$]
+			\item Cloud privé => Sous-réseau LAN\_3-31
+			\item Cloud public => Sous-réseau LAN\_3-32
+			\item Routeurs fournisseurs assurant l'interconnexion
+			\begin{itemize}
+				\item Routeur RF1 (réseau Intranet Cloud)
+				\item Routeur RF2 (réseau Public Cloud)
+			\end{itemize}
+		\end{itemize}
+
+
 	\section{Contraintes Techniques}
 
 		\begin{itemize}
-			\item Utilisation du protocole IPv4
+			\item Utilisation du protocole IPv4	
 			\item Respect des normes IEEE 802.1Q pour la segmentation VLAN
 			\item Utilisation d’équipements compatibles Cisco IOS
 			\item Simulation réalisée sous GNS3
 		\end{itemize}
 
-	%-------------------------------------------------
-	\section{Architecture Générale}
+%-------------------------------------------------
 	
-	Chaque site comprend :
-	
-	\begin{itemize}[label=$\bullet$]
-		\item Un routeur d’accès Internet (RE1 pour Site 1, RE2 pour Site 2)
-		\item Deux commutateurs interconnectés en trunk 802.1Q
-		\begin{itemize}
-			\item Un commutateur dédié aux utilisateurs
-			\item Un commutateur dédié aux serveurs
-		\end{itemize}
-		\item Quatre sous-réseaux distincts
-	\end{itemize}
-	
-	Chez le fournisseur Cloud :
-	
-	\begin{itemize}[label=$\bullet$]
-		\item Cloud privé => Sous-réseau LAN\_3-31
-		\item Cloud public => Sous-réseau LAN\_3-32
-		\item Routeurs fournisseurs assurant l'interconnexion
-		\begin{itemize}
-			\item Routeur RF1 (réseau Intranet Cloud)
-			\item Routeur RF2 (réseau Public Cloud)
-		\end{itemize}
-	\end{itemize}
-	
-	%-------------------------------------------------
 	\section{Plan d’Adressage}
 	
-	\subsection{Site 1}
-	
-	Plage publique attribuée : 123.1.1.160/27
-	
-	Sous-réseaux à définir :
-	
-	\begin{itemize}
-		\item LAN\_1-1 : 14  hôtes (Administratif)
-		\item LAN\_1-2 : 18  hôtes (Développeurs)
-		\item LAN\_1-31 : 6  hôtes (Serveurs Intranet)
-		\item LAN\_1-32 : jusqu’à 14 adresses publiques
-	\end{itemize}
-	
-	Réseau privé : 192.168.1.0/24
+		\subsection{Site 1}
 		
-	\subsection{Site 2}
-	
-	Plage publique attribuée : 123.2.2.160/27
-	
-	Sous-réseaux à définir :
-	
-	\begin{itemize}
-		\item LAN\_2-1 : 7  hôtes
-		\item LAN\_2-2 : 26  hôtes
-		\item LAN\_2-31 : 2 hôtes
-		\item LAN\_2-32 : jusqu’à 6 adresses publiques
-	\end{itemize}
-	
-	Réseau privé :  192.168.2.0/24
-	
-	\subsection{Fournisseur de Cloud}
-	
-	Plage publique Cloud : 163.173.19.224/28
-	
-	Sous-réseaux à définir:
-	
-	\begin{itemize}
-		\item LAN\_3-31 : 10 serveurs Intranet
-		\item LAN\_3-32 : 10 serveurs Public
-		\item Liaisons point-à-point :
+			Plage publique attribuée : 123.1.1.160/27
+		
+			Sous-réseaux à définir :
+		
 		\begin{itemize}
-			\item RF1 : 163.173.18.254/31
-			\item RF2 : 163.173.19.222/31
+			\item LAN\_1-1 : 14  hôtes (Administratif)
+			\item LAN\_1-2 : 18  hôtes (Développeurs)
+			\item LAN\_1-31 : 6  hôtes (Serveurs Intranet)
+			\item LAN\_1-32 : jusqu’à 14 adresses publiques
 		\end{itemize}
-	\end{itemize}
-
-	Réseau privé :  192.168.3.0/24
+		
+			Réseau privé : 192.168.1.0/24
+		
+		\subsection{Site 2}
+		
+			Plage publique attribuée : 123.2.2.160/27
+		
+			Sous-réseaux à définir :
+		
+		\begin{itemize}
+			\item LAN\_2-1 : 7  hôtes
+			\item LAN\_2-2 : 26  hôtes
+			\item LAN\_2-31 : 2 hôtes
+			\item LAN\_2-32 : jusqu’à 6 adresses publiques
+		\end{itemize}
+		
+			Réseau privé :  192.168.2.0/24
+		
+		\subsection{Fournisseur de Cloud}
+		
+			Plage publique Cloud : 163.173.19.224/28
+		
+			Sous-réseaux à définir:
+		
+		\begin{itemize}
+			\item LAN\_3-31 : 10 serveurs Intranet
+			\item LAN\_3-32 : 10 serveurs Public
+			\item Liaisons point-à-point :
+			\begin{itemize}
+				\item RF1 : 163.173.18.254/31
+				\item RF2 : 163.173.19.222/31
+			\end{itemize}
+		\end{itemize}
+		
+		Réseau privé :  192.168.3.0/24
 	
 	%-------------------------------------------------
 	\section{Segmentation VLAN}
@@ -182,7 +186,7 @@
 		\item VLAN 32 : Serveurs DMZ
 	\end{itemize}
 	
-	Le routage inter-VLAN est assuré par RE1 et RE2 via encapsulation IEEE 802.1Q.
+	Le routage inter-VLAN est assuré par R1 et R2 via encapsulation IEEE 802.1Q.
 	
 	%-------------------------------------------------
 	\section{Politique de Sécurité}
@@ -204,24 +208,165 @@
 	
 	\subsection{DHCP}
 	
-	Un serveur DHCP est déployé sur chaque site pour attribuer
-	dynamiquement les adresses IP des sous-réseaux privés.
+		Un serveur DHCP est déployé sur chaque site pour attribuer dynamiquement les adresses IP des sous-réseaux privés.
 	
-	Les serveurs applicatifs disposent d’adresses IP statiques.
+		Les serveurs applicatifs disposent d’adresses IP statiques.
 	
 	\subsection{NAT}
 	
-	Les routeurs RE1 et RE2 implémentent :
+	Les routeurs R1 et R2 implémentent :
 	
 	\begin{itemize}
 		\item NAT dynamique (PAT) pour les postes internes
-		\item NAT statique pour les serveurs DMZ
-	\end{itemize}
-	
-	Une adresse publique est réservée pour l’accès Internet au serveur Web.
+		\item NAT statique pour les serveurs internes et DMZ
+	\end{itemize}	
+	Une adresse publique est réservée pour l’accès Internet au serveur Web.	
 	
 	%-------------------------------------------------
-	\section{Livrables}
+\chapter{Réseau Opérateur}
+Dans cette seconde partie du projet, l’objectif est de concevoir et de mettre en œuvre un réseau opérateur simulé permettant d’assurer l’interconnexion entre les différents sites de l’entreprise ainsi que les infrastructures du fournisseur de cloud.
+
+\section{Architecture du réseau opérateur}
+
+Le réseau opérateur est structuré autour de deux niveaux :
+
+\begin{itemize}
+	\item Un \textbf{backbone} composé de routeurs de cœur (RO1 à RO4) interconnectés selon une topologie maillée, garantissant la redondance des chemins et la résilience du réseau ;
+	
+	\item Une \textbf{périphérie} constituée de routeurs (RO11, RO21 et RO31) assurant l’interconnexion entre le backbone et les réseaux externes.
+\end{itemize}
+
+Les routeurs de périphérie permettent de raccorder les différentes entités suivantes :
+
+\begin{itemize}
+	\item le Site 1 de l’entreprise via le routeur R1 ;
+	\item le Site 2 de l’entreprise via le routeur R2 ;
+	\item le réseau Intranet du fournisseur de cloud via le routeur RF1 ;
+	\item le réseau public du fournisseur de cloud via le routeur RF2.
+\end{itemize}
+
+Les routeurs R1, R2 et RF1 sont considérés comme des routeurs de type \textbf{CE (Customer Edge)}, tandis que les routeurs RO11, RO21 et RO31 jouent le rôle de \textbf{PE (Provider Edge)}. Les routeurs RO1 à RO4 constituent le cœur du réseau (\textbf{P -- Provider}).
+
+\section{Contraintes techniques}
+
+Le réseau opérateur doit respecter les contraintes suivantes :
+
+\begin{itemize}
+	\item Utilisation d’une image de routeur spécifique (\texttt{c7200-adventerprisek9-mz.124-24.T5}) dans l’environnement GNS3 afin de bénéficier des fonctionnalités nécessaires (OSPF, MPLS, LDP) ;
+	
+	\item Mise en place d’un plan d’adressage IP cohérent :
+	\begin{itemize}
+		\item le backbone utilise des sous-réseaux issus du bloc 12.0.0.0/8 ;
+		\item les liens d’accès vers les sites de l’entreprise utilisent les plages 123.1.1.160/27 et 123.2.2.160/27 ;
+		\item les liens vers le fournisseur de cloud utilisent des sous-réseaux en /31.
+	\end{itemize}
+	
+	\item Les interconnexions entre routeurs sont réalisées via des liaisons point-à-point nécessitant deux adresses IP ;
+	
+	\item Les liens d’accès A2 et B2 ne sont pas exploités dans cette phase du projet.
+		
+	\item Les liens vers le fournisseur de cloud (RF2, RF2 vers RO13) utilisent des sous-réseaux en /31.
+	
+	\item Des sous-réseaux en \textbf{/31} sont privilégiés pour les liaisons point-à-point,  entre les routeurs clients de l’entreprise (RE1, RE2)  et les routeurs de périphérie du réseau opérateur (RO11, RO21). 
+	
+	\item Des sous-réseaux en \textbf{/30} sont utilisés au niveau du backbone afin de faciliter la gestion et le diagnostic des liaisons entre les routeurs de cœur.
+	
+	
+\end{itemize}
+
+\section{Exigences fonctionnelles}
+
+Le réseau opérateur doit assurer les fonctionnalités suivantes :
+
+\begin{itemize}
+	\item Mise en place d’un routage IP opérationnel :
+	\begin{itemize}
+		\item routage dynamique (OSPF) au sein du backbone ;
+		\item routage statique entre les routeurs clients (CE) et les routeurs de périphérie (PE) ;
+	\end{itemize}
+	
+	\item Assurer la connectivité complète entre les routeurs du réseau opérateur et les réseaux externes ;
+	
+	\item Permettre l’échange des routes publiques des sites de l’entreprise et du fournisseur de cloud au sein du backbone ;
+	
+	\item Déployer le protocole MPLS sur le réseau opérateur afin d’introduire une commutation basée sur des labels ;
+	
+	\item Mettre en œuvre le protocole LDP pour assurer la distribution des labels entre les routeurs MPLS ;
+	
+	\item Garantir le bon fonctionnement du réseau via des tests de connectivité (\texttt{ping}, \texttt{traceroute}) et des commandes de vérification (OSPF, LDP, tables MPLS).
+\end{itemize}
+
+\section{Objectif global}
+
+L’objectif final est d’obtenir un réseau opérateur de type \textbf{IP/MPLS} pleinement fonctionnel, capable d’assurer l’acheminement des flux entre les différents sites tout en garantissant une architecture évolutive et conforme aux pratiques des réseaux opérateurs.
+	
+
+%----------------------------
+\chapter{Tunnel d'interconnexion}
+	
+	Cette troisième partie du mini-projet s’inscrit dans la continuité des deux précédentes et vise à étendre les fonctionnalités du réseau en mettant en œuvre des mécanismes d’interconnexion avancés entre les différents sites de l’entreprise et le fournisseur de cloud.
+	
+	L’objectif principal est d’assurer :
+	\begin{itemize}
+		\item l’interconnexion des sous-réseaux privés des deux sites de l’entreprise ;
+		\item l’accès aux ressources hébergées sur le réseau Intranet du fournisseur de cloud ;
+		\item la continuité des communications à travers le réseau opérateur en utilisant des technologies de virtualisation réseau.
+	\end{itemize}
+	
+	\section{Interconnexion des sites via MPLS (L2VPN)}
+	
+	Une première évolution consiste à interconnecter les sous-réseaux privés des deux sites (LAN\_1-1 avec LAN\_2-1, LAN\_1-2 avec LAN\_2-2, et LAN\_1-31 avec LAN\_2-31).
+	
+	Cette interconnexion repose sur la mise en place d’un tunnel de niveau 2 (L2VPN de type VPWS) s’appuyant sur l’infrastructure MPLS du réseau opérateur.
+	
+	Les exigences associées sont les suivantes :
+	\begin{itemize}
+		\item mise en place d’un tunnel point-à-point entre les routeurs de périphérie RO11 et RO21 ;
+		\item transport des trames Ethernet des VLANs privés à travers le réseau MPLS ;
+		\item conservation de l’encapsulation \texttt{dot1Q} sur les interfaces des routeurs R1 et R2 ;
+		\item ajout de règles de routage statiques pour permettre la communication entre les VLANs des deux sites ;
+		\item transparence du réseau opérateur pour les utilisateurs (illusion d’un réseau local unique).
+	\end{itemize}
+	
+	\section{Interconnexion avec le réseau Intranet du fournisseur de cloud (L3VPN via GRE)}
+	
+	Une seconde évolution vise à interconnecter les sous-réseaux applicatifs LAN\_x-31 des deux sites avec le réseau Intranet du fournisseur de cloud (LAN\_3-31).
+	
+	Cette interconnexion est réalisée à l’aide de tunnels GRE (Generic Routing Encapsulation), permettant le transport de paquets IP entre les différents sites.
+	
+	Les exigences sont les suivantes :
+	\begin{itemize}
+		\item mise en place de deux tunnels GRE entre les sites de l’entreprise (R1, R2) et le routeur RF1 ;
+		\item encapsulation des paquets IP dans des tunnels logiques indépendants de l’infrastructure physique ;
+		\item ajout des routes nécessaires pour assurer l’acheminement du trafic vers le réseau Intranet ;
+		\item interconnexion complète entre les sous-réseaux LAN\_x-31 et LAN\_3-31 ;
+		\item possibilité d’accès au réseau Intranet depuis les VLANs internes des sites.
+	\end{itemize}
+	
+	\section{Contraintes techniques}
+	
+	La mise en œuvre de ces évolutions doit respecter les contraintes suivantes :
+	\begin{itemize}
+		\item utilisation du réseau opérateur MPLS mis en place dans la partie précédente ;
+		\item maintien de la séparation des flux entre les différents types de trafic (privé, public, intranet) ;
+		\item absence de mécanismes de chiffrement (hors périmètre du projet) ;
+		\item validation des interconnexions à l’aide de tests de connectivité (\texttt{ping}, \texttt{traceroute}) ;
+		\item vérification du fonctionnement des tunnels et des labels MPLS via des captures Wireshark.
+	\end{itemize}
+	
+	\section{Objectif global}
+	
+	L’ensemble de ces mécanismes doit permettre de simuler un réseau d’entreprise étendu reposant sur une infrastructure opérateur, capable de :
+	\begin{itemize}
+		\item interconnecter plusieurs sites distants de manière transparente ;
+		\item exploiter les technologies MPLS pour le transport des flux ;
+		\item intégrer des services cloud via des tunnels de niveau 3 ;
+		\item garantir la continuité des communications entre les différents environnements.
+	\end{itemize}
+		
+	
+	%-------------------------------------------------
+	\chapter{Livrables}
 	
 	\begin{itemize}
 		\item Plan d’adressage détaillé
