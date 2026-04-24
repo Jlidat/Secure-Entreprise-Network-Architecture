@@ -219,33 +219,46 @@ Tous les tests confirment :
         ├── acl_tests.png  
 
 ---
+## Fonctionnalités Implémentées
 
-### Prochaine Évolution
+- Mise en place d’un réseau opérateur IP/MPLS
+- Routage dynamique avec OSPF
+- Activation de MPLS et LDP sur le backbone
+- Interconnexion des sites via :
+    -- L2VPN (VPWS) pour l’extension de VLANs entre sites
+    -- L3VPN (GRE) pour l’accès au réseau Intranet Cloud
+    -- Intégration d’un fournisseur de cloud (Intranet + Public)
+    -- Mise en œuvre de routage statique complémentaire
+    -- Validation complète avec :
+        --- ping
+        --- traceroute
+        --- Wireshark (analyse MPLS & GRE)
+## Compétences Démontrées
+    - Conception d’architecture réseau multi-sites
+    - Planification d’adressage IPv4
+    - VLAN & 802.1Q
+    - ACL étendues Cisco
+    - DHCP & Relay
+    - NAT dynamique (PAT)
+    - Segmentation de sécurité
+    - Routage dynamique (OSPF)
+    - Architecture opérateur IP/MPLS
+    - MPLS & LDP (Label Switching)
+    - L2VPN (VPWS)
+    - L3VPN (GRE tunneling)
+    - Analyse de trafic réseau (Wireshark)
+    - Diagnostic & troubleshooting réseau
+    - Conception de politiques de filtrage réseau
+    - Publication sécurisée de services en DMZ
 
-La phase suivante du projet intègre :
+## Résultat
+L’infrastructure permet :
+    - la communication inter-sites transparente
+    - l’accès sécurisé au Cloud Intranet
+    - une segmentation stricte des flux
+    - une abstraction complète du réseau opérateur (MPLS)
 
-- Routage dynamique OSPF dans le réseau opérateur
-- Interconnexion sécurisée des deux sites
-- Analyse des tables de routage
-
----
-
-### Compétences Démontrées
-
-- Conception d’architecture réseau multi-sites
-- Planification d’adressage IPv4
-- VLAN & 802.1Q
-- ACL étendues Cisco
-- DHCP & Relay
-- NAT dynamique (PAT)
-- Segmentation de sécurité
-- Analyse de trafic réseau
-- Conception de politiques de filtrage réseau
-- Publication sécurisée de services en DMZ
-
----
-
-### Environnement Technique
+## Environnement Technique
 
 - Simulation : GNS3
 - Équipements : Routeurs Cisco IOS
@@ -254,6 +267,6 @@ La phase suivante du projet intègre :
 
 ---
 
-### Auteur
+## Auteur
 Nozha Safi (Jlidat)
 Projet réalisé dans le cadre d’un travail personnel de consolidation des compétences en ingénierie réseau.
