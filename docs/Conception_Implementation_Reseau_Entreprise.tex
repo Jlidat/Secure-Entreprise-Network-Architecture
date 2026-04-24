@@ -109,7 +109,7 @@
 	\begin{minipage}{0.65\textwidth}
 		\raggedright
 		\textbf{\Large Architecture Réseau d’Entreprise Sécurisée}\\
-		\small Urbanisation des Services Réseau
+		\small Urbanisation des Services Réseau -CNAM
 	\end{minipage}
 }
 
@@ -122,33 +122,43 @@
 
 \begin{document}
 	
-	\vspace*{1cm}
+	\vspace*{0.85cm}
 	
 	\begin{center}
 		
-		{\Huge \textbf{Architecture Réseau d’Entreprise Sécurisée}}\\[0.8cm]
+		{\Huge \textbf{Architecture Réseau d’Entreprise Sécurisée}}\\[0.45cm]
 		
-		{\Large Conception d’une Infrastructure Multi-Sites}\\[1.5cm]
+		{\Large Conception d’une Infrastructure Multi-Sites}\\[0.9cm]
 		
-		\begin{tcolorbox}[colback=gray!5,colframe=black,width=0.9\textwidth,sharp corners,boxrule=1pt]
+		{\large \textit{MPLS, L2VPN, L3VPN (GRE), OSPF et Sécurisation des Flux}}\\[1cm]
+		
+		\begin{tcolorbox}[colback=gray!5,colframe=black,width=1\textwidth,sharp corners,boxrule=1pt]
 			\centering
-			\Large
-			Ce projet présente la conception d’une architecture réseau d’entreprise comprenant :
+			\large
+			Ce projet présente la conception et la mise en œuvre d’une architecture réseau d’entreprise complète intégrant :
+			
+			\vspace{0.3cm}
 			
 			\begin{itemize}
-				\item Une infrastructure multi-sites
-				\item Une segmentation réseau basée sur VLAN
-				\item Un plan d’adressage structuré
-				\item L’intégration d’une infrastructure Cloud
+				\item Une infrastructure multi-sites interconnectée
+				\item Une segmentation logique via VLANs
+				\item Un plan d’adressage IPv4 structuré et hiérarchisé
+				\item Un backbone opérateur IP/MPLS
+				\item Des tunnels VPN :
+				\begin{itemize}
+					\item L2VPN (VPWS) pour l’interconnexion des sites
+					\item L3VPN (GRE) pour l’accès au Cloud
+				\end{itemize}
 				\item Une architecture orientée sécurité (ACL, isolation des flux)
+				\item Une validation fonctionnelle (ping, traceroute, Wireshark)
 			\end{itemize}
 			
 		\end{tcolorbox}
-		
-		\vspace{1.5cm}
+
+		\vspace{1cm}
 		
 		\textbf{Auteur}\\
-		Nozha Safi
+		Nozha Safi Jlidat
 		
 		\vspace{0.5cm}
 		
@@ -169,10 +179,9 @@
 		
 		\small
 		Ce dépôt présente une documentation technique reconstruite d’une architecture
-		réseau d’entreprise réalisée dans un cadre pédagogique.
+		réseau d’entreprise, dans un environnement simulé (GNS3), réalisée dans un cadre pédagogique.
 		
 	\end{center}
-	
 	%--- Fin page de garde ---
 	\clearpage
 	
@@ -260,7 +269,8 @@ où :
 Cette convention permet d’identifier rapidement l’origine et la fonction de chaque réseau dans l’architecture globale.
 
 \subsection{Structure des LAN et VLAN}
-	\subsubsection{Organisation des LAN}
+	\begin{enumerate}
+		\item \textbf{Organisation des LAN}
 
 \begin{table}[H]
 	\centering
@@ -280,7 +290,7 @@ Cette convention permet d’identifier rapidement l’origine et la fonction de 
 	\caption{Organisation des sous-réseaux LAN}
 \end{table}
 
-\subsubsection{Segmentation VLAN}
+	\item \textbf{Segmentation VLAN}
 
 \begin{table}[H]
 	\centering
@@ -297,6 +307,7 @@ Cette convention permet d’identifier rapidement l’origine et la fonction de 
 	\end{tabular}
 	\caption{Segmentation VLAN}
 \end{table}
+\end{enumerate}
 
 Cette segmentation permet :
 
@@ -328,7 +339,8 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\item le rôle fonctionnel dans l’architecture.
 \end{itemize}
 
-\subsubsection{Site 1}
+\begin{enumerate}
+	\item \textbf{Site 1}
 
 \begin{table}[H]
 	\centering
@@ -346,7 +358,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\caption{Sous-réseaux du Site 1}
 \end{table}
 
-\subsubsection{Site 2}
+	\item \textbf{Site 2}
 
 \begin{table}[H]
 	\centering
@@ -364,7 +376,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\caption{Sous-réseaux du Site 2}
 \end{table}
 
-\subsubsection{Infrastructure Cloud}
+	\item \textbf{Infrastructure Cloud}
 
 \begin{table}[H]
 	\centering
@@ -379,7 +391,7 @@ Chaque sous-réseau est défini selon les critères suivants :
 	\end{tabular}
 	\caption{Sous-réseaux Cloud}
 \end{table}
-
+\end{enumerate}
 \subsection{Paramètres définis pour chaque sous-réseau}
 
 Pour chaque sous-réseau, les éléments suivants sont formellement définis :
@@ -419,7 +431,8 @@ Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, t
 
 \subsection{Plan d'adressage - Site 1}
 
-\subsubsection{Plage d’adressage privé}
+\begin{enumerate}
+	\item \textbf{Plage d’adressage privé}
 
 \begin{table}[]
 	\centering
@@ -442,7 +455,7 @@ Les sous-réseaux sont dimensionnés en fonction des besoins réels en hôtes, t
 		\item La première adresse IP utilisable est attribuée à la passerelle par défaut.	\\ 
 	\end{enumerate}
  
-\subsubsection{Gestion de la plage publique}
+	\item \textbf{Gestion de la plage publique}
 
 Le Site 1 dispose du bloc public suivant : \texttt{123.1.1.160/27} (30 adresses IP utilisables).\\
 Ce bloc est subdivisé afin de couvrir plusieurs besoins : 
@@ -498,7 +511,7 @@ L’ensemble de ces sous-réseaux reste inclus dans la plage publique initiale
 \end{itemize}
 
 \vspace{0.5cm}
-\subsubsection{Polique NAT }
+\item \textbf{Polique NAT }
 
 \textit{NAT Statique (1:1)} : Les serveurs exposés utilisent un NAT statique (1:1) \textit{1 adresse IP privée $\leftrightarrow$ 1 adresse publique}.
 
@@ -513,12 +526,13 @@ L’ensemble de ces sous-réseaux reste inclus dans la plage publique initiale
 \textit{NAT Dynamique avec surcharge (PAT)} : Les Vlan internes utilisent un pool d'adresses publiques, \textit{Nat avec surcharge (PAT)} et une traduction basée sur les ports. 
 
 Cela permet à plusieurs machines privées de partager une ou plusieurs adresses publiques.
-
+\end{enumerate}
 %---------------------
 
 \subsection{Plan d'adressage - Site 2}
 
-\subsubsection{Gestion de la plage privée}
+\begin{enumerate}
+	\item \textbf{Gestion de la plage privée}
 
 \begin{table}[H]
 	\centering
@@ -539,7 +553,7 @@ L’uniformité des masques garantit une cohérence d’architecture entre les d
 
 \vspace{0.5cm}
 
-\subsubsection{Gestion de la plage publique}
+\item \textbf{Gestion de la plage publique}
 
 Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
@@ -576,9 +590,10 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 	\end{tabular}
 	\caption{Découpage de la plage publique du Site 2}
 \end{table}
-
+\end{enumerate}
 \subsection{Plan d'adressage - Cloud}
-\subsubsection{Réseau privé Cloud (Intranet) (LAN\_3-31)}
+\begin{enumerate}
+	\item \textbf{Réseau privé Cloud (Intranet) (LAN\_3-31)}
 
 	Le LAN\_3-31 dispose du bloc public suivant :	\texttt{192.168.3.0/28}
 
@@ -595,7 +610,7 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
 	%---------------------
 	
-	\subsubsection{Réseau Publique Cloud (Internet) (Lan\_3-32)}
+	\item \textbf{Réseau publique Cloud (Internet) (Lan\_3-32)}
 	
 	Le sous-réseau LAN\_3-32 correspond à la zone publique hébergée chez le fournisseur Cloud.
 	Il est destiné à accueillir des serveurs applicatifs accessibles depuis Internet. Contrairement aux réseaux internes de l’entreprise, ce sous-réseau utilise un adressage IP public (routable via le routeur Rf2), permettant l’accessibilité directe depuis l’extérieur.
@@ -635,7 +650,88 @@ Le Site 2 dispose du bloc public suivant : \texttt{123.2.2.160/27}
 
 
 	Le routeur Rf2 assure l’interconnexion entre le réseau public Cloud (LAN\_3-32) et le réseau de l’opérateur via une liaison point-à-point utilisant le sous-réseau 163.173.19.222/31.
+\end{enumerate}
 %----------------------
+
+\subsection{Configuration des interfaces réseau des hôtes}
+
+Afin de vérifier la connectivité de la topologie réseau mise en place dans l’environnement GNS3, les interfaces réseau des différentes machines ont été configurées manuellement avec des adresses IP statiques.
+
+Dans un premier temps, cette configuration statique permet de valider le bon fonctionnement du plan d’adressage et des routes avant la mise en place de services automatisés tels que DHCP.
+
+\begin{enumerate}
+	\item \textbf{Méthodes de configuration}
+
+Sous les systèmes Linux utilisés dans la topologie, la configuration des interfaces réseau peut être réalisée de deux manières :
+
+\begin{itemize}
+	\item en mode texte, en modifiant directement le fichier de configuration situé dans :
+	\texttt{/etc/network/interfaces}
+	\item en mode graphique, en effectuant un clic droit sur la machine concernée dans GNS3 puis en sélectionnant l’option \textit{Edit Configuration}.
+\end{itemize}
+
+Avant tout, il faut redémarrer le service réseau : 
+
+\texttt{/etc/init.d/networking start ou restart}, 
+
+ou bien redémarrer la machine.
+
+Dans le cas de la configuration manuelle, il est nécessaire d’activer les lignes correspondantes à l’interface réseau en supprimant les caractères de commentaire (\#), puis de renseigner les paramètres réseau appropriés.
+
+\item \textbf{Paramètres configurés}
+
+Les paramètres suivants doivent être définis pour chaque interface :
+
+\begin{itemize}
+	\item l’adresse IP de l’interface ;
+	\item le masque de sous-réseau (\textit{netmask}) ;
+	\item l’adresse de la passerelle par défaut (\textit{gateway}).
+\end{itemize}
+
+\item \textbf{Exemple de configuration}
+
+Un exemple de configuration statique d’une interface réseau dans le fichier
+\texttt{/etc/network/interfaces} est présenté ci-dessous :
+
+\begin{verbatim}
+	auto eth0
+	iface eth0 inet static
+	address 192.168.1.34
+	netmask 255.255.255.224
+	gateway 192.168.1.33
+\end{verbatim}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../captures/02_hote_config_stat.png}
+\caption{Exemple de fichier de configuration IP d’une interface réseau en mode graphique}
+
+\label{fig:config_stat}
+\end{figure}
+
+Après modification du fichier de configuration, il est nécessaire de redémarrer le service réseau afin d’appliquer les changements :
+
+\begin{verbatim}
+	/etc/init.d/networking restart
+\end{verbatim}
+
+ou bien de redémarrer la machine.
+
+\item \textbf{Organisation de l'adressage}
+
+Chaque sous-réseau est configuré avec un masque adapté aux besoins en nombre d’hôtes, conformément au plan d’adressage défini précédemment.
+
+Les premières adresses IP utilisables de chaque sous-réseau sont attribuées aux interfaces des routeurs, qui jouent le rôle de passerelles par défaut pour les machines du réseau.
+
+Cette organisation permet d’assurer :
+
+\begin{itemize}
+	\item une gestion cohérente de l’espace d’adressage IP ;
+	\item une connectivité fiable entre les différents sous-réseaux ;
+	\item une communication correcte entre les réseaux internes, le Cloud et l’accès Internet.
+\end{itemize}
+\end{enumerate}
 \subsection{Politique d'adressage}
 Pour chaque sous-réseau :
 \begin{itemize}[label*=$\star$]
@@ -686,85 +782,6 @@ La conception du plan d’adressage et de l’architecture réseau repose sur pl
 	\item \textbf{Utilisation efficace de l’espace d’adressage public} : la plage publique attribuée à chaque site est découpée afin d’accueillir les serveurs exposés, les liaisons WAN et les pools NAT, tout en évitant le gaspillage d’adresses IP.
 \end{itemize}
 
-%----------------------
-\subsection{Configuration des interfaces réseau des hôtes}
-
-Afin de vérifier la connectivité de la topologie réseau mise en place dans l’environnement GNS3, les interfaces réseau des différentes machines ont été configurées manuellement avec des adresses IP statiques.
-
-Dans un premier temps, cette configuration statique permet de valider le bon fonctionnement du plan d’adressage et des routes avant la mise en place de services automatisés tels que DHCP.
-
-\subsubsection{Méthodes de configuration}
-
-Sous les systèmes Linux utilisés dans la topologie, la configuration des interfaces réseau peut être réalisée de deux manières :
-
-\begin{itemize}
-	\item en mode texte, en modifiant directement le fichier de configuration situé dans :
-	\texttt{/etc/network/interfaces}
-	\item en mode graphique, en effectuant un clic droit sur la machine concernée dans GNS3 puis en sélectionnant l’option \textit{Edit Configuration}.
-\end{itemize}
-
-Avant tout, il faut redémarrer le service réseau : 
-
-\texttt{/etc/init.d/networking start ou restart}, 
-
-ou bien redémarrer la machine.
-
-Dans le cas de la configuration manuelle, il est nécessaire d’activer les lignes correspondantes à l’interface réseau en supprimant les caractères de commentaire (\#), puis de renseigner les paramètres réseau appropriés.
-
-\subsubsection{Paramètres configurés}
-
-Les paramètres suivants doivent être définis pour chaque interface :
-
-\begin{itemize}
-	\item l’adresse IP de l’interface ;
-	\item le masque de sous-réseau (\textit{netmask}) ;
-	\item l’adresse de la passerelle par défaut (\textit{gateway}).
-\end{itemize}
-
-\subsubsection{Exemple de configuration}
-
-Un exemple de configuration statique d’une interface réseau dans le fichier
-\texttt{/etc/network/interfaces} est présenté ci-dessous :
-
-\begin{verbatim}
-	auto eth0
-	iface eth0 inet static
-	address 192.168.1.34
-	netmask 255.255.255.224
-	gateway 192.168.1.33
-\end{verbatim}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{../captures/02_hote_config_stat.png}
-\caption{Exemple de fichier de configuration IP d’une interface réseau en mode graphique}
-
-\label{fig:config_stat}
-\end{figure}
-
-Après modification du fichier de configuration, il est nécessaire de redémarrer le service réseau afin d’appliquer les changements :
-
-\begin{verbatim}
-	/etc/init.d/networking restart
-\end{verbatim}
-
-ou bien de redémarrer la machine.
-
-\subsubsection{Organisation de l'adressage}
-
-Chaque sous-réseau est configuré avec un masque adapté aux besoins en nombre d’hôtes, conformément au plan d’adressage défini précédemment.
-
-Les premières adresses IP utilisables de chaque sous-réseau sont attribuées aux interfaces des routeurs, qui jouent le rôle de passerelles par défaut pour les machines du réseau.
-
-Cette organisation permet d’assurer :
-
-\begin{itemize}
-	\item une gestion cohérente de l’espace d’adressage IP ;
-	\item une connectivité fiable entre les différents sous-réseaux ;
-	\item une communication correcte entre les réseaux internes, le Cloud et l’accès Internet.
-\end{itemize}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -809,11 +826,13 @@ La répartition des VLAN suit la topologie vu sur la figure  \ref{fig:topologie_
 
 \subsection{Configuration des VLAN sur les commutateurs}
 
-	\subsubsection{Architecture des ports des commutateurs}
+	\begin{enumerate}
+		\item \textbf{Architecture des ports des commutateurs}
 %Pour chaque site, les VLAN seront configurés sur les switches, et chaque port de switch sera assigné à un VLAN spécifique selon les utilisateurs ou les serveurs qu'il dessert. Les VLAN seront étiquetés avec le protocole IEEE 802.1q afin de permettre le transport simultané des trames appartenant à plusieurs VLANs entre les switches.
 
 La configuration des interfaces se fera comme suit :
-\subsubsection*{i. Sur les switches S1 et S3}
+		\begin{itemize}
+			\item \textbf{Sur les switches S1 et S3}
 
 \textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), ce port permet le transport des trames de plusieurs VLANs entre les switches.
 
@@ -821,7 +840,7 @@ La configuration des interfaces se fera comme suit :
 
 \textbf{Interface \texttt{e2}} : configurée en mode access, ce port connecte les machines hôtes appartenant au VLAN\_20 (ID VLAN 20).
 
-\subsubsection*{ii. Sur les switches S2 et S4}
+		\item \textbf{Sur les switches S2 et S4}
 
 \textbf{Interface \texttt{e0}} : configurée en mode trunk (802.1q), assurant la connexion entre les différents VLANs.
 
@@ -830,10 +849,12 @@ La configuration des interfaces se fera comme suit :
 \textbf{Interface \texttt{e2}} : configurée en mode access, connectant les machines hôtes appartenant au VLAN\_31 (ID VLAN 31).
 
 \textbf{Interface \texttt{e3}} : configurée en mode access, connectant les machines hôtes appartenant au VLAN\_32 (ID VLAN 32).
+	\end{itemize}
 
-	\subsubsection{Configuration des VLAN sur le switch S1}
+	\item \textbf{Configuration des VLAN sur le switch S1}
 
-		\paragraph{Configuration en mode graphique \\}
+		\begin{itemize}
+			\item \textbf{Configuration en mode graphique \\}
 		Voici les étapes de configuration des VLANs 10 et 20 sur le commutateur \textbf{S1}, ainsi que l’affectation des interfaces aux VLANs et la configuration du mode \texttt{trunk} pour l’interface connectée au routeur R1.
 		\begin{figure}[H]
 			\centering
@@ -841,9 +862,9 @@ La configuration des interfaces se fera comme suit :
 			\caption{Configuration des VLANs d'ID 10 et 20 sur le switch S1.}
 			\label{fig:vlans-conf}
 		\end{figure}
-			\paragraph{Configuration en ligne de commande \\}
-\begin{enumerate}
-	\item \textbf{Définir le nom du switch et créer les VLANs :}
+			\item \textbf{Configuration en ligne de commande \\}
+				\begin{enumerate}
+				\item \textbf{Définir le nom du switch et créer les VLANs :}
 \begin{lstlisting}[language=bash]
 	Switch> enable
 	Switch# configure terminal
@@ -883,14 +904,16 @@ La configuration des interfaces se fera comme suit :
 	S1(config-if)# exit
 \end{lstlisting}	
 \end{enumerate}			
-
+	\end{itemize}
+\end{enumerate}
 	
 		
 %------------------------------
 
 \subsection{Routage inter-VLAN}
 
-	\subsubsection{Principe du Router-on-a-Stick}
+	\begin{enumerate}
+		\item \textbf{Principe du Router-on-a-Stick}
 	
 Pour permettre la communication entre les différents VLANs sur chaque site, nous mettons en place une solution de type \textbf{router-on-a-stick}, qui consiste à utiliser un \textit{commutateur-routeur} configuré avec des \textbf{sous-interfaces VLAN} sur une interface physique unique.
 
@@ -926,7 +949,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 \end{center}
 
 
-	\subsubsection{Configuration des sous-interfaces sur le routeur R1}
+	\item \textbf{Configuration des sous-interfaces sur le routeur R1}
 \begin{enumerate}
 	\item \textbf{Définition des sous-interfaces VLAN sur le routeur R1 \\} La configuration suivante permet de créer les différentes sous-interfaces sur le routeur R1 et d'associer chacune d'elles à un VLAN spécifique.
 	
@@ -979,7 +1002,7 @@ Chaque sous-interface se voit attribuer une adresse IP qui joue le rôle de \tex
 	
 \end{enumerate}
 
-	\subsubsection{Configuration des sous-interfaces sur le routeur R2}
+	\item \textbf{Configuration des sous-interfaces sur le routeur R2}
 La configuration réalisée sur le routeur du site 2 suit la même logique que celle mise en place sur le site 1.  
 Le routeur agit comme passerelle par défaut pour les différents VLAN du réseau local et assure le routage inter-VLAN grâce à l'utilisation de sous-interfaces associées à l'encapsulation \texttt{802.1Q}.
 
@@ -1052,18 +1075,19 @@ Chaque sous-interface est liée à un identifiant de VLAN spécifique et possèd
 	\includegraphics[width=0.9\linewidth]{../captures/04_vlan_ssInterfaceR1.png}
 	\caption{Commandes de configuration des interfaces virtuelles sur le routeur R1 du site 1}
 \end{figure}
+\end{enumerate}
 \end{enumerate}	
 %-------------------------------
 
 \subsection{Validation de la configuration}
 
-	\subsubsection{Vérification des interfaces et des VLAN}
+	\begin{enumerate}
+		\item \textbf{Vérification des interfaces et des VLAN}
 	
-	
+	Les captures d’écran suivantes illustrent le résultat de la configuration des sous-interfaces : 
 
-Les captures d’écran suivantes illustrent le résultat de la configuration des sous-interfaces : 
-
-\paragraph{Sur le routeur R1 (site 1) \\}
+		\begin{enumerate}
+			\item \textbf{Sur le routeur R1 (site 1) \\}
 	
 	\begin{figure}[H]
 		\centering
@@ -1085,7 +1109,7 @@ Les captures d’écran suivantes illustrent le résultat de la configuration de
 		\label{fig:reseau}
 	\end{figure}
 
-\paragraph{Sur le routeur R2 \\}
+	\item \textbf{Sur le routeur R2 }
 
 \begin{figure}[H]
 	\centering
@@ -1112,9 +1136,11 @@ Les captures d’écran suivantes illustrent le résultat de la configuration de
 		\item l’état \texttt{up} des interfaces, indiquant leur bon fonctionnement ;
 		\item les réseaux directement joignables à travers chaque sous-interface, permettant d’assurer le routage inter-VLAN.
 	\end{itemize}
+\end{enumerate}
 
-\subsubsection{Analyse des tables de routage}
-\textbf{Site 1 :} 
+	\item \textbf{Analyse des tables de routage}
+		\begin{enumerate}
+			\item \textbf{Site 1 :} 
 	
 	Dans la table de routage, les sous-réseaux 192.168.1.0/27, 192.168.1.32/27 et 192.168.1.64/29 apparaissent comme réseaux directement connectés (C). Chaque réseau est associé à une sous-interface spécifique du routeur (Ethernet1/1.10, Ethernet1/1.20 et Ethernet1/1.31).
 	Le réseau 123.1.1.160/27, correspondant à l’infrastructure publique, est également directement connecté via l’interface Ethernet1/1.32.
@@ -1122,7 +1148,7 @@ Les captures d’écran suivantes illustrent le résultat de la configuration de
 	Enfin, l'absence de gateway of last resort indique qu’aucune route par défaut n’a encore été configurée à ce stade de l’implémentation.
 
 
-\textbf{Site 2 :}
+		\item textbf{Site 2 :}
 
 L'analyse de la table de routage montre que les réseaux suivants sont directement connectés au routeur :
 
@@ -1134,7 +1160,7 @@ L'analyse de la table de routage montre que les réseaux suivants sont directeme
 \end{itemize}
 
 Chaque réseau est associé à une sous-interface spécifique du routeur (\texttt{Ethernet1/1.X}), permettant d'assurer le routage inter-VLAN au sein du site 2.
-
+	\end{enumerate}
 Comme pour le site 1, l'absence de \textit{gateway of last resort} indique qu'aucune route par défaut n'a encore été définie à ce stade de la configuration. Cette route sera ajoutée ultérieurement afin d'assurer l'accès aux réseaux externes et à Internet.
 
 %--------------------------------------------
@@ -1142,15 +1168,15 @@ Comme pour le site 1, l'absence de \textit{gateway of last resort} indique qu'au
 Afin de valider le fonctionnement du routage inter-VLAN au niveau des couches basses du modèle réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}.
 
 
-\subsubsection{Tests de connectivité entre les différents équipements}
+\item \textbf{Tests de connectivité entre les différents équipements}
 
 Afin de valider le bon fonctionnement de l’architecture réseau mise en place, des tests de connectivité ont été réalisés entre les différents équipements à l’aide de la commande \texttt{ping}. 
 
 Ces tests reposent sur le protocole ICMP (\textit{Internet Control Message Protocol}), permettant de vérifier l’accessibilité entre des hôtes situés dans des VLANs distincts.
 
 \medskip
-
-\paragraph{Tests de connectivité ICMP (ping) \\}
+\begin{enumerate}
+	\item \textbf{Tests de connectivité ICMP (ping)}
 
 Des requêtes ICMP ont été émises entre plusieurs VLANs d’un même site, notamment :
 \begin{itemize}
@@ -1180,7 +1206,7 @@ Ces observations confirment le bon fonctionnement du routage inter-VLAN assuré 
 
 \medskip
 
-\paragraph{Analyse du trafic avec Wireshark \\}
+	\item \textbf{Analyse du trafic avec Wireshark}
 
 Afin d’approfondir la validation du fonctionnement réseau, une analyse du trafic a été réalisée à l’aide de l’outil \textbf{Wireshark}. Cette analyse permet d’observer les échanges au niveau des couches basses du modèle OSI.
 
@@ -1219,9 +1245,9 @@ Ces observations confirment que :
 	\item l’infrastructure réseau est fonctionnelle et cohérente avec le plan d’adressage défini.
 	\item des trames Ethernet encapsulant des balises VLAN (\texttt{802.1Q}) identifiant les réseaux logiques traversés.
 \end{itemize}
+\end{enumerate}
 
-
-\subsubsection{Interprétation des résultats}
+\item \textbf{Interprétation des résultats}
 
 Les tests de connectivité ainsi que l’analyse des captures réseau permettent de valider plusieurs points essentiels de l’architecture :
 
@@ -1231,7 +1257,7 @@ Les tests de connectivité ainsi que l’analyse des captures réseau permettent
 	\item la cohérence entre la configuration théorique (plan d’adressage) et le comportement réel du réseau ;
 	\item la fiabilité des communications entre les différents équipements du site.
 \end{itemize}
-
+\end{enumerate}
 Ces résultats confirment que l’infrastructure réseau est opérationnelle et conforme aux exigences de segmentation, de communication et de performance définies en phase de conception.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1243,7 +1269,8 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 %=================================================
 	\subsection{Attribution dynamique des adresses IP : DHCP}
 	
-		\subsubsection{Choix du mode d’adressage}
+		\begin{enumerate}
+			\item \textbf{Choix du mode d’adressage}
 		Dans l’architecture proposée, chaque site est segmenté en plusieurs VLANs correspondant à différents usages (administratif, développement, serveurs).
 		
 		Le choix du mode d’attribution des adresses IP est le suivant :
@@ -1257,13 +1284,15 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 		
 		Les serveurs publics (VLAN\_32) doivent impérativement disposer d’adresses IP fixes afin d’être accessibles depuis Internet.
 	
-	\subsubsection{Implémentation du service DHCP}
+		\item \textbf{Implémentation du service DHCP}
 	
 	Le protocole DHCP a été mis en place afin d’automatiser l’attribution des adresses IP aux hôtes des différents VLANs.
 	
 	La mise en place du DHCP est implémentée sur les routeurs, en mode de configuration globale (configure terminal) et elle repose sur les étapes suivantes: 
 	
-		\paragraph{i. Création des pools DHCP\\}
+		\begin{enumerate}
+			\item  \textbf{Création des pools DHCP}
+			
 		Chaque VLAN utilisateur dispose d'un pool dédié. CI-dessous l'implémentation du pool poolVLAN\_10 pour le VLAN\_10 administratif (idem pour le VLAN\_20) : 
 		\begin{verbatim}
 			ip dhcp pool poolVLAN_10             ! Active le service DHCP
@@ -1272,13 +1301,14 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 			lease 7   ! Durée du bail : 7 jours (ou lease 12 pour 12h)
 		\end{verbatim}
 
-		\paragraph{ii. Exclusion d’adresses\\}
+		\item \textbf{Exclusion d’adresses}
+		
 		Certaines adresses sont exclues pour des équipements critiques : 
 		\begin{verbatim}
 			ip dhcp excluded-address 192.168.1.1 192.168.1.5 
 		\end{verbatim}
 		
-		\paragraph{iii. Relais DHCP \\}
+		\item \textbf{Relais DHCP}
 		
 		\begin{itemize}
 			\item Le service DHCP est directement implémenté sur les routeurs de chaque site. Ainsi, aucun mécanisme de relai DHCP n’est nécessaire, les requêtes étant traitées localement.
@@ -1288,8 +1318,8 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 				ip helper-address @ip\_serveur\_DHCP
 			\end{verbatim}
 		\end{itemize}
-		
-	\paragraph{iv. Implémentation du DHCP sur les équipements \\}
+	
+	\item \textbf{Mise en pratique}
 	
 	La figure~\ref{fig:dhcp_impl} présente les différentes configurations réalisées pour activer le service DHCP :
 	
@@ -1321,13 +1351,14 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 		\caption{Implémentation du service DHCP sur les routeurs et un hôte client}
 		\label{fig:dhcp_impl}
 	\end{figure}	
-		
+\end{enumerate}	
+\end{enumerate}	
 %	\subsection{Problèmes rencontrés}
 %	Les requêtes DHCP seront initialement bloquées par les ACL.  
 %	La solution a consisté à autoriser explicitement les flux UDP (ports 67 et 68)(voir \label{DHCP_ACL}).
+
 	
-	
-	\subsubsection{Validation du DHCP}	
+	\subsection{Validation du DHCP}	
 	Une fois le service configuré, les commandes de supervision permettent de vérifier son bon fonctionnement sont les suivantes.
 	
 	\begin{itemize}
@@ -1342,7 +1373,7 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 		\label{fig:dhcp_show}
 	\end{figure}
 	
-	\subsubsection{Analyse du fonctionnement du DHCP}
+	\subsection{Analyse du fonctionnement du DHCP}
 	
 	Enfin, la figure~\ref{fig:dhcp_resultats} présente les résultats expérimentaux confirmant le bon fonctionnement du service DHCP :
 	
@@ -1379,7 +1410,7 @@ L’objectif est d’assurer à la fois la connectivité, la sécurité et la ma
 	
 	\noindent
 	L’observation de cette séquence complète dans les captures Wireshark confirme le bon fonctionnement du service DHCP. Elle montre que les requêtes des clients sont correctement relayées et traitées, et que les adresses IP sont attribuées de manière dynamique conformément à la configuration des pools DHCP définis sur les routeurs.
-	
+%\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2486,7 +2517,8 @@ Avec cette configuration, chaque VLAN des sites 1 et 2 est prolongé sur le tunn
 		\draw (R1X31) ++(0.18,0) -- node[midway, below]{192.168.0.0/24} (R2X31) ++(-0.18,0);
 	\end{tikzpicture}
 		\subsubsection{Création des sous-interfaces sur les R1 et R2}
-			\paragraph{i. \textbf{Sur R1}}
+\begin{enumerate}
+	\item {\textbf{Sur R1}}
 \begin{verbatim}
 	! VLAN10 : LAN_1-1
 	interface Ethernet1/0.10
@@ -2503,7 +2535,7 @@ Avec cette configuration, chaque VLAN des sites 1 et 2 est prolongé sur le tunn
 	encapsulation dot1Q 31
 	ip address 192.168.0.4 255.255.255.254	
 \end{verbatim}
-		\paragraph{ii. \textbf{Sur R2}}
+	\item {\textbf{Sur R2}}
 \begin{verbatim}
 	! VLAN10 : LAN_2-1
 	interface Ethernet1/0.10
@@ -2520,7 +2552,7 @@ Avec cette configuration, chaque VLAN des sites 1 et 2 est prolongé sur le tunn
 	encapsulation dot1Q 31
 	ip address 192.168.0.5 255.255.255.254	
 \end{verbatim}
-
+\end{enumerate}
 		\subsubsection{Routage statique (R1/R2)}
 
 Une fois les VLANs des deux sites sont définis (VLAN 10, 20, 31).
@@ -2595,7 +2627,7 @@ D'autre part, les LAN des sites tels que définis dans la partie 1, sont :\\
 		 \\
 		
 		\rowcolor{green!10}
-		RE2 & Par défaut & \texttt{ip route 0.0.0.0 0.0.0.0 192.168.0.21} 
+		R2 & Par défaut & \texttt{ip route 0.0.0.0 0.0.0.0 192.168.0.21} 
 		\\
 		
 		\hline
@@ -2606,7 +2638,8 @@ D'autre part, les LAN des sites tels que définis dans la partie 1, sont :\\
 %%%%%%%%%
 
 \subsection{Configuration du tunnel MPLS sur RO11 et RO21}
-\paragraph{i. \textbf{Sur RO11}}
+\begin{enumerate}
+	\item {\textbf{Sur RO11}}
 \begin{verbatim}
 	! Identifiant fixe pour RO11
 	interface Loopback0
@@ -2649,7 +2682,7 @@ D'autre part, les LAN des sites tels que définis dans la partie 1, sont :\\
 	ip route 192.168.1.64 255.255.255.248 192.168.0.4		
 \end{verbatim}
 
-\paragraph{\textbf{Sur RO21}}
+\item {\textbf{Sur RO21}}
 \begin{verbatim}
 	! Identifiant fixe pour RO21
 	interface Loopback0
@@ -2686,6 +2719,8 @@ D'autre part, les LAN des sites tels que définis dans la partie 1, sont :\\
 		ip route 192.168.2.32 255.255.255.224 192.168.0.3
 		ip route 192.168.2.64 255.255.255.248 192.168.0.5		
 	\end{verbatim}
+\end{enumerate}	
+
 \subsection{Débogage et vérification de l'état up du tunnel L2VPN}
 
 Dans le cadre du débogage du tunnel L2VPN MPLS, une série de vérifications et d’actions correctives, résumée dans le tableau ci-dessous, peut-être menée afin d’identifier l’origine d'un dysfonctionnement (état \textit{DOWN} du pseudowire par exemple). 
@@ -2780,5 +2815,1107 @@ En traversant la liaison RO3 – RO21, le label de routage du backbone (24) disp
 \end{figure}
 
 \section{Interconnexion avec le réseau Intranet du fournisseur de cloud (L3VPN via GRE)}
-La suite ...
+
+%\subsection{Objectif}
+
+L’objectif de cette partie est de permettre l’interconnexion des sous-réseaux applicatifs des sites de l’entreprise (LAN\_x-31) avec le réseau Intranet du fournisseur de cloud (LAN\_3-31) (fig.~\ref{fig:gre_topo}).  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/15_img_gre.png}
+	\caption{Capture Wireshark illustrant l’encapsulation GRE d’un flux ICMP entre RF1 et R1}
+	\label{fig:gre_topo}
+\end{figure}
+
+
+Pour cela, des tunnels de niveau 3 (L3VPN) basés sur le protocole GRE (Generic Routing Encapsulation) sont mis en place.
+
+Contrairement au tunnel L2VPN implémenté précédemment, le tunnel GRE permet le transport de paquets IP (niveau 3) en encapsulant les datagrammes dans des paquets IP transitant par le réseau opérateur.
+
+\subsection{Principe de fonctionnement}
+
+Le protocole GRE permet de créer un lien logique point-à-point entre deux équipements distants à travers un réseau intermédiaire (backbone IP/MPLS).
+
+Chaque tunnel est associé à :
+\begin{itemize}
+	\item une interface virtuelle de type \texttt{Tunnel},
+	\item une adresse IP appartenant à un sous-réseau dédié,
+	\item une adresse source (interface publique locale),
+	\item une adresse destination (interface publique distante).
+\end{itemize}
+
+Les paquets issus des réseaux internes sont encapsulés dans des paquets GRE (protocole IP 47), puis transportés sur le réseau opérateur avant d’être décapsulés à destination.
+
+\subsection{Mise en œuvre des tunnels GRE}
+
+Deux tunnels GRE sont configurés afin d’assurer la connectivité entre les sites de l’entreprise et le réseau Intranet du fournisseur de cloud :
+
+\begin{itemize}
+	\item Tunnel 1 : entre le site 1 (R1) et le fournisseur de cloud (RF1) ; 10.31.1.0/30,
+	\item Tunnel 2 : entre le site 2 (R2) et le fournisseur de cloud (RF1) ;  10.31.2.0/30.
+\end{itemize}
+
+Ces sous-réseaux permettent d’attribuer une adresse IP à chaque extrémité du tunnel et d’assurer le routage du trafic encapsulé.
+
+\subsubsection{Implémentation des Tunnels GRE}
+Les interfaces tunnel sont configurées avec les paramètres suivants :
+\begin{itemize}
+	\item définition de l’adresse IP du tunnel,
+	\item spécification des adresses source et destination,
+	\item ajustement de la MTU pour éviter la fragmentation,
+	\item ajout de routes statiques vers les réseaux distants via le tunnel.
+\end{itemize}
+
+Le routage statique est utilisé afin de rediriger le trafic des sous-réseaux applicatifs (LAN\_x-31) vers le réseau distant via les interfaces tunnel correspondantes.
+
+%\subsection{Commentaires sur la configuration des tunnels GRE}
+
+La configuration des tunnels GRE repose sur la création d’interfaces logiques de type \texttt{Tunnel} sur les routeurs d’extrémité (R1, R2 et RF1).
+
+\begin{enumerate}
+	\item {\textbf{Configuration du tunnel 1 (R1 $\leftrightarrow$ RF1)}}
+
+Sur le routeur R1, l’interface \texttt{Tunnel1} est configurée avec l’adresse IP \texttt{10.31.1.1/30}. Cette adresse correspond à l’extrémité locale du tunnel.  
+
+Les paramètres \texttt{tunnel source} et \texttt{tunnel destination} définissent respectivement l’adresse IP publique de sortie de R1 (\texttt{123.1.1.176}) et l’adresse IP publique du routeur distant RF1 (\texttt{163.173.18.254}).  
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Élément} & \textbf{Tunnel 1 (R1 $\leftrightarrow$ RF1)} \\
+		\hline
+		
+		Interface tunnel 
+		& \texttt{Tunnel1} \\
+		\hline
+		
+		Tunnel source 
+		& \texttt{123.1.1.176} (interface f0/0 de R1) \\
+		\hline
+		
+		Tunnel destination 
+		& \texttt{163.173.18.254} (interface e1/0 de RF1) \\
+		\hline
+		
+		Sous-réseau GRE 
+		& \texttt{10.31.1.0/30} \\
+		\hline
+		
+		Adresse réseau 
+		& \texttt{10.31.1.0} \\
+		\hline
+		
+		IP côté site entreprise 
+		& \texttt{10.31.1.1} (interface Tunnel1 sur R1)  \\
+		\hline
+		
+		IP côté cloud (RF1) 
+		& \texttt{10.31.1.2} (interface Tunnel1 sur RF1)\\
+		\hline
+		
+		Adresse de broadcast 
+		& \texttt{10.31.1.3} \\
+		\hline
+		
+	\end{tabular}
+	\caption{Paramètres du tunnel1 GRE entre le site 1 de l’entreprise et le fournisseur de cloud}
+	\label{tab:gre_tunnel1}
+\end{table}
+
+%-----------------------
+Ainsi, chaque extrémité du GRE aura une IP de ce sous-réseau dédié au tunnel. 
+
+
+Les commandes suivantes sont utilisées pour optimiser le transport des paquets encapsulés :
+
+\begin{itemize}
+	\item \texttt{ip mtu 1400} : permet de réduire la taille maximale des paquets afin d’éviter la fragmentation due à l’encapsulation GRE,
+	\item \texttt{ip tcp adjust-mss 1360} : ajuste la taille des segments TCP pour garantir la compatibilité avec la MTU réduite.
+\end{itemize}
+
+Des routes statiques sont ensuite ajoutées pour diriger le trafic vers le réseau Intranet (\texttt{192.168.3.0/24}) ainsi que vers le sous-réseau serveur local (\texttt{192.168.1.64/29}) via l’interface tunnel.
+
+Du côté du routeur RF1, une configuration symétrique est mise en place avec l’adresse \texttt{10.31.1.2/30}. Les routes statiques permettent d’atteindre les réseaux du site 1 via l’adresse tunnel \texttt{10.31.1.1}.
+
+Des routes supplémentaires sont également configurées afin d’assurer la joignabilité des adresses publiques utilisées par le tunnel, garantissant ainsi le bon établissement de celui-ci.
+
+%-------------------------------------------------------------
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{2.5cm}|p{7cm}|p{6.5cm}|}
+		\hline
+		\textbf{Routeur} & \textbf{Commande} & \textbf{Commentaire} \\
+		\hline
+		
+		\multirow{6}{*}{\textbf{R1}} 
+		& interface Tunnel1 & Création du tunnel GRE vers RF1 \\
+		& ip address 10.31.1.1 255.255.255.252 & IP du tunnel côté Site 1 \\
+		& tunnel source 123.1.1.176 & IP publique de R1 (underlay) \\
+		& tunnel destination 163.173.18.254 & IP publique de RF1 \\
+		& ip mtu 1400 / ip tcp adjust-mss 1360 & Optimisation (éviter fragmentation) \\
+		& ip route 192.168.3.0/24 via 10.31.1.2 & Accès réseau Intranet via tunnel \\
+		\cline{2-3}
+		& ip route 192.168.1.64/29 via 10.31.1.2 & Routage srvIntra via GRE \\
+		\hline
+		
+		\multirow{7}{*}{\textbf{RF1 (Tunnel1)}} 
+		& interface Tunnel1 & Extrémité tunnel côté Cloud \\
+		& ip address 10.31.1.2 255.255.255.252 & IP tunnel côté RF1 \\
+		& tunnel source 163.173.18.254 & IP publique RF1 \\
+		& tunnel destination 123.1.1.176 & IP publique R1 \\
+		& ip mtu 1400 / ip tcp adjust-mss 1360 & Optimisation tunnel \\
+		& ip route 192.168.1.64/29 via 10.31.1.1 & Accès srvIntra Site 1 \\
+		& ip route 192.168.3.0/24 via 10.31.1.1 & Routage retour Intranet \\
+		\cline{2-3}
+		& routes vers underlay (10.31.1.0, 123.1.1.176) & Accessibilité réseau transport \\
+		\hline
+		
+	\end{tabular}
+	\caption{Implémentation du tunnel1 GRE (L3VPN) sur les différents équipements}
+\end{table}
+
+
+\item {\textbf{Configuration du tunnel 2 (R2 $\leftrightarrow$ RF1)}}
+
+Le second tunnel repose sur le même principe. L’interface \texttt{Tunnel2} du routeur R2 est configurée avec l’adresse \texttt{10.31.2.1/30}, tandis que l’interface correspondante sur RF1 utilise l’adresse \texttt{10.31.2.2/30}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Élément} & \textbf{Tunnel 2 (R2 $\leftrightarrow$ RF1)} \\
+		\hline
+		
+		Interface tunnel 
+		& \texttt{Tunnel2} \\
+		\hline
+		
+		Tunnel source  
+		& \texttt{123.2.2.168} (interface f0/0 de R2) \\
+		\hline
+		
+		Tunnel destination 
+		& \texttt{163.173.18.254} (interface e1/0 de RF1) \\
+		\hline
+		
+		Sous-réseau GRE 
+		& \texttt{10.31.2.0/30} \\
+		\hline
+		
+		Adresse réseau  
+		& \texttt{10.31.2.0} \\
+		\hline
+		
+		IP côté site entreprise  
+		& \texttt{10.31.2.1} (interface Tunnel2 sur R2) \\
+		\hline
+		
+		IP côté cloud (RF1) 
+		& \texttt{10.31.2.2} (interface Tunnel2 sur RF1) \\
+		\hline
+		
+		Adresse de broadcast 
+		& \texttt{10.31.2.3} \\
+		\hline
+		
+	\end{tabular}
+	\caption{Paramètres de tunnel2 GRE entre le site 2 de l’entreprise et le fournisseur de cloud}
+	\label{tab:gre_tunnel2}
+\end{table}
+
+Les adresses publiques utilisées pour l’établissement du tunnel sont :
+\begin{itemize}
+	\item \texttt{123.2.2.168} pour le routeur R2 (source),
+	\item \texttt{163.173.18.254} pour le routeur RF1 (destination).
+\end{itemize}
+
+Comme pour le premier tunnel, les paramètres MTU et MSS sont ajustés afin d’optimiser les performances du tunnel.
+
+Des routes statiques sont configurées sur R2 pour acheminer le trafic vers le réseau Intranet (\texttt{192.168.3.0/24}) ainsi que vers son propre sous-réseau serveur (\texttt{192.168.2.64/29}) via l’interface tunnel.
+
+Sur RF1, des routes statiques symétriques sont mises en place afin de permettre l’acheminement du trafic vers les réseaux du site 2.
+
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{2.5cm}|p{7cm}|p{6.5cm}|}
+		\hline
+		\textbf{Routeur} & \textbf{Commande} & \textbf{Commentaire} \\
+		\hline		
+		\multirow{6}{*}{\textbf{R2}} 
+		& interface Tunnel2 & Création tunnel GRE vers RF1 \\
+		& ip address 10.31.2.1 255.255.255.252 & IP tunnel Site 2 \\
+		& tunnel source 123.2.2.168 & IP publique R2 \\
+		& tunnel destination 163.173.18.254 & IP publique RF1 \\
+		& ip mtu 1400 / ip tcp adjust-mss 1360 & Optimisation tunnel \\
+		& ip route 192.168.3.0/24 via 10.31.2.2 & Accès Intranet Cloud \\
+		\cline{2-3}
+		& ip route 192.168.2.64/29 via 10.31.2.2 & Routage srvIntra Site 2 \\
+		\hline
+		
+		\multirow{7}{*}{\textbf{RF1 (Tunnel2)}} 
+		& interface Tunnel2 & Deuxième tunnel GRE (Site 2) \\
+		& ip address 10.31.2.2 255.255.255.252 & IP tunnel côté RF1 \\
+		& tunnel source 163.173.18.254 & IP publique RF1 \\
+		& tunnel destination 123.2.2.168 & IP publique R2 \\
+		& ip mtu 1400 / ip tcp adjust-mss 1360 & Optimisation tunnel \\
+		& ip route 192.168.2.64/29 via 10.31.2.1 & Accès srvIntra Site 2 \\
+		& ip route 192.168.3.0/24 via 10.31.2.1 & Routage Intranet \\
+		\cline{2-3}
+		& routes vers underlay (10.31.2.0, 123.2.2.168) & Accessibilité réseau transport \\
+		\hline
+		
+	\end{tabular}
+	\caption{Implémentation du tunnel 2 GRE (L3VPN) sur les différents équipements}
+\end{table}
+
+%\subsubsection{Analyse globale}
+
+La configuration des deux tunnels GRE permet de créer des liens logiques indépendants entre chaque site de l’entreprise et le fournisseur de cloud.
+
+Chaque tunnel agit comme une interface point-à-point virtuelle, facilitant le routage des flux applicatifs sans dépendre directement de la topologie du réseau opérateur.
+
+L’utilisation de routes statiques assure un contrôle précis du chemin emprunté par les paquets, bien que cette approche puisse présenter des limites en termes de scalabilité.
+
+Enfin, l’ajustement des paramètres MTU et MSS permet d’éviter les problèmes de fragmentation liés à l’encapsulation GRE, garantissant ainsi une transmission efficace des données.
+
+Cette configuration met en évidence la distinction entre :
+\begin{itemize}
+	\item le réseau physique de transport (underlay),
+	\item et le réseau logique de communication (overlay) créé par les tunnels GRE.
+\end{itemize}
+
+\subsection{Conclusion générale}
+
+La mise en œuvre des tunnels L2VPN et L3VPN a permis de valider deux approches complémentaires d’interconnexion réseau.
+
+Le L2VPN, basé sur MPLS, offre une interconnexion transparente de niveau 2, permettant aux sites distants de fonctionner comme un réseau local unique. En revanche, le tunnel GRE permet une interconnexion de niveau 3 plus flexible, reposant sur le routage IP.
+
+Ces deux mécanismes illustrent les principes fondamentaux des architectures overlay/underlay utilisées dans les réseaux modernes, notamment dans les environnements opérateurs et cloud.
+
+Enfin, les tests réalisés (ping, traceroute, Wireshark) ont permis de valider le bon fonctionnement global de l’infrastructure mise en place.
+
+\begin{comment}
+	
+
+sur R1 :
+
+\begin{verbatim}
+	R1(config)#interface Tunnel1
+	R1(config-if)#ip address 10.31.1.1 255.255.255.252  <@IP_PRIVE_HOTE1> <masque_reseau_HOTE1>
+	R1(config-if)#tunnel source 123.1.1.176  !tunnel source <@IP_PUBLIC_HOTE1>
+	R1(config-if)# tunnel destination 163.173.18.254 !tunnel destination <@IP_PUBLIC_HOTE2>
+	R1(config-if)# ip mtu 1400
+	R1(config-if)# ip tcp adjust-mss 1360
+	R1(config-if)#exit
+	R1(config)#ip rote 192.168.3.0 255.255.255.0 10.31.1.2 
+	R1(config)#ip rote 192.168.1.64 255.255.255.248 10.31.1.2 
+\end{verbatim}
+
+sur RF1 :
+
+\begin{verbatim}
+	RF1(config)#interface Tunnel1
+	RF1(config-if)#ip address 10.31.1.2 255.255.255.252 
+	RF1(config-if)#tunnel source 163.173.18.254   
+	RF1(config-if)# tunnel destination 123.1.1.176
+	RF1(config-if)# ip mtu 1400
+	RF1(config-if)# ip tcp adjust-mss 1360 
+	RF1(config-if)#exit
+	RF1(config)#ip route 192.168.1.64 255.255.255.248 10.31.1.1
+	RF1(config)#ip route 192.168.3.0 255.255.255.0 10.31.1.1 
+	
+	RF1(config)#ip route 10.31.1.0 255.255.255.252 123.1.1.176
+	RF1(config)#ip route 123.1.1.176 255.255.255.252 163.173.18.255
+\end{verbatim}
+
+
+%----------------------------------------
+
+\subsection{Tunnel2 : R2 -> RF1}
+
+Sur R2
+\begin{verbatim}
+	R2(config)#interface Tunnel2
+	R2(config-if)#ip address 10.31.2.1 255.255.255.252   
+	R2(config-if)#tunnel source 123.2.2.168 
+	R2(config-if)#tunnel destination 163.173.18.254 
+	R2(config-if)# ip mtu 1400
+	R2(config-if)# ip tcp adjust-mss 1360
+	R2(config-if)#exit
+	R2(config)#ip route 192.168.3.0 255.255.255.0  10.31.2.2
+	R2(config)#ip route 192.168.2.64 255.255.255.248 10.31.2.2 
+\end{verbatim}
+
+
+
+%----------------------------------------
+
+Sur RF1
+
+\begin{verbatim}
+	RF1(config)#interface Tunnel2
+	RF1(config-if)#ip address 10.31.2.2 255.255.255.252 
+	RF1(config-if)#tunnel source 163.173.18.254
+	RF1(config-if)#tunnel destination 123.2.2.168 
+	RF1(config-if)# ip mtu 1400
+	RF1(config-if)# ip tcp adjust-mss 1360
+	RF1(config-if)#exit
+	
+	RF1(config)#ip route 192.168.2.64 255.255.255.248 10.31.2.1
+	RF1(config)#ip route 192.168.3.0 255.255.255.0 10.31.2.1 
+	
+	RF1(config)#ip route 10.31.2.0 255.255.255.252 123.2.2.168
+	RF1(config)#ip route 123.2.2.168 255.255.255.252 163.173.18.255
+\end{verbatim}
+
+Une configuration similaire est appliquée sur les routeurs R2 et RF1.
+\end{comment}
+
+\item {\textbf{Protocoles et routes nécessaires pour le fonctionnement des tunnels}}
+
+La mise en place des tunnels GRE nécessite un réseau IP sous-jacent pleinement opérationnel. 
+En particulier, les routeurs doivent être capables de se joindre de manière fiable afin d’établir et de maintenir les tunnels.
+
+L’utilisation d’une interface \texttt{loopback} permet de définir une adresse IP stable, indépendante de l’état des interfaces physiques. Cette adresse est utilisée comme identifiant logique du routeur et peut servir de point de référence pour certains protocoles 
+(comme MPLS/LDP ou OSPF).
+
+L’intégration de cette interface dans le protocole de routage OSPF permet :
+\begin{itemize}
+	\item d’annoncer l’adresse de loopback dans le réseau,
+	\item d’assurer sa joignabilité depuis les autres équipements,
+	\item de garantir une meilleure stabilité du plan de contrôle.
+\end{itemize}
+
+Ainsi, la combinaison d’une interface loopback et de son annonce dans OSPF contribue à la fiabilité globale de l’infrastructure et au bon fonctionnement des tunnels GRE.
+
+\begin{verbatim}
+	!interface loopback0
+	RO31(config)#interface loopback0
+	RO31(config-if)#ip address 192.168.0.31 255.255.255.255
+	
+	! Annoncer des routes en ospf
+	RO31(config)# router ospf1
+	RO31(config-router)# passive-interface loopback0
+	RO31(config-router)# network 192.168.0.31 0.0.0.0 area 0
+	RO31(config-router)# network 163.173.18.254 0.0.0.1 area 0
+\end{verbatim}
+\end{enumerate}
+\begin{comment}
+\textbf{Annoncer les tunnels GRE à OSPF :}
+Quand on crée les tunnels GRE entre deux routeurs,  RE1-RF1 et RE2-RF1, l'interface tunnel est vue comme une interface logique point-à-point ; on lui attribue une adresse IP et pour que OSPF connaisse et utilise ces tunnel comme chemin, on doit l'inclure dans OSPF.
+
+\textbf{RO11}
+\begin{verbatim}
+	router ospf 1
+	network 10.31.1.0 0.0.0.3 area 0
+\end{verbatim} 
+
+\textbf{RO21}
+\begin{verbatim}
+	router ospf 1
+	network 10.31.2.0 0.0.0.3 area 0
+\end{verbatim}
+
+\textbf{RO21}
+\begin{verbatim}
+	router ospf 1
+	network 10.31.1.0 0.0.0.3 area 0
+	network 10.31.2.0 0.0.0.3 area 0
+\end{verbatim}
+\end{comment}
+
+\subsection{Validation du fonctionnement}
+
+La validation repose sur plusieurs tests de connectivité :
+
+\begin{itemize}
+	\item communication entre les sous-réseaux LAN\_1-31 et LAN\_3-31,
+	\item communication entre les sous-réseaux LAN\_2-31 et LAN\_3-31,
+	\item interconnexion entre les sites via le réseau Intranet du cloud.
+\end{itemize}
+
+Les tests réalisés à l’aide des commandes \texttt{ping} et \texttt{traceroute} confirment le bon fonctionnement des tunnels GRE, avec une connectivité opérationnelle entre les différents réseaux (fig.~\ref{fig:gre_wireshark}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../captures/15_img_gre_success.png}
+	\caption{Capture Wireshark illustrant l’encapsulation GRE d’un flux ICMP entre RF1 et R1}
+	\label{fig:gre_wireshark}
+\end{figure}
+
+\begin{itemize}
+	\item \texttt{\textbf{traceroute}}
+	
+	Le traceroute effectué depuis le routeur RF1 vers R1 met en évidence le comportement du tunnel GRE.
+
+Contrairement à un routage classique, les routeurs intermédiaires du réseau opérateur ne sont pas visibles dans le chemin. En effet, le trafic est encapsulé dans un paquet GRE entre les deux extrémités du tunnel.
+
+Ainsi, le traceroute présente :
+\begin{itemize}
+	\item un premier saut correspondant à l’interface de sortie locale,
+	\item puis directement l’adresse IP du tunnel côté distant (R1),
+\end{itemize}
+
+sans afficher les routeurs intermédiaires du backbone MPLS/IP.
+
+Ce comportement confirme que :
+\begin{itemize}
+	\item le tunnel GRE est correctement établi,
+	\item le trafic est encapsulé et transporté de manière transparente à travers le réseau opérateur,
+	\item le réseau sous-jacent (underlay) est masqué au profit du réseau logique (overlay).
+\end{itemize}
+
+Le traceroute valide ainsi le bon fonctionnement du tunnel GRE en tant que mécanisme de virtualisation de réseau de niveau 3.
+
+
+%\subsection{Analyse du trafic (Wireshark)}
+\item \texttt{\textbf{wireshark}}
+
+L’analyse du trafic capturé via Wireshark, lors d’un ping entre le routeur RF1 et le routeur R1, met en évidence le fonctionnement du tunnel GRE.
+
+On observe que :
+
+\begin{itemize}
+	\item les paquets sont transportés sous forme de paquets IP avec un protocole égal à 47 (GRE),
+	\item le paquet encapsulé contient un second en-tête IP correspondant au trafic original,
+	\item la charge utile correspond à des paquets ICMP (requêtes et réponses de type echo).
+\end{itemize}
+
+Cette encapsulation confirme que le trafic applicatif est transporté de manière transparente à travers le réseau opérateur.
+
+L’analyse met également en évidence le rôle du réseau opérateur comme réseau de transport (underlay), tandis que le tunnel GRE constitue un réseau logique superposé (overlay).
+\end{itemize}
+
+\subsection{Conclusion}
+
+La mise en œuvre des tunnels GRE permet d’assurer une interconnexion de niveau 3 fonctionnelle entre les sites de l’entreprise et le réseau Intranet du fournisseur de cloud.
+
+Les tests de connectivité ainsi que l’analyse du trafic confirment le bon fonctionnement du mécanisme d’encapsulation GRE.
+
+Cette solution illustre la mise en place d’un L3VPN reposant sur une infrastructure IP existante, et constitue une approche flexible pour l’interconnexion de réseaux distants.
+
+Cependant, cette solution présente certaines contraintes :
+
+\begin{itemize}
+	\item absence de mécanisme de sécurité (pas de chiffrement)
+	\item une surcharge liée à l’encapsulation, nécessitant l’ajustement de la MTU (\texttt{ip mtu 1400}),
+	\item une réduction de la taille maximale des segments TCP (\texttt{ip tcp adjust-mss}),
+	\item une dépendance au réseau IP sous-jacent pour assurer la connectivité.
+\end{itemize}
+
+Cependant, cette solution présente également des avantages :
+
+\begin{itemize}
+	\item simplicité de déploiement,
+	\item flexibilité pour interconnecter plusieurs sites,
+	\item indépendance vis-à-vis de l’infrastructure MPLS.
+\end{itemize}
+
+\chapter{Annexes}
+\section{Configuration sur le R1 :  }
+\begin{verbatim}
+	R1# show running-config
+	Ip cef
+	no ip domain lookup
+	no ip dhcp use vrf connected
+	ip dhcp excluded-address 192.168.1.1 192.168.1.5
+	ip dhcp excluded-address 192.168.1.33 192.168.1.37
+	!
+	ip dhcp pool poolVLAN_10
+	network 192.168.1.0 255.255.255.224
+	default-router 192.168.1.1
+	lease 7
+	!
+	ip dhcp pool poolVLAN_20
+	network 192.168.1.32 255.255.255.224
+	default-router 192.168.1.33
+	lease 7
+	!
+	ip tcp synwait-time 5
+	!
+	!
+	interface Tunnel1
+	ip address 10.31.1.1 255.255.255.252
+	ip mtu 1400
+	ip tcp adjust-mss 1360
+	tunnel source 123.1.1.176
+	tunnel destination 163.173.18.254
+	!
+	interface FastEthernet0/0
+	ip address 123.1.1.176 255.255.255.254
+	ip access-group 102 out
+	ip nat outside
+	ip virtual-reassembly
+	duplex half
+	!
+	.
+	.
+	!
+	interface Ethernet1/1.10
+	encapsulation dot1Q 10
+	ip address 192.168.1.1 255.255.255.224
+	ip access-group 100 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.20
+	encapsulation dot1Q 20
+	ip address 192.168.1.33 255.255.255.224
+	ip access-group 100 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.31
+	encapsulation dot1Q 31
+	ip address 192.168.1.65 255.255.255.248
+	ip access-group 101 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.32
+	encapsulation dot1Q 32
+	ip address 123.1.1.161 255.255.255.240
+	ip access-group 101 in 
+	!
+	!
+	interface Eternet1/2
+	no ip address
+	duplex half
+	!
+	interface Ethernet1/2.10
+	encapsulation dot1Q 10
+	ip address 192.168.0.0 255.255.255.254
+	ip access-group 100 in
+	!
+	interface Ethernet1/2.20
+	encapsulation dot1Q 10
+	ip address 192.168.0.2 255.255.255.254
+	ip access-group 100 in
+	!
+	interface Ethernet1/2.31
+	encapsulation dot1Q 10
+	ip address 192.168.0.4 255.255.255.254
+	ip access-group 101 in
+	!
+	!
+	ip route 0.0.0.0 0.0.0.0 123.1.1.177
+	ip route 0.0.0.0 0.0.0.0 192.168.0.11
+	ip route 123.2.2.168 255.255.255.254 123.1.1.177
+	ip route 192.168.1.64 255.255.255.248 10.31.1.2
+	ip route 192.168.2.0 255.255.255.224 192.168.0.1
+	ip route 192.168.2.32 255.255.255.224 192.168.0.3
+	ip route 192.168.2.64 255.255.255.248 192.168.0.5
+	ip route 192.168.3.0 255.255.255.0 10.31.1.2
+	!
+	!
+	ip nat pool NAT_POOL_SITE1 123.1.1.178 123.1.1.190 netmask 255.255.255.224
+	ip nat inside source list 1 pool NAT_POOL_SITE1 overload
+	!
+	access-list 1 permit 192.168.1.0 0.0.0.31
+	access-list 1 permit 192.168.1.32 0.0.0.31
+	access-list 1 permit 192.168.1.64 0.0.0.7
+	
+	access-list 100 deny ip 192.168.1.0 0.0.0.31 192.168.1.32 0.0.0.31
+	access-list 100 deny ip 192.168.1.0 0.0.0.31 192.168.2.32 0.0.0.31
+	access-list 100 deny ip 192.168.1.32 0.0.0.31 192.168.1.0 0.0.0.31
+	access-list 100 deny ip 192.168.1.32 0.0.0.31 192.168.2.0 0.0.0.31
+	access-list 100 permit ip any any
+	
+	access-list 101 deny ip 192.168.1.64 0.0.0.7 123.1.1.160 0.0.0.15
+	access-list 101 deny ip 192.168.1.64 0.0.0.7 123.2.2.160 0.0.0.7
+	access-list 101 deny ip 123.1.1.160 0.0.0.15 192.168.2.64 0.0.0.7
+	access-list 101 deny ip 123.1.1.160 0.0.0.15 192.168.1.64 0.0.0.7
+	access-list 101 permit ip any any
+	
+	access-list 102 deny ip any 192.168.1.0 0.0.0.255
+	access-list 102 permit ip any any	
+	
+\end{verbatim}
+
+\section{Configuration sur le R2 :  }
+\begin{verbatim}
+	R2# show running-config
+	!!!
+	ip cef
+	no ip domain lookup
+	no ip dhcp use vrf connected
+	ip dhcp excluded-address 192.168.2.1 192.168.2.5
+	ip dhcp excluded-address 192.168.2.33 192.168.2.37
+	!
+	ip dhcp pool poolVLAN_10
+	network 192.168.2.0 255.255.255.224
+	default-router 192.168.2.1
+	lease 7
+	!
+	ip dhcp pool poolVLAN_20
+	network 192.168.1.32 255.255.255.224
+	default-router 192.168.2.33
+	dns-server 8.8.8.8
+	lease 7
+	!
+	ip tcp synwait-time 5
+	!
+	interface Tunnel2
+	ip address 10.31.2.1 255.255.255.252
+	ip mtu 1400
+	ip tcp adjust-mss 1360
+	tunnel source 123.2.2.168
+	tunnel destination 163.173.18.254
+	!	
+	!
+	interface FastEthernet0/0
+	ip address 123.2.2.168 255.255.255.254
+	ip access-group 102 out
+	ip nat outside
+	ip virtual-reassembly
+	duplex half
+	!
+	....
+	!
+	interface Ethernet1/1
+	no ip address
+	duplex half
+	!
+	interface Ethernet1/1.10
+	encapsulation dot1Q 10
+	ip address 192.168.2.1 255.255.255.224
+	ip access-group 100 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.20
+	encapsulation dot1Q 20
+	ip address 192.168.2.33 255.255.255.224
+	ip access-group 100 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.31
+	encapsulation dot1Q 31
+	ip address 192.168.2 .65 255.255.255.248
+	ip access-group 101 in 
+	ip nat inside
+	ip virtual-reassembly
+	!
+	interface Ethernet1/1.32
+	encapsulation dot1Q 32
+	ip address 123.2.2.161 255.255.255.248
+	ip access-group 101 in 
+	!
+	interface Eternet1/2
+	no ip address
+	duplex half
+	!
+	interface Ethernet1/2.10
+	encapsulation dot1Q 10
+	ip address 192.168.0.1 255.255.255.254
+	ip access-group 100 in
+	!
+	interface Ethernet1/2.20
+	encapsulation dot1Q 10
+	ip address 192.168.0.3 255.255.255.254
+	ip access-group 100 in
+	!
+	interface Ethernet1/2.31
+	encapsulation dot1Q 10
+	ip address 192.168.0.5 255.255.255.254
+	ip access-group 101 in
+	!
+	!
+	ip route 0.0.0.0 0.0.0.0 123.1.1.169
+	ip route 0.0.0.0 0.0.0.0 192.168.0.21
+	ip route 123.1.1.176 255.255.255.254 123.1.1.169
+	ip route 192.168.1.0 255.255.255.224 192.168.0.0
+	ip route 192.168.1.32 255.255.255.224 192.168.0.2
+	ip route 192.168.1.64 255.255.255.248 192.168.0.4
+	ip route 192.168.2.64 255.255.255.248 10.31.2.2
+	ip route 192.168.3.0 255.255.255.0 10.31.2.2
+	!
+	ip nat pool NAT_POOL_SITE2 123.2.2.170 123.2.2.190 netmask 255.255.255.224
+	ip nat inside source list 2 pool NAT_POOL_SITE2 overload
+	!
+	!
+	access-list 2 permit 192.168.2.0 0.0.0.31
+	access-list 2 permit 192.168.2.32 0.0.0.31
+	access-list 2 permit 192.168.2.64 0.0.0.7
+	
+	access-list 100 deny ip 192.168.2.0 0.0.0.31 192.168.2.32 0.0.0.31
+	access-list 100 deny ip 192.168.2.0 0.0.0.31 192.168.2.32 0.0.0.31
+	access-list 100 deny ip 192.168.2.32 0.0.0.31 192.168.2.0 0.0.0.31
+	access-list 100 deny ip 192.168.2.32 0.0.0.31 192.168.1.0 0.0.0.31
+	access-list 100 permit ip any any
+	
+	access-list 101 deny ip 192.168.2.64 0.0.0.7 123.2.2.160 0.0.0.7
+	access-list 101 deny ip 192.168.2.64 0.0.0.7 123.1.1.160 0.0.0.15
+	access-list 101 deny ip 123.2.2.160 0.0.0.7 192.168.2.64 0.0.0.7
+	access-list 101 deny ip 123.2.2.160 0.0.0.7 192.168.1.64 0.0.0.7
+	access-list 101 permit ip any any
+	
+	access-list 102 deny ip any 192.168.2.0 0.0.0.255
+	access-list 102 permit ip any any
+	...
+\end{verbatim}
+
+
+\section{Configuration sur le RO11 :  }
+\begin{verbatim}
+	ip cef
+	!
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	interface Loopback0
+	ip address 192.168.0.11 255.255.255.255
+	!
+	!
+	!
+	interface FastEthernet0/0
+	ip address 123.1.1.177 255.255.255.254
+	duplex half
+	!
+	interface FastEthernet1/0
+	ip address 12.0.0.1 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/2
+	no ip address
+	duplex half
+	xconnect 192.168.0.21 101 encapsulation mpls
+	! 
+	!
+	router ospf 1
+	router-id 192.168.0.11
+	log-adjacency-changes
+	redistribute static subnets
+	passive-interface FastEternet0/0
+	passive-interface Loopback0
+	network 12.0.0.0 0.0.0.3 area 0
+	network 123.1.1.176 0.0.0.1 area 0
+	network 192.168.0.0 0.0.0.1 area 0
+	network 192.168.0.2 0.0.0.1 area 0
+	network 192.168.0.4 0.0.0.1 area 0
+	network 192.168.0.11 0.0.0.0 area 0
+	! 
+	ip forward-protocol nd
+	ip route 123.1.1.160 255.255.255.240 123.1.1.176
+	ip route 163.173.18.254 255.255.255.254 12.0.0.2
+	ip route 192.168.1.0 255.255.255.224 192.168.0.0
+	ip route 192.168.1.32 255.255.255.224 192.168.0.2
+	ip route 192.168.1.64 255.255.255.248 192.168.0.4
+	no ip http server
+\end{verbatim}
+
+\section{Configuration sur le RO21 :  } 
+\begin{verbatim}
+	ip cef
+	!
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	interface Loopback0
+	ip address 192.168.0.21 255.255.255.255
+	!
+	interface FastEthernet0/0
+	ip address 123.2.2.169 255.255.255.254
+	duplex half
+	!
+	interface Ethernet1/0
+	ip address 12.0.0.5 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/2
+	no ip address
+	duplex half
+	xconnect 192.168.0.11 101 encapsulation mpls
+	!
+	!
+	router ospf 1
+	router-id 192.168.0.21
+	log-adjacency-changes
+	redistribute static subnets
+	passive-interface FastEternet0/0
+	passive-interface Loopback0
+	network 12.0.0.4 0.0.0.3 area 0
+	network 123.2.2.168 0.0.0.1 area 0
+	network 192.168.0.0 0.0.0.1 area 0
+	network 192.168.0.2 0.0.0.1 area 0
+	network 192.168.0.4 0.0.0.1 area 0
+	network 192.168.0.21 0.0.0.0 area 0
+	! 
+	ip forward-protocol nd
+	ip route 123.2.2.160 255.255.255.240 123.2.2.168
+	ip route 163.173.18.254 255.255.255.254 12.0.0.6
+	ip route 192.168.2.0 255.255.255.224 192.168.0.1
+	ip route 192.168.2.32 255.255.255.224 192.168.0.3
+	ip route 192.168.2.64 255.255.255.248 192.168.0.5 
+	
+	no ip http server
+\end{verbatim}
+
+\section{Configuration sur le RO31 :  }
+\begin{verbatim}
+	ip cef
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	interface Loopback0
+	ip address 192.168.0.31 255.255.255.255
+	!
+	interface FastEthernet0/0
+	ip address 163.173.19.223 255.255.255.254
+	duplex half
+	!
+	interface Ethernet1/0
+	ip address 12.0.0.9 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/1
+	ip address 163.173.18.255 255.255.255.254
+	duplex half
+	!
+	!
+	!
+	router ospf 1
+	router-id 192.168.0.31
+	log-adjacency-chages
+	redistribute static subnets
+	passive-interface FastEthenet0/0
+	passive-interface Ethernet1/1
+	passive-interface Loopback0
+	network 12.0.0.8 0.0.0.3 area 0
+	network 163.173.19.222 0.0.0.1 area 0
+	network 163.173.18.254 0.0.0.1 area 0
+	network 192.168.0.31 0.0.0.0 area 0
+	!
+	!
+	ip forward-protocol nd 
+	ip route 163.173.19.224 255.255.255.240 163.173.19.222
+	no ip http server 	
+\end{verbatim}
+\section{Configuration sur le RF1 :  }
+\begin{verbatim}
+	ip cef
+	!
+	!
+	interface Tunnel1
+	ip address 10.31.1.2 255.255.255.252
+	ip mtu 1400
+	ip tcp adjust-mss 1360
+	tunnel source 163.173.18.254
+	tunnel destination 123.1.1.176
+	!
+	interface Tunnel2
+	ip address 10.31.2.2 255.255.255.252
+	ip mtu 1400
+	ip tcp adjust-mss 1360
+	tunnel source 163.173.18.254
+	tunnel destination 123.2.2.168
+	!
+	!
+	interface Ethernet1/0
+	ip address 163.173.18.254 255.255.255.254
+	duplex half
+	!
+	!
+	interface Ethernet1/1
+	ip address 192.168.3.1 255.255.255.0
+	duplex half
+	!
+	ip route 0.0.0.0 0.0.0.0 163.173.18.255
+	ip route 0.0.0.0 0.0.0.0 192.168.0.31
+	ip route 10.31.1.0 255.255.255.252 123.1.1.176
+	ip route 10.31.2.0 255.255.255.252 123.2.2.168
+	ip route 192.168.1.64 255.255.255.248 10.31.1.1
+	ip route 192.168.2.64 255.255.255.248 10.31.2.1	
+	ip route 123.1.1.176 255.255.255.255 163.173.18.255
+	ip route 123.2.2.168 255.255.255.255 163.173.18.255
+	ip route 192.168.3.0 255.255.255.0 10.31.1.1
+	ip route 192.168.3.0 255.255.255.0 10.31.2.1
+	no ip http server 
+\end{verbatim}
+
+\section{Configuration sur le RF2 :  }
+\begin{verbatim}
+	ip cef
+	!
+	!
+	!
+	interface FastEthernet0/0
+	ip address 163.173.19.222 255.255.255.254
+	duplex half
+	!
+	interface Ethernet1/1
+	ip address 163.173.19.225 255.255.255.240
+	duplex half
+	!
+	!
+	!
+	ip route 0.0.0.0 0.0.0.0 163.173.19.223 
+	no ip http server 	
+\end{verbatim}
+\section{Configuration sur le RO1 :  }
+\begin{verbatim}
+	ip cef
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	!
+	!
+	inetrfaceEthernet1/1
+	ip address 12.0.0.22 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	inetrfaceEthernet1/2
+	ip address 12.0.0.29 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	inetrfaceEthernet1/3
+	ip address 12.0.0.26 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	router ospf 1
+	router-id 1.1.1.1
+	log-adjacency-chages
+	redistribute static subnets
+	network 12.0.0.20 0.0.0.3 area 0
+	network 12.0.0.24 0.0.0.3 area 0
+	network 12.0.0.28 0.0.0.3 area 0
+	!
+	!
+	ip forward-protocol nd 
+	no ip http server 
+\end{verbatim}
+\section{Configuration sur le RO2 :  }
+
+\begin{verbatim}
+	ip cef
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	!
+	!
+	inetrfaceEthernet1/0
+	ip address 12.0.0.2 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/1
+	ip address 12.0.0.21 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/3
+	ip address 12.0.0.13 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	router ospf 1
+	router-id 2.2.2.2
+	log-adjacency-chages
+	redistribute static subnets
+	network 12.0.0.0 0.0.0.3 area 0
+	network 12.0.0.12 0.0.0.3 area 0
+	network 12.0.0.20 0.0.0.3 area 0
+	!
+	!
+	ip forward-protocol nd 
+	no ip http server 	
+\end{verbatim}
+
+\section{Configuration sur le RO3 :  }
+\begin{verbatim}
+	ip cef
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	!
+	!
+	interface Ethernet1/0
+	ip address 12.0.0.6 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/1
+	ip address 12.0.0.17 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	interface Ethernet1/3
+	ip address 12.0.0.25 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	router ospf 1
+	router-id 3.3.3.3
+	log-adjacency-chages
+	redistribute static subnets
+	network 12.0.0.4 0.0.0.3 area 0
+	network 12.0.0.16 0.0.0.3 area 0
+	network 12.0.0.24 0.0.0.3 area 0
+	!
+	!
+	ip forward-protocol nd 
+	no ip http server 	
+\end{verbatim}
+\section{Configuration sur le RO4 :  }
+
+\begin{verbatim}
+	ip cef
+	multilink bundle-name authenticated
+	mpls label protocol ldp
+	!
+	!
+	!
+	!
+	inetrfaceEthernet1/0
+	ip address 12.0.0.10 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	inetrfaceEthernet1/1
+	ip address 12.0.0.18 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	inetrfaceEthernet1/2
+	ip address 12.0.0.30 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	inetrfaceEthernet1/3
+	ip address 12.0.0.14 255.255.255.252
+	duplex half
+	mpls ip
+	!
+	router ospf 1
+	router-id 4.4.4.4
+	log-adjacency-chages
+	redistribute static subnets
+	network 12.0.0.8 0.0.0.3 area 0
+	network 12.0.0.12 0.0.0.3 area 0
+	network 12.0.0.16 0.0.0.3 area 0	
+	network 12.0.0.28 0.0.0.3 area 0
+	!
+	!
+	ip forward-protocol nd 
+	no ip http server 	
+\end{verbatim}
+
 \end{document}
